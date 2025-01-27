@@ -32,8 +32,8 @@ class _HomePageState extends State<HomePage> {
   String? fname;
   String? fullname;
   String? username;
+  String? id;
 
-  var id;
   bool public = false;
 
   @override
@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
     var strFullname = await LocalAuthService().getFullName("fullname");
+    var strUserId = await LocalAuthService().getId("id");
+
     var strUsername = await LocalAuthService().getUsername("username");
 
     // Verifique se o widget ainda está montado antes de chamar setState
@@ -55,6 +57,7 @@ class _HomePageState extends State<HomePage> {
         token = strToken;
         fullname = strFullname;
         username = strUsername;
+        id = strUserId;
       });
     }
   }
@@ -266,6 +269,7 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(
           builder: (context) => LivePage(
+                id: id.toString(),
                 liveID: liveID,
                 isHost: isHost,
                 username: username.toString(),

@@ -10,21 +10,23 @@ class LivePage extends StatelessWidget {
   final String liveID;
   final bool isHost;
   final String username;
+  final String id;
 
   const LivePage({
     Key? key,
     required this.liveID,
     this.isHost = false,
     required this.username,
+    required this.id,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ZegoUIKitPrebuiltLiveStreaming(
-        appID: int.parse(dotenv.env["APPSIGN"].toString()),
+        appID: int.parse(dotenv.env["APPID"].toString()),
         appSign: dotenv.env["APPSIGN"].toString(),
-        userID: localUserID,
+        userID: id.toString(),
         userName: username,
         liveID: liveID,
         config: isHost

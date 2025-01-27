@@ -84,7 +84,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   title: email == "null" ? "Entrar na conta" : "Sair da conta",
                   onClick: () {
                     if (token != "null") {
-                      authController.signOut(context);  
+                      authController.signOut(context);
                       // Navigator.pop(
                       //   context,
                       //   MaterialPageRoute(
