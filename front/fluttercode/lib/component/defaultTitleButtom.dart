@@ -23,13 +23,21 @@ class DefaultTitleButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SubTextSized(text: title, size: 24, fontweight: FontWeight.bold),
-          DefaultCircleButton(
-            color: color,
-            iconColor: iconColor,
-            onClick: () {
+          GestureDetector(
+            onTap: () {
               onClick();
             },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.exit_to_app,
+                  color: iconColor,
+                ),
+                SizedBox(width: 15,),
+                SubTextSized(
+                    text: title, size: 12, fontweight: FontWeight.w300),
+              ],
+            ),
           ),
         ],
       ),

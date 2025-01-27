@@ -56,7 +56,7 @@ class _AccountScreenState extends State<AccountScreen> {
           children: [
             DefaultTitle(
               buttom: widget.buttom,
-              title: "Seu perfil.",
+              title: "Seu perfil",
             ),
             Column(
               children: [
@@ -84,7 +84,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   title: email == "null" ? "Entrar na conta" : "Sair da conta",
                   onClick: () {
                     if (token != "null") {
-                      authController.signOut(context);
+                      authController.signOut(context);  
                       // Navigator.pop(
                       //   context,
                       //   MaterialPageRoute(
@@ -101,7 +101,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     }
                   },
                   color: FifthColor,
-                  iconColor: lightColor,
+                  iconColor: nightColor,
                 ),
               ],
             ),

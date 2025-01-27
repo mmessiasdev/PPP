@@ -97,15 +97,14 @@ class AuthController extends GetxController {
           var email = userData['email'];
           var id = userData['id'];
           var fullname = userData['fullname'];
-          var colaboratorId = userData['personidvoalle'];
-          print(colaboratorId);
+          var username = userData['user']['username'];
 
           await LocalAuthService().storeToken(token);
           await LocalAuthService().storeAccount(
             id: id,
+            username: username,
             email: email,
             fullname: fullname,
-            colaboratorId: colaboratorId.toString(),
           );
 
           EasyLoading.showSuccess("Bem vindo ao Prontas");
@@ -120,50 +119,6 @@ class AuthController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
       EasyLoading.showError('Alguma coisa deu errado. Tente novamente!');
-    } finally {
-      EasyLoading.dismiss();
-    }
-  }
-
-  void requests({
-    required String fullname,
-    required String cpf,
-    required String resultReq,
-    required String colaboratorId,
-  }) async {
-    try {
-      EasyLoading.show(
-        status: 'Iniciando procura...',
-        dismissOnTap: false,
-      );
-
-      var token = await LocalAuthService().getSecureToken("token");
-      var result = await RemoteAuthService().addRequests(
-        token: token.toString(),
-        resultReq: resultReq.toString(),
-        colaboratorname: fullname.toString(),
-        cpf: cpf.toString(),
-      );
-
-      await LocalAuthService().storeCpfClient(cpf);
-
-      var cpfClient = LocalAuthService().getCpfClient("cpfClient");
-
-      print(cpfClient.toString());
-      print(result.statusCode);
-      print(token);
-
-      if (result.statusCode == 200) {
-        // Obtendo o token Voalle
-        var voalleToken =
-            await RemoteAuthService().getTokenVoalle(); // Corrigido com 'await'
-        print('Voalle Token: $voalleToken'); // Exibe o token
-        var responseVoalle = await RemoteAuthService().getVoalleInvoices(
-            cpf: cpf, voalleToken: voalleToken, colaboratorId: colaboratorId);
-      }
-    } catch (e) {
-      print(e);
-      EasyLoading.showError('Estamos passando por uma manutenção.');
     } finally {
       EasyLoading.dismiss();
     }

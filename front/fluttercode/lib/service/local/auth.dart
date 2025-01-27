@@ -11,28 +11,24 @@ class LocalAuthService {
     return await _storage.read(key: "token");
   }
 
-  Future<void> storeCpfClient(String CpfClient) async {
-    await _storage.write(key: "cpfClient", value: CpfClient);
-  }
-
-  Future<String?> getCpfClient(String CpfClient) async {
-    return await _storage.read(key: "cpfClient");
-  }
-
   Future storeAccount({
     required String email,
     required String fullname,
     required int id,
-    required String colaboratorId,
+    required String username,
   }) async {
     await _storage.write(key: "id", value: id.toString());
     await _storage.write(key: "email", value: email);
     await _storage.write(key: "fullname", value: fullname);
-    await _storage.write(key: "colaboratorId", value: colaboratorId);
+    await _storage.write(key: "username", value: username);
   }
 
   Future<String?> getEmail(String unicKey) async {
     return await _storage.read(key: "email");
+  }
+
+  Future<String?> getUsername(String unicKey) async {
+    return await _storage.read(key: "username");
   }
 
   Future<String?> getId(String unicKey) async {
@@ -41,10 +37,6 @@ class LocalAuthService {
 
   Future<String?> getFullName(String unicKey) async {
     return await _storage.read(key: "fullname");
-  }
-
-  Future<String?> getColaboratorId(String unicKey) async {
-    return await _storage.read(key: "colaboratorId");
   }
 
   Future<void> clear() async {
