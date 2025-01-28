@@ -1,6 +1,7 @@
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/view/account/account.dart';
 import 'package:Prontas/view/account/auth/signin.dart';
+import 'package:Prontas/view/prenatalwallet/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:Prontas/view/home/homepage.dart';
@@ -46,6 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     index: controller.tabIndex,
                     children: [
                       HomePage(),
+                      PreNatalScreen(),
                       AccountScreen(
                         buttom: false,
                       ),
@@ -74,6 +76,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.search_sharp,
                         size: 30,
                       )),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.bedroom_baby,
+                          size: 30,
+                        ),
+                      ),
                       BottomNavigationBarItem(
                         icon: Icon(
                           Icons.people,

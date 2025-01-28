@@ -2,14 +2,12 @@ import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
-import 'package:Prontas/controller/auth.dart';
 import 'package:Prontas/view/account/account.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/service/local/auth.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:Prontas/view/live/livepage.dart';
@@ -198,8 +196,9 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(
                                     width: 100,
                                     child: SubText(
-                                        text: "Iniciar Transmissão",
-                                        align: TextAlign.center),
+                                      text: "Iniciar Transmissão",
+                                      align: TextAlign.center,
+                                    ),
                                   ),
                                 ],
                               ),

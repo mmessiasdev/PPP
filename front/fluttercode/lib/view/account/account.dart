@@ -4,7 +4,6 @@ import 'package:Prontas/component/widgets/title.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/controller/controllers.dart';
-
 import '../../component/defaultTitleButtom.dart';
 import '../../component/colors.dart';
 import 'auth/signin.dart';
