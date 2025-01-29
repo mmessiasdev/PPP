@@ -47,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     index: controller.tabIndex,
                     children: [
                       HomePage(),
-                      PreNatalScreen(),
+                      // PreNatalScreen(),
                       AccountScreen(
                         buttom: false,
                       ),
@@ -76,12 +76,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.search_sharp,
                         size: 30,
                       )),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.bedroom_baby,
-                          size: 30,
-                        ),
-                      ),
+                      // BottomNavigationBarItem(
+                      //   icon: Icon(
+                      //     Icons.bedroom_baby,
+                      //     size: 30,
+                      //   ),
+                      // ),
                       BottomNavigationBarItem(
                         icon: Icon(
                           Icons.people,

@@ -27,7 +27,7 @@ dependencies:
   url_launcher: ^6.0.20
   flutter_custom_tabs: ^2.1.0
   zego_uikit_prebuilt_live_streaming: ^3.13.12
-  zego_express_engine: ^3.19.0
+  zego_express_engine: ^3.17.0
 
 
 
