@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/prenatalmedicines",
+      "handler": "prenatalmedicine.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalmedicines/count",
+      "handler": "prenatalmedicine.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalmedicines/:id",
+      "handler": "prenatalmedicine.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/prenatalmedicines",
+      "handler": "prenatalmedicine.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/prenatalmedicines/:id",
+      "handler": "prenatalmedicine.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/prenatalmedicines/:id",
+      "handler": "prenatalmedicine.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

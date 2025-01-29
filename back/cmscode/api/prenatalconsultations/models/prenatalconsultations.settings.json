@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prenatalconsultations",
+  "info": {
+    "name": "prenatalconsultations"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data": {
+      "type": "date"
+    },
+    "obs": {
+      "type": "string"
+    },
+    "professional": {
+      "type": "string"
+    },
+    "profile": {
+      "via": "prenatalconsultations",
+      "model": "profile"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/prenatalexams",
+      "handler": "prenatalexams.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalexams/count",
+      "handler": "prenatalexams.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalexams/:id",
+      "handler": "prenatalexams.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/prenatalexams",
+      "handler": "prenatalexams.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/prenatalexams/:id",
+      "handler": "prenatalexams.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/prenatalexams/:id",
+      "handler": "prenatalexams.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

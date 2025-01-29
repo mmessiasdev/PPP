@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/prenatalvaccines",
+      "handler": "prenatalvaccines.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalvaccines/count",
+      "handler": "prenatalvaccines.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalvaccines/:id",
+      "handler": "prenatalvaccines.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/prenatalvaccines",
+      "handler": "prenatalvaccines.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/prenatalvaccines/:id",
+      "handler": "prenatalvaccines.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/prenatalvaccines/:id",
+      "handler": "prenatalvaccines.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prenatalmedicines",
+  "info": {
+    "name": "prenatalmedicine"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "dosage": {
+      "type": "string"
+    },
+    "obs": {
+      "type": "string"
+    },
+    "profile": {
+      "via": "prenatalmedicines",
+      "model": "profile"
+    }
+  }
+}

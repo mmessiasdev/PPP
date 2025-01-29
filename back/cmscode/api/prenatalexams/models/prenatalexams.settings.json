@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prenatalexams",
+  "info": {
+    "name": "prenatalexams"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data": {
+      "type": "date"
+    },
+    "type": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    },
+    "profile": {
+      "via": "prenatalexams",
+      "model": "profile"
+    }
+  }
+}

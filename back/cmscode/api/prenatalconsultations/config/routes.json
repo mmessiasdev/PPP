@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/prenatalconsultations",
+      "handler": "prenatalconsultations.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalconsultations/count",
+      "handler": "prenatalconsultations.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/prenatalconsultations/:id",
+      "handler": "prenatalconsultations.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/prenatalconsultations",
+      "handler": "prenatalconsultations.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/prenatalconsultations/:id",
+      "handler": "prenatalconsultations.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/prenatalconsultations/:id",
+      "handler": "prenatalconsultations.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

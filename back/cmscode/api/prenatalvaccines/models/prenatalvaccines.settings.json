@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prenatalvaccines",
+  "info": {
+    "name": "prenatalvaccines"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date"
+    },
+    "nextdose": {
+      "type": "date"
+    },
+    "profile": {
+      "via": "prenatalvaccines",
+      "model": "profile"
+    }
+  }
+}

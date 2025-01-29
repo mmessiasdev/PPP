@@ -22,6 +22,22 @@
     },
     "fullname": {
       "type": "string"
+    },
+    "prenatalvaccines": {
+      "collection": "prenatalvaccines",
+      "via": "profile"
+    },
+    "prenatalmedicines": {
+      "collection": "prenatalmedicine",
+      "via": "profile"
+    },
+    "prenatalexams": {
+      "collection": "prenatalexams",
+      "via": "profile"
+    },
+    "prenatalconsultations": {
+      "collection": "prenatalconsultations",
+      "via": "profile"
     }
   }
 }
