@@ -129,20 +129,23 @@ class _LivePageState extends State<LivePage> {
             if (widget.isHost)
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      SubText(
-                        color: lightColor,
-                        text: "Código da live: ${widget.codlive}",
-                        align: TextAlign.end,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.copy, color: lightColor),
-                        onPressed: () => copyLiveCode(widget.codlive),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      spacing: 2,
+                      children: [
+                        SubText(
+                          color: lightColor,
+                          text: "Código da live: ${widget.codlive}",
+                          align: TextAlign.end,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.copy, color: lightColor),
+                          onPressed: () => copyLiveCode(widget.codlive),
+                        ),
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Align(
