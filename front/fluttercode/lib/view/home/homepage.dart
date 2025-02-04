@@ -173,6 +173,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           GestureDetector(
                             onTap: () => jumpToLivePage(
+                              liveTextCtrl: liveTextCtrl.text,
                               context,
                               liveID: liveTextCtrl.text,
                               isHost: true,
@@ -247,6 +248,7 @@ class _HomePageState extends State<HomePage> {
                               Builder(builder: (context) {
                                 return GestureDetector(
                                   onTap: () => jumpToLivePage(
+                                    liveTextCtrl: liveTextCtrl.text,
                                     context,
                                     liveID: liveTextCtrl.text,
                                     isHost: false,
@@ -274,12 +276,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   jumpToLivePage(BuildContext context,
-      {required String liveID, required bool isHost}) {
+      {required String liveID,
+      required bool isHost,
+      required String liveTextCtrl}) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => LivePage(
                 id: id.toString(),
+                codlive: liveTextCtrl,
                 liveID: liveID,
                 isHost: isHost,
                 username: username.toString(),

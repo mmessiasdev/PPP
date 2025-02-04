@@ -1,21 +1,24 @@
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_express_engine/zego_express_engine.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 
 class LivePage extends StatefulWidget {
   final String liveID;
   final bool isHost;
   final String username;
   final String id;
+  final String codlive;
 
   const LivePage({
     Key? key,
+    required this.codlive,
     required this.liveID,
     this.isHost = false,
     required this.username,
@@ -93,6 +96,11 @@ class _LivePageState extends State<LivePage> {
         .stopRecordingCapturedData(channel: ZegoPublishChannel.Main);
   }
 
+  void copyLiveCode(String liveCode) {
+    Clipboard.setData(ClipboardData(text: liveCode));
+    EasyLoading.showSuccess("Código da live copiado: $liveCode");
+  }
+
   @override
   Widget build(BuildContext context) {
     if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
@@ -119,24 +127,48 @@ class _LivePageState extends State<LivePage> {
                   : ZegoUIKitPrebuiltLiveStreamingConfig.audience(),
             ),
             if (widget.isHost)
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 50),
-                  child: ElevatedButton(
-                    onPressed: isRecording ? stopRecording : startRecording,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isRecording ? SecudaryColor : PrimaryColor,
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(5),
-                    ),
-                    child: Icon(
-                      isRecording ? Icons.stop : Icons.play_arrow,
-                      color: lightColor,
-                      size: 30,
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 10,
+                    children: [
+                      SubText(
+                        color: lightColor,
+                        text: "Código da live: ${widget.codlive}",
+                        align: TextAlign.end,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.copy, color: lightColor),
+                        onPressed: () => copyLiveCode(widget.codlive),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 50),
+                        child: ElevatedButton(
+                          onPressed:
+                              isRecording ? stopRecording : startRecording,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                isRecording ? SecudaryColor : PrimaryColor,
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(5),
+                          ),
+                          child: Icon(
+                            isRecording ? Icons.stop : Icons.play_arrow,
+                            color: lightColor,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
           ],
         ),
