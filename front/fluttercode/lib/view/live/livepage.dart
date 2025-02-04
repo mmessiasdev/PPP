@@ -1,13 +1,12 @@
+import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_express_engine/zego_express_engine.dart';
-import 'dart:math';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-final String localUserID = Random().nextInt(100000).toString();
 
 class LivePage extends StatefulWidget {
   final String liveID;
@@ -67,16 +66,29 @@ class _LivePageState extends State<LivePage> {
 
   // Inicia a gravação
   void startRecording() {
-    final ZegoDataRecordConfig recordConfig = ZegoDataRecordConfig(
-        "/storage/emulated/0/Download/live_recording.mp4",
-        ZegoDataRecordType.AudioAndVideo);
+    setState(() {
+      isRecording = true;
+    });
+
+    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    String filePath =
+        "/storage/emulated/0/Download/live_recording_$timestamp.mp4";
+
+    final ZegoDataRecordConfig recordConfig =
+        ZegoDataRecordConfig(filePath, ZegoDataRecordType.AudioAndVideo);
 
     ZegoExpressEngine.instance.startRecordingCapturedData(recordConfig,
         channel: ZegoPublishChannel.Main);
+
+    debugPrint("Gravação iniciada em: $filePath");
   }
 
   // Para a gravação
   void stopRecording() {
+    setState(() {
+      isRecording = false;
+    });
+
     ZegoExpressEngine.instance
         .stopRecordingCapturedData(channel: ZegoPublishChannel.Main);
   }
@@ -93,9 +105,6 @@ class _LivePageState extends State<LivePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Live Streaming com Gravação"),
-      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -111,13 +120,21 @@ class _LivePageState extends State<LivePage> {
             ),
             if (widget.isHost)
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 50),
                   child: ElevatedButton(
                     onPressed: isRecording ? stopRecording : startRecording,
-                    child: Text(
-                        isRecording ? "Parar Gravação" : "Iniciar Gravação"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isRecording ? SecudaryColor : PrimaryColor,
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(5),
+                    ),
+                    child: Icon(
+                      isRecording ? Icons.stop : Icons.play_arrow,
+                      color: lightColor,
+                      size: 30,
+                    ),
                   ),
                 ),
               ),

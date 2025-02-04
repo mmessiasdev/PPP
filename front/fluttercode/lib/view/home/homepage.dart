@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
 
   /// Users who use the same liveID can join the same live streaming.
   final liveTextCtrl =
-      TextEditingController(text: Random().nextInt(1000000).toString());
+      TextEditingController(text: Random().nextInt(10000).toString());
 
   @override
   Widget build(BuildContext context) {
