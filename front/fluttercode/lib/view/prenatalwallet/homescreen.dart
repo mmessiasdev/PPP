@@ -115,6 +115,8 @@ import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
+import 'package:Prontas/component/widgets/cardbaby.dart';
+import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/prenatal/consultations.dart';
 import 'package:Prontas/model/prenatal/exams.dart';
 import 'package:Prontas/model/prenatal/medicines.dart';
@@ -175,246 +177,244 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            PrimaryText(
-              color: nightColor,
-              text: "Consultas",
-            ),
-            FutureBuilder<List<PrenatalConsultations>>(
-              future:
-                  RemoteAuthService().getPrenatalConsultations(token: token),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Text("Nenhuma loja disponível no momento."),
+    return LayoutBuilder(builder: (context, constraints) {
+      bool isDesktop = constraints.maxWidth > 800;
+
+      return SafeArea(
+        child: token == null
+            ? const SizedBox()
+            : ListView(
+                children: [
+                  Column(
+                    children: [
+                      MainHeader(title: "Cateirinha da gestante"),
+                      Padding(
+                        padding: defaultPadding,
+                        child: RichDefaultText(
+                          text: "Aqui fica sua carteinha de \n",
+                          wid: SubText(
+                              text: "Prenatal!", align: TextAlign.start),
+                        ),
                       ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var renders = snapshot.data![index];
-                        // Verificação se o idPlan não é nulo
-                        return Padding(
-                            padding: defaultPadding,
-                            child: Column(
-                              children: [
-                                SubText(
-                                    text: renders.professional.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.obs.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.data.toString(),
-                                    align: TextAlign.start),
-                              ],
-                            ));
-                      },
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return WidgetLoading();
-                }
-                return SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: nightColor,
-                    ),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            PrimaryText(
-              color: nightColor,
-              text: "Medicamentos",
-            ),
-            FutureBuilder<List<PrenatalMedicines>>(
-              future:
-                  RemoteAuthService().getPrenatalMedicines(token: token),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Text("Nenhuma loja disponível no momento."),
+                      SizedBox(
+                        height: 100,
                       ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var renders = snapshot.data![index];
-                        // Verificação se o idPlan não é nulo
-                        return Padding(
-                            padding: defaultPadding,
-                            child: Column(
-                              children: [
-                                SubText(
-                                    text: renders.name.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.obs.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.dosage.toString(),
-                                    align: TextAlign.start),
-                              ],
-                            ));
-                      },
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return WidgetLoading();
-                }
-                return SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: nightColor,
-                    ),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            PrimaryText(
-              color: nightColor,
-              text: "Exames",
-            ),
-            FutureBuilder<List<PrenatalExams>>(
-              future:
-                  RemoteAuthService().getPrnatalExams(token: token),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Text("Nenhuma loja disponível no momento."),
+                      Padding(
+                        padding: defaultPadding,
+                        child: SizedBox(
+                          width: isDesktop ? 600 : double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              FutureBuilder<List<PrenatalConsultations>>(
+                                future: RemoteAuthService()
+                                    .getPrenatalConsultations(token: token),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                          ConnectionState.done &&
+                                      snapshot.hasData) {
+                                    if (snapshot.data!.isEmpty) {
+                                      return const SizedBox(
+                                        height: 200,
+                                        child: Center(
+                                          child: Text(
+                                              "Nenhum card disponível no momento."),
+                                        ),
+                                      );
+                                    } else {
+                                      return SizedBox(
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                            var renders = snapshot.data![index];
+                                            // Verificação se o idPlan não é nulo
+                                            return CardBaby(
+                                              title: "Consultas",
+                                              text:
+                                                  renders.professional.toString(),
+                                              subtext: renders.obs.toString(),
+                                              pedaltext: renders.data.toString(),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  } else if (snapshot.hasError) {
+                                    return WidgetLoading();
+                                  }
+                                  return SizedBox(
+                                    height: 300,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: nightColor,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 100,
+                              ),
+                              FutureBuilder<List<PrenatalMedicines>>(
+                                future: RemoteAuthService()
+                                    .getPrenatalMedicines(token: token),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                          ConnectionState.done &&
+                                      snapshot.hasData) {
+                                    if (snapshot.data!.isEmpty) {
+                                      return const SizedBox(
+                                        height: 200,
+                                        child: Center(
+                                          child: Text(
+                                              "Nenhuma loja disponível no momento."),
+                                        ),
+                                      );
+                                    } else {
+                                      return SizedBox(
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                            var renders = snapshot.data![index];
+                                            // Verificação se o idPlan não é nulo
+                                            return CardBaby(
+                                              title: "Medicamentos",
+                                              text: renders.name.toString(),
+                                              subtext: renders.obs.toString(),
+                                              pedaltext:
+                                                  renders.dosage.toString(),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  } else if (snapshot.hasError) {
+                                    return WidgetLoading();
+                                  }
+                                  return SizedBox(
+                                    height: 300,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: nightColor,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 100,
+                              ),
+                              FutureBuilder<List<PrenatalExams>>(
+                                future: RemoteAuthService()
+                                    .getPrnatalExams(token: token),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                          ConnectionState.done &&
+                                      snapshot.hasData) {
+                                    if (snapshot.data!.isEmpty) {
+                                      return const SizedBox(
+                                        height: 200,
+                                        child: Center(
+                                          child: Text(
+                                              "Nenhuma loja disponível no momento."),
+                                        ),
+                                      );
+                                    } else {
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          var renders = snapshot.data![index];
+                                          // Verificação se o idPlan não é nulo
+                                          return CardBaby(
+                                            title: "Exames",
+                                            text: renders.type.toString(),
+                                            subtext: renders.result.toString(),
+                                            pedaltext: renders.data.toString(),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else if (snapshot.hasError) {
+                                    return WidgetLoading();
+                                  }
+                                  return SizedBox(
+                                    height: 300,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: nightColor,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 100,
+                              ),
+                              FutureBuilder<List<PrenatalVaccines>>(
+                                future: RemoteAuthService()
+                                    .getPrenatalVaccines(token: token),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                          ConnectionState.done &&
+                                      snapshot.hasData) {
+                                    if (snapshot.data!.isEmpty) {
+                                      return const SizedBox(
+                                        height: 200,
+                                        child: Center(
+                                          child: Text(
+                                              "Nenhuma loja disponível no momento."),
+                                        ),
+                                      );
+                                    } else {
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          var renders = snapshot.data![index];
+                                          // Verificação se o idPlan não é nulo
+                                          return CardBaby(
+                                            title: "Vacinas",
+                                            text: renders.name.toString(),
+                                            subtext: renders.date.toString(),
+                                            pedaltext:
+                                                renders.nextdose.toString(),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else if (snapshot.hasError) {
+                                    return WidgetLoading();
+                                  }
+                                  return SizedBox(
+                                    height: 300,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: nightColor,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var renders = snapshot.data![index];
-                        // Verificação se o idPlan não é nulo
-                        return Padding(
-                            padding: defaultPadding,
-                            child: Column(
-                              children: [
-                                SubText(
-                                    text: renders.type.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.result.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.data.toString(),
-                                    align: TextAlign.start),
-                              ],
-                            ));
-                      },
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return WidgetLoading();
-                }
-                return SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: nightColor,
-                    ),
+                    ],
                   ),
-                );
-              },
-            ),
-             SizedBox(
-              height: 100,
-            ),
-            PrimaryText(
-              color: nightColor,
-              text: "Vacinas",
-            ),
-            FutureBuilder<List<PrenatalVaccines>>(
-              future:
-                  RemoteAuthService().getPrenatalVaccines(token: token),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Text("Nenhuma loja disponível no momento."),
-                      ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var renders = snapshot.data![index];
-                        // Verificação se o idPlan não é nulo
-                        return Padding(
-                            padding: defaultPadding,
-                            child: Column(
-                              children: [
-                                SubText(
-                                    text: renders.name.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.date.toString(),
-                                    align: TextAlign.start),
-                                SubText(
-                                    text: renders.nextdose.toString(),
-                                    align: TextAlign.start),
-                              ],
-                            ));
-                      },
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return WidgetLoading();
-                }
-                return SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: nightColor,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+                ],
+              ),
+      );
+    });
   }
 }
