@@ -116,6 +116,9 @@ import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/model/prenatal/consultations.dart';
+import 'package:Prontas/model/prenatal/exams.dart';
+import 'package:Prontas/model/prenatal/medicines.dart';
+import 'package:Prontas/model/prenatal/vaccines.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +181,7 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
           children: [
             PrimaryText(
               color: nightColor,
-              text: "Cosultas",
+              text: "Consultas",
             ),
             FutureBuilder<List<PrenatalConsultations>>(
               future:
@@ -213,6 +216,183 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                     align: TextAlign.start),
                                 SubText(
                                     text: renders.data.toString(),
+                                    align: TextAlign.start),
+                              ],
+                            ));
+                      },
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return WidgetLoading();
+                }
+                return SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: nightColor,
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 100,
+            ),
+            PrimaryText(
+              color: nightColor,
+              text: "Medicamentos",
+            ),
+            FutureBuilder<List<PrenatalMedicines>>(
+              future:
+                  RemoteAuthService().getPrenatalMedicines(token: token),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Text("Nenhuma loja disponível no momento."),
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var renders = snapshot.data![index];
+                        // Verificação se o idPlan não é nulo
+                        return Padding(
+                            padding: defaultPadding,
+                            child: Column(
+                              children: [
+                                SubText(
+                                    text: renders.name.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.obs.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.dosage.toString(),
+                                    align: TextAlign.start),
+                              ],
+                            ));
+                      },
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return WidgetLoading();
+                }
+                return SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: nightColor,
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 100,
+            ),
+            PrimaryText(
+              color: nightColor,
+              text: "Exames",
+            ),
+            FutureBuilder<List<PrenatalExams>>(
+              future:
+                  RemoteAuthService().getPrnatalExams(token: token),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Text("Nenhuma loja disponível no momento."),
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var renders = snapshot.data![index];
+                        // Verificação se o idPlan não é nulo
+                        return Padding(
+                            padding: defaultPadding,
+                            child: Column(
+                              children: [
+                                SubText(
+                                    text: renders.type.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.result.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.data.toString(),
+                                    align: TextAlign.start),
+                              ],
+                            ));
+                      },
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return WidgetLoading();
+                }
+                return SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: nightColor,
+                    ),
+                  ),
+                );
+              },
+            ),
+             SizedBox(
+              height: 100,
+            ),
+            PrimaryText(
+              color: nightColor,
+              text: "Vacinas",
+            ),
+            FutureBuilder<List<PrenatalVaccines>>(
+              future:
+                  RemoteAuthService().getPrenatalVaccines(token: token),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Text("Nenhuma loja disponível no momento."),
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var renders = snapshot.data![index];
+                        // Verificação se o idPlan não é nulo
+                        return Padding(
+                            padding: defaultPadding,
+                            child: Column(
+                              children: [
+                                SubText(
+                                    text: renders.name.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.date.toString(),
+                                    align: TextAlign.start),
+                                SubText(
+                                    text: renders.nextdose.toString(),
                                     align: TextAlign.start),
                               ],
                             ));
