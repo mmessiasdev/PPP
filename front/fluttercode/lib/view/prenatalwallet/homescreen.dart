@@ -147,7 +147,7 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
   }
 
   void getString() async {
-    var strToken = await LocalAuthService().getSecureToken("token");
+    var strToken = await LocalAuthService().getSecureToken();
 
     // Verifique se o widget ainda está montado antes de chamar setState
     if (mounted) {
@@ -233,10 +233,11 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                             // Verificação se o idPlan não é nulo
                                             return CardBaby(
                                               title: "Consultas",
-                                              text:
-                                                  renders.professional.toString(),
+                                              text: renders.professional
+                                                  .toString(),
                                               subtext: renders.obs.toString(),
-                                              pedaltext: renders.data.toString(),
+                                              pedaltext:
+                                                  renders.data.toString(),
                                             );
                                           },
                                         ),

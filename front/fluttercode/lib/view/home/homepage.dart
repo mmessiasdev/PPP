@@ -43,11 +43,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getString() async {
-    var strToken = await LocalAuthService().getSecureToken("token");
-    var strFullname = await LocalAuthService().getFullName("fullname");
-    var strUserId = await LocalAuthService().getId("id");
+    var strToken = await LocalAuthService().getSecureToken();
+    var strFullname = await LocalAuthService().getFullName();
+    var strUserId = await LocalAuthService().getId();
 
-    var strUsername = await LocalAuthService().getUsername("username");
+    var strUsername = await LocalAuthService().getUsername();
 
     // Verifique se o widget ainda está montado antes de chamar setState
     if (mounted) {

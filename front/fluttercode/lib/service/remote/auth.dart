@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/model/openvoalleinvoices.dart';
 import 'package:Prontas/model/prenatal/consultations.dart';
 import 'package:Prontas/model/prenatal/exams.dart';
 import 'package:Prontas/model/prenatal/medicines.dart';
 import 'package:Prontas/model/prenatal/vaccines.dart';
 import 'package:Prontas/model/serasamodel.dart';
+import 'package:Prontas/model/video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,6 +15,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:http/http.dart' as http;
+
+import '../../model/categoriescareers.dart';
 
 // const url = String.fromEnvironment('BASEURL', defaultValue: '');
 
@@ -186,6 +190,241 @@ class RemoteAuthService {
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PrenatalConsultations.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<CoursesModel>> getOneCategoryCourse({
+    required String? token,
+    required String? id,
+  }) async {
+    List<CoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/category-courses/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body['courses'];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<CoursesModel>> getCerfiticatesCourses(
+      {required String? token, required String profileId}) async {
+    List<CoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse(
+          '${url.toString()}/courses?profilescerfiticates.id_eq=$profileId'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<Map> getOneCourse({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/courses/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
+  Future<dynamic> putFavoriteCourse({
+    required String fullname,
+    required String token,
+    required String id,
+    required String profileId,
+  }) async {
+    var body = {
+      "profilespinned": [profileId],
+    };
+    var response = await client.put(
+      Uri.parse('${url.toString()}/courses/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      EasyLoading.showSuccess("Curso adicionado aos favoritos!");
+    }
+    return response;
+  }
+
+  Future<List<Videos>> getOneCourseVideos({
+    required String? token,
+    required String? id,
+  }) async {
+    List<Videos> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/courses/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body['videos'];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(Videos.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<Map> getOneProof({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/proofs/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
+  Future<dynamic> putAddCerfiticates({
+    required String token,
+    required String id,
+    required String profileId,
+  }) async {
+    var body = {
+      "profilescerfiticates": [profileId],
+    };
+    var response = await client.put(
+      Uri.parse('${url.toString()}/courses/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
+  }
+
+  Future<List<CoursesModel>> getFavoriteCourses(
+      {required String? token, required String profileId}) async {
+    List<CoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/courses?profilespinned.id_eq=$profileId'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<Map> getOneVideo({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/videos/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
+  Future<List<CoursesModel>> getCourses({
+    required String? token,
+  }) async {
+    List<CoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/courses'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<CategoryCoursesModel>> getCategoriesCourses({
+    required String? token,
+  }) async {
+    List<CategoryCoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/category-courses'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CategoryCoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<CoursesModel>> getCoursesSearch({
+    required String token,
+    required String query,
+  }) async {
+    List<CoursesModel> listItens = [];
+    var response = await client.get(
+      Uri.parse(
+          "${url.toString()}/courses?private=false&title_contains=$query"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(CoursesModel.fromJson(itemCount[i]));
     }
     return listItens;
   }

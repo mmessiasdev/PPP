@@ -28,6 +28,10 @@ dependencies:
   flutter_custom_tabs: ^2.1.0
   zego_uikit_prebuilt_live_streaming: ^3.13.12
   zego_express_engine: ^3.17.0
+  video_player: ^2.9.2
+  youtube_player_iframe: ^4.0.4
+  youtube_player_flutter: ^9.1.1
+
 
 
 
