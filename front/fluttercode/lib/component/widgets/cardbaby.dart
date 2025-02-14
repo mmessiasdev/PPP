@@ -17,27 +17,6 @@ class CardBaby extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SecundaryText(
-              color: nightColor,
-              text: title ?? "",
-              align: TextAlign.start,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddExamScreen(),
-                  ),
-                );
-              },
-              child: Icon(Icons.add),
-            )
-          ],
-        ),
         SizedBox(
           height: 15,
         ),

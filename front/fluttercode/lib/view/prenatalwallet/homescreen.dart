@@ -123,6 +123,7 @@ import 'package:Prontas/model/prenatal/medicines.dart';
 import 'package:Prontas/model/prenatal/vaccines.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
+import 'package:Prontas/view/prenatalwallet/post.dart';
 import 'package:flutter/material.dart';
 
 class PreNatalScreen extends StatefulWidget {
@@ -231,13 +232,40 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                           itemBuilder: (context, index) {
                                             var renders = snapshot.data![index];
                                             // Verificação se o idPlan não é nulo
-                                            return CardBaby(
-                                              title: "Consultas",
-                                              text: renders.professional
-                                                  .toString(),
-                                              subtext: renders.obs.toString(),
-                                              pedaltext:
-                                                  renders.data.toString(),
+                                            return Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SecundaryText(
+                                                      color: nightColor,
+                                                      text: "Consultas",
+                                                      align: TextAlign.start,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                AddExamScreen(),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Icon(Icons.add),
+                                                    )
+                                                  ],
+                                                ),
+                                                CardBaby(
+                                                  text: renders.professional,
+                                                  subtext:
+                                                      renders.obs.toString(),
+                                                  pedaltext:
+                                                      renders.data.toString(),
+                                                ),
+                                              ],
                                             );
                                           },
                                         ),
@@ -275,24 +303,58 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                         ),
                                       );
                                     } else {
-                                      return SizedBox(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context, index) {
-                                            var renders = snapshot.data![index];
-                                            // Verificação se o idPlan não é nulo
-                                            return CardBaby(
-                                              title: "Medicamentos",
-                                              text: renders.name.toString(),
-                                              subtext: renders.obs.toString(),
-                                              pedaltext:
-                                                  renders.dosage.toString(),
-                                            );
-                                          },
-                                        ),
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SecundaryText(
+                                                color: nightColor,
+                                                text: "Medicamentos",
+                                                align: TextAlign.start,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AddExamScreen(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Icon(Icons.add),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (context, index) {
+                                                var renders =
+                                                    snapshot.data![index];
+                                                // Verificação se o idPlan não é nulo
+                                                return Column(
+                                                  children: [
+                                                    CardBaby(
+                                                      title: "Medicamentos",
+                                                      text: renders.name
+                                                          .toString(),
+                                                      subtext: renders.obs
+                                                          .toString(),
+                                                      pedaltext: renders.dosage
+                                                          .toString(),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     }
                                   } else if (snapshot.hasError) {
@@ -327,21 +389,55 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                         ),
                                       );
                                     } else {
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: snapshot.data!.length,
-                                        itemBuilder: (context, index) {
-                                          var renders = snapshot.data![index];
-                                          // Verificação se o idPlan não é nulo
-                                          return CardBaby(
-                                            title: "Exames",
-                                            text: renders.type.toString(),
-                                            subtext: renders.result.toString(),
-                                            pedaltext: renders.data.toString(),
-                                          );
-                                        },
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SecundaryText(
+                                                color: nightColor,
+                                                text: "Exames",
+                                                align: TextAlign.start,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AddExamScreen(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Icon(Icons.add),
+                                              )
+                                            ],
+                                          ),
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: snapshot.data!.length,
+                                            itemBuilder: (context, index) {
+                                              var renders =
+                                                  snapshot.data![index];
+                                              // Verificação se o idPlan não é nulo
+                                              return Column(
+                                                children: [
+                                                  CardBaby(
+                                                    text:
+                                                        renders.type.toString(),
+                                                    subtext: renders.result
+                                                        .toString(),
+                                                    pedaltext:
+                                                        renders.data.toString(),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       );
                                     }
                                   } else if (snapshot.hasError) {

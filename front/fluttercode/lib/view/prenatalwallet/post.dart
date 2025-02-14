@@ -60,19 +60,19 @@ class _AddExamScreenState extends State<AddExamScreen> {
                     children: [
                       TextFormField(
                         controller: typeField,
-                        decoration: InputDecoration(labelText: "Campo 1"),
+                        decoration: InputDecoration(labelText: "Nome do exame"),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
                       TextFormField(
                         controller: dataField,
-                        decoration: InputDecoration(labelText: "Campo 2"),
+                        decoration: InputDecoration(labelText: "Resultado"),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
                       TextFormField(
                         controller: resultField,
-                        decoration: InputDecoration(labelText: "Campo 3"),
+                        decoration: InputDecoration(labelText: "Data"),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
