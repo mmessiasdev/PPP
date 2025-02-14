@@ -174,6 +174,30 @@ class RemoteAuthService {
     return listItens;
   }
 
+  Future postPrenatalExams(
+      {required String? token,
+      required String? result,
+      required String? type,
+      required String? date,
+      int? profileId}) async {
+    final body = {
+      "data": date,
+      "type": type,
+      "result": result,
+      "profile": profileId
+    };
+    var response = await client.post(
+      Uri.parse('$url/prenatalexams'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
+  }
+
   Future<List<PrenatalConsultations>> getPrenatalConsultations({
     required String? token,
   }) async {

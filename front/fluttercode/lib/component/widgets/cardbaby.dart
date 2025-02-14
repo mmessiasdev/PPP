@@ -1,6 +1,7 @@
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
+import 'package:Prontas/view/prenatalwallet/post.dart';
 import 'package:flutter/material.dart';
 
 class CardBaby extends StatelessWidget {
@@ -16,10 +17,26 @@ class CardBaby extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SecundaryText(
-          color: nightColor,
-          text: title ?? "",
-          align: TextAlign.start,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SecundaryText(
+              color: nightColor,
+              text: title ?? "",
+              align: TextAlign.start,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddExamScreen(),
+                  ),
+                );
+              },
+              child: Icon(Icons.add),
+            )
+          ],
         ),
         SizedBox(
           height: 15,
