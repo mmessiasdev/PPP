@@ -1,3 +1,4 @@
+import 'package:Prontas/component/containerpaycourse.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/widgets/header.dart';
@@ -114,19 +115,20 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                                 } else {
                                   return ListView.builder(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.vertical,
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: (context, index) {
                                       var renders = snapshot.data![index];
-                                      return CourseContent(
+                                      return ContainerPayCourse(
                                           title: renders.title.toString(),
                                           id: renders.id.toString());
                                     },
                                   );
                                 }
                               } else if (snapshot.hasError) {
-                                return WidgetLoading();
+                                return const WidgetLoading();
                               }
                               return Expanded(
                                 child: Center(
@@ -137,7 +139,7 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                               );
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 35,
                           ),
                         ],
@@ -145,7 +147,7 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                     ),
                   ],
                 ),
-                SizedBox(),
+                const SizedBox(),
               ],
             ),
           );

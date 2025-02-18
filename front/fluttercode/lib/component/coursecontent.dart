@@ -40,7 +40,7 @@ class CourseContent extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      CoursePayScreen(id: id, urlbanner: urlThumb.toString())),
+                      CourseScreen(id: id, urlbanner: urlThumb.toString())),
             ),
           );
         },

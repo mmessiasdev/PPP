@@ -1,5 +1,6 @@
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/colors.dart';
+import 'package:Prontas/component/containerpaycourse.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/padding.dart';
@@ -112,7 +113,7 @@ class _CoursePayScreenState extends State<CoursePayScreen> {
                                     color: nightColor,
                                     align: TextAlign.center,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 35,
                                   ),
                                   Padding(
@@ -140,7 +141,7 @@ class _CoursePayScreenState extends State<CoursePayScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                             SubText(
+                                            SubText(
                                               color: nightColor,
                                               text: "${render["desc"]}",
                                               align: TextAlign.end,

@@ -141,6 +141,30 @@ class RemoteAuthService {
     return listItens;
   }
 
+  Future postPrenatalVaccines(
+      {required String? token,
+      required String? nextdose,
+      required String? date,
+      required String? name,
+      int? profileId}) async {
+    final body = {
+      "name": name,
+      "nextdose": nextdose,
+      "date": date,
+      "profile": profileId
+    };
+    var response = await client.post(
+      Uri.parse('$url/prenatalvaccines'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
+  }
+
   Future<List<PrenatalMedicines>> getPrenatalMedicines({
     required String? token,
   }) async {
@@ -159,6 +183,30 @@ class RemoteAuthService {
       listItens.add(PrenatalMedicines.fromJson(itemCount[i]));
     }
     return listItens;
+  }
+
+  Future postPrenatalMedicines(
+      {required String? token,
+      required String? name,
+      required String? dosage,
+      required String? obs,
+      int? profileId}) async {
+    final body = {
+      "name": name,
+      "dosage": dosage,
+      "obs": obs,
+      "profile": profileId
+    };
+    var response = await client.post(
+      Uri.parse('$url/prenatalmedicines'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
   }
 
   Future<List<PrenatalExams>> getPrnatalExams({
@@ -223,6 +271,30 @@ class RemoteAuthService {
       listItens.add(PrenatalConsultations.fromJson(itemCount[i]));
     }
     return listItens;
+  }
+
+  Future postPrenatalConsultations(
+      {required String? token,
+      required String? date,
+      required String? obs,
+      required String? professional,
+      int? profileId}) async {
+    final body = {
+      "data": date,
+      "obs": obs,
+      "professional": professional,
+      "profile": profileId
+    };
+    var response = await client.post(
+      Uri.parse('$url/prenatalconsultations'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
   }
 
   Future<List<CoursesModel>> getOneCategoryCourse({
@@ -438,7 +510,6 @@ class RemoteAuthService {
     return listItens;
   }
 
-  
   Future<List<Banners>> getCarrouselBanners({
     required String? token,
     required String? id,
@@ -460,7 +531,8 @@ class RemoteAuthService {
     }
     return listItens;
   }
-    Future<List<StoresModel>> getStores({
+
+  Future<List<StoresModel>> getStores({
     required String? token,
   }) async {
     List<StoresModel> listItens = [];
@@ -480,7 +552,7 @@ class RemoteAuthService {
     return listItens;
   }
 
-    Future<Map> getStore({
+  Future<Map> getStore({
     required String id,
     required String? token,
   }) async {

@@ -124,6 +124,7 @@ import 'package:Prontas/model/prenatal/vaccines.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/prenatalwallet/post.dart';
+import 'package:Prontas/view/prenatalwallet/timelineprenatal.dart';
 import 'package:flutter/material.dart';
 
 class PreNatalScreen extends StatefulWidget {
@@ -189,6 +190,7 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                   Column(
                     children: [
                       MainHeader(title: "Cateirinha da gestante"),
+                      // PrenatalTimelineScreen(),
                       Padding(
                         padding: defaultPadding,
                         child: RichDefaultText(
@@ -223,52 +225,52 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                         ),
                                       );
                                     } else {
-                                      return SizedBox(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context, index) {
-                                            var renders = snapshot.data![index];
-                                            // Verificação se o idPlan não é nulo
-                                            return Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SecundaryText(
-                                                      color: nightColor,
-                                                      text: "Consultas",
-                                                      align: TextAlign.start,
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SecundaryText(
+                                                color: nightColor,
+                                                text: "Consultas",
+                                                align: TextAlign.start,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AddConsultationsScreen(),
                                                     ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                AddExamScreen(),
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Icon(Icons.add),
-                                                    )
-                                                  ],
-                                                ),
-                                                CardBaby(
+                                                  );
+                                                },
+                                                child: Icon(Icons.add),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (context, index) {
+                                                var renders =
+                                                    snapshot.data![index];
+                                                // Verificação se o idPlan não é nulo
+                                                return CardBaby(
                                                   text: renders.professional,
                                                   subtext:
                                                       renders.obs.toString(),
                                                   pedaltext:
                                                       renders.data.toString(),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     }
                                   } else if (snapshot.hasError) {
@@ -320,7 +322,7 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          AddExamScreen(),
+                                                          AddMedicinesScreen(),
                                                     ),
                                                   );
                                                 },
@@ -489,7 +491,7 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          AddExamScreen(),
+                                                          AddVaccinesScreen(),
                                                     ),
                                                   );
                                                 },

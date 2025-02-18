@@ -4,6 +4,7 @@ import 'package:Prontas/view/account/auth/signin.dart';
 import 'package:Prontas/view/club/home/homepage.dart';
 import 'package:Prontas/view/course/homepage.dart';
 import 'package:Prontas/view/prenatalwallet/homescreen.dart';
+import 'package:Prontas/view/prenatalwallet/timelineprenatal.dart';
 import 'package:Prontas/view/videos/home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -54,6 +55,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       HomePageCoursesScreen(),
                       HomePageCareers(),
                       PreNatalScreen(),
+                      PrenatalTimelineScreen(),
                       AccountScreen(
                         buttom: false,
                       ),
@@ -103,6 +105,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       BottomNavigationBarItem(
                         icon: Icon(
                           Icons.bedroom_baby,
+                          size: 30,
+                        ),
+                      ),
+                           BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.timelapse,
                           size: 30,
                         ),
                       ),
