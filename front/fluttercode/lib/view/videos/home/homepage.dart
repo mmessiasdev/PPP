@@ -1,5 +1,6 @@
 import 'package:Prontas/component/categorie.dart';
 import 'package:Prontas/component/containersLoading.dart';
+import 'package:Prontas/component/contentproduct.dart';
 import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
@@ -84,10 +85,12 @@ class _HomePageCareersState extends State<HomePageCareers> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: SecudaryColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
+                        color: SecudaryColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -115,13 +118,6 @@ class _HomePageCareersState extends State<HomePageCareers> {
                                   );
                                 } else {
                                   return ListView.builder(
-                                    // gridDelegate:
-                                    //     const SliverGridDelegateWithFixedCrossAxisCount(
-                                    //   crossAxisCount: 1,
-                                    //   crossAxisSpacing: 1,
-                                    //   mainAxisSpacing: 1,
-                                    //   childAspectRatio: 0.75, // Proporção padrão
-                                    // ),
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.vertical,
@@ -133,12 +129,7 @@ class _HomePageCareersState extends State<HomePageCareers> {
                                         subtitle: "${renders.desc}",
                                         title: renders.title.toString(),
                                         id: renders.id.toString(),
-                                        // price: renders.price == "" ||
-                                        //         renders.price == null
-                                        //     ? "Grátis"
-                                        //     : "${renders.price.toString()}R\$",
-                                        time:
-                                            "",
+                                        time: "",
                                       );
                                     },
                                   );
@@ -158,62 +149,6 @@ class _HomePageCareersState extends State<HomePageCareers> {
                           SizedBox(
                             height: 35,
                           ),
-                          // Padding(
-                          //   padding: defaultPadding,
-                          //   child: SecundaryText(
-                          //       text: 'Categorías',
-                          //       color: nightColor,
-                          //       align: TextAlign.start),
-                          // ),
-                          // FutureBuilder<List<CategoryCoursesModel>>(
-                          //   future: RemoteAuthService()
-                          //       .getCategoriesCourses(token: token),
-                          //   builder: (context, snapshot) {
-                          //     if (snapshot.connectionState ==
-                          //             ConnectionState.done &&
-                          //         snapshot.hasData) {
-                          //       if (snapshot.data!.isEmpty) {
-                          //         return const Center(
-                          //           child: Text(
-                          //               "Nenhuma categoría disponível no momento."),
-                          //         );
-                          //       } else {
-                          //         return SizedBox(
-                          //           height: 280,
-                          //           child: ListView.builder(
-                          //             shrinkWrap: true,
-                          //             scrollDirection: Axis.horizontal,
-                          //             itemCount: snapshot.data!.length,
-                          //             itemBuilder: (context, index) {
-                          //               var renders = snapshot.data![index];
-                          //               return Padding(
-                          //                   padding: const EdgeInsets.all(8.0),
-                          //                   child: CategorieCareers(
-                          //                     title: renders.name.toString(),
-                          //                     id: renders.id.toString(),
-                          //                     illurl:
-                          //                         renders.urlbanner.toString(),
-                          //                   ));
-                          //             },
-                          //           ),
-                          //         );
-                          //       }
-                          //     } else if (snapshot.hasError) {
-                          //       return WidgetLoading();
-                          //     }
-                          //     return SizedBox(
-                          //       height: 300,
-                          //       child: Center(
-                          //         child: CircularProgressIndicator(
-                          //           color: nightColor,
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
-                          // SizedBox(
-                          //   height: 35,
-                          // ),
                         ],
                       ),
                     ),

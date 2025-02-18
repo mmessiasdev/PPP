@@ -1,5 +1,6 @@
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/texts.dart';
+import 'package:Prontas/view/course/coursescreen.dart';
 import 'package:Prontas/view/videos/coursescreen.dart';
 import 'package:Prontas/view/videos/video/videoscreen.dart';
 import 'package:flutter/material.dart';
@@ -180,11 +181,10 @@ class VideoContent extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => VideoScreen(
-                id: id,
-                urlbanner: urlThumb ?? "",
-              ),
-            ),
+                builder: (context) => CoursePayScreen(
+                      id: id,
+                      urlbanner: urlThumb ?? "",
+                    )),
           );
         },
         child: Container(

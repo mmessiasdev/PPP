@@ -1,12 +1,19 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:Prontas/model/balancelocalstores.dart';
+import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
+import 'package:Prontas/model/localstores.dart';
+import 'package:Prontas/model/localstoresverfiquedbuy.dart';
 import 'package:Prontas/model/openvoalleinvoices.dart';
+import 'package:Prontas/model/planstores.dart';
 import 'package:Prontas/model/prenatal/consultations.dart';
 import 'package:Prontas/model/prenatal/exams.dart';
 import 'package:Prontas/model/prenatal/medicines.dart';
 import 'package:Prontas/model/prenatal/vaccines.dart';
 import 'package:Prontas/model/serasamodel.dart';
+import 'package:Prontas/model/stores.dart';
+import 'package:Prontas/model/verifiquedexitbalances.dart';
 import 'package:Prontas/model/video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -431,6 +438,48 @@ class RemoteAuthService {
     return listItens;
   }
 
+  
+  Future<List<Banners>> getCarrouselBanners({
+    required String? token,
+    required String? id,
+  }) async {
+    List<Banners> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/carrousels/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body['banners'];
+    print(itemCount);
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(Banners.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+    Future<List<StoresModel>> getStores({
+    required String? token,
+  }) async {
+    List<StoresModel> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/online-stores'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(StoresModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
   Future<List<CoursesModel>> getCoursesSearch({
     required String token,
     required String query,
@@ -449,6 +498,206 @@ class RemoteAuthService {
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(CoursesModel.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<LocalStores>> getOnePlansLocalStores({
+    required String? token,
+    required String? id,
+  }) async {
+    List<LocalStores> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/plans/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body["local_stores"];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(LocalStores.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<LocalStores>> getLocalStores({
+    required String? token,
+  }) async {
+    List<LocalStores> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/local-stores'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(LocalStores.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<PlanStores>> getPlanStores(
+      {required String? token, required String? id}) async {
+    List<PlanStores> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/plans/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body["plan_stores"];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(PlanStores.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<Map> getLocalStore({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/local-stores/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
+  Future<Map> getQrCodeLocalStore({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/local-stores/$id/qrcode'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
+  Future<List<Receipt>> getVerifiquedLocalStoriesFiles(
+      {required String? token, required String? id}) async {
+    List<Receipt> listItens = [];
+    var response = await client.get(
+      Uri.parse('${url.toString()}/verifiqued-buy-local-stores/${id}'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body["receipt"];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(Receipt.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<BalanceLocalStores>> getBalanceLocalStores(
+      {required String? token, required String? profileId}) async {
+    List<BalanceLocalStores> listItens = [];
+
+    var response = await client.get(
+      Uri.parse(
+          '${url.toString()}/verifiqued-buy-local-stores?profile.id_eq=${profileId}&approved=true'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(BalanceLocalStores.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future<List<VerfiquedExitBalances>> getExitBalances(
+      {required String? token, required String? profileId}) async {
+    List<VerfiquedExitBalances> listItens = [];
+    var response = await client.get(
+      Uri.parse(
+          '${url.toString()}/verfiqued-exit-balances?profile.id_eq=${profileId}&approved=true'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    print(body);
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(VerfiquedExitBalances.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
+  Future postExitBalances(
+      {required String? token,
+      required String? profileId,
+      required String? valueExit}) async {
+    final body = {
+      "value": valueExit.toString(),
+      "profile": [profileId]
+    };
+    var response = await client.post(
+      Uri.parse('${url.toString()}/verfiqued-exit-balances'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      EasyLoading.showSuccess("Saldo enviado para conta de destino!");
+      Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
+    } else {
+      EasyLoading.showSuccess("Algo deu errado. Tente novamente!");
+    }
+    return response;
+  }
+
+  Future<List<StoresModel>> getOnlineStoresSearch({
+    required String token,
+    required String query,
+  }) async {
+    List<StoresModel> listItens = [];
+    var response = await client.get(
+      Uri.parse("${url.toString()}/online-stores?name_contains=$query"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body;
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(StoresModel.fromJson(itemCount[i]));
     }
     return listItens;
   }

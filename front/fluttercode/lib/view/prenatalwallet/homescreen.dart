@@ -472,22 +472,51 @@ class _PreNatalScreenState extends State<PreNatalScreen> {
                                         ),
                                       );
                                     } else {
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: snapshot.data!.length,
-                                        itemBuilder: (context, index) {
-                                          var renders = snapshot.data![index];
-                                          // Verificação se o idPlan não é nulo
-                                          return CardBaby(
-                                            title: "Vacinas",
-                                            text: renders.name.toString(),
-                                            subtext: renders.date.toString(),
-                                            pedaltext:
-                                                renders.nextdose.toString(),
-                                          );
-                                        },
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SecundaryText(
+                                                color: nightColor,
+                                                text: "Vacinas",
+                                                align: TextAlign.start,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AddExamScreen(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Icon(Icons.add),
+                                              )
+                                            ],
+                                          ),
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: snapshot.data!.length,
+                                            itemBuilder: (context, index) {
+                                              var renders =
+                                                  snapshot.data![index];
+                                              // Verificação se o idPlan não é nulo
+                                              return CardBaby(
+                                                title: "Vacinas",
+                                                text: renders.name.toString(),
+                                                subtext:
+                                                    renders.date.toString(),
+                                                pedaltext:
+                                                    renders.nextdose.toString(),
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       );
                                     }
                                   } else if (snapshot.hasError) {
