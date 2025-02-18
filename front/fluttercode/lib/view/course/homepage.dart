@@ -1,15 +1,8 @@
-import 'package:Prontas/component/categorie.dart';
 import 'package:Prontas/component/containersLoading.dart';
-import 'package:Prontas/component/contentproduct.dart';
 import 'package:Prontas/component/coursecontent.dart';
-import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
-import 'package:Prontas/component/widgets/iconlist.dart';
-import 'package:Prontas/controller/auth.dart';
-import 'package:Prontas/model/categoriescareers.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
-import 'package:Prontas/view/course/coursescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
@@ -87,7 +80,7 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: SecudaryColor,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
@@ -95,7 +88,7 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 35,
                           ),
                           Padding(

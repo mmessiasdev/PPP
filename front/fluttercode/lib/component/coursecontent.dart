@@ -35,14 +35,14 @@ class CourseContent extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: GestureDetector(
         onTap: () {
-          (Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CourseScreen(
-                      id: id,
-                      urlbanner: urlThumb ?? "",
-                    )),
-          ));
+          (
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      CoursePayScreen(id: id, urlbanner: urlThumb.toString())),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -112,11 +112,6 @@ class CourseContent extends StatelessWidget {
                       SizedBox(
                         height: 35,
                       ),
-                      // SubTextSized(
-                      //     text: price ?? "Grátis",
-                      //     size: 26,
-                      //     align: TextAlign.end,
-                      //     fontweight: FontWeight.w600),
                       SizedBox(
                         height: 15,
                       ),
