@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "local_stores",
+  "info": {
+    "name": "LocalStore",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "rules": {
+      "type": "string"
+    },
+    "localization": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "urllogo": {
+      "type": "string"
+    },
+    "code": {
+      "type": "uid"
+    },
+    "cep": {
+      "type": "integer"
+    },
+    "benefit": {
+      "type": "string"
+    },
+    "cashback": {
+      "type": "integer"
+    },
+    "verifiqued_buy_local_stores": {
+      "via": "local_store",
+      "collection": "verifiqued-buy-local-store"
+    },
+    "ative": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

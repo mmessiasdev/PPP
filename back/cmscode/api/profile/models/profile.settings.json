@@ -32,12 +32,28 @@
       "via": "profile"
     },
     "prenatalexams": {
-      "collection": "prenatalexams",
-      "via": "profile"
+      "via": "profile",
+      "collection": "prenatalexams"
     },
     "prenatalconsultations": {
       "collection": "prenatalconsultations",
       "via": "profile"
+    },
+    "plan_stores": {
+      "via": "profile",
+      "collection": "plan-stores"
+    },
+    "plan": {
+      "via": "profiles",
+      "model": "plan"
+    },
+    "verfiqued_exit_balances": {
+      "via": "profile",
+      "collection": "verfiqued-exit-balance"
+    },
+    "verifiqued_buy_local_stores": {
+      "via": "profile",
+      "collection": "verifiqued-buy-local-store"
     }
   }
 }

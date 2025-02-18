@@ -52,7 +52,7 @@ class _RenderContentsState extends State<RenderContents> {
                         var render = snapshot.data![index];
                         return GestureDetector(
                           child: ContentProduct(
-                              urlLogo: render.logourl.toString(),
+                              urlThumb: render.logourl.toString(),
                               maxl: 1,
                               over: TextOverflow.fade,
                               drules:

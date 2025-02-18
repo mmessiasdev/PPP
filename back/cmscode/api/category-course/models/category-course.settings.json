@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_courses",
+  "info": {
+    "name": "CategoryCourse"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "courses": {
+      "collection": "course",
+      "via": "category_courses",
+      "dominant": true
+    },
+    "urlbanner": {
+      "type": "string"
+    }
+  }
+}

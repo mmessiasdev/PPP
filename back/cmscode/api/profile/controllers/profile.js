@@ -14,6 +14,7 @@ module.exports = {
             // Criação do perfil usando o serviço de 'profile'
             const result = await strapi.services.profile.create({
                 fullname: ctx.request.body.fullname,
+                plan: ctx.request.body.plan,
                 email: user.email,
                 user: user.id,  // Relacionando o perfil com o usuário autenticado
             });

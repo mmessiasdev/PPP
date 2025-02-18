@@ -113,7 +113,11 @@ class _HomePageClubState extends State<HomePageClub> {
 
                             // Verifica se o campo "plan" é nulo
                             if (render != null && render['plan'] == null) {
-                              return SizedBox();
+                              return SizedBox(
+                                child: Center(
+                                    child:
+                                        Text('Você não possui nenhum plano')),
+                              );
                             } else {
                               idPlan = render['plan']['id'].toString();
                               return ListView(
@@ -487,12 +491,12 @@ class _HomePageClubState extends State<HomePageClub> {
                                                 const SizedBox(
                                                   height: 60,
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      defaultPaddingHorizon,
-                                                  child: const ListTitle(
-                                                      title: "Eletrônicos"),
-                                                ),
+                                                // Padding(
+                                                //   padding:
+                                                //       defaultPaddingHorizon,
+                                                //   child: const ListTitle(
+                                                //       title: "Eletrônicos"),
+                                                // ),
                                                 // SizedBox(
                                                 //   height:
                                                 //       250, // Altura definida para o ListView

@@ -480,6 +480,22 @@ class RemoteAuthService {
     return listItens;
   }
 
+    Future<Map> getStore({
+    required String id,
+    required String? token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('${url.toString()}/online-stores/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "ngrok-skip-browser-warning": "true"
+      },
+    );
+    var itens = json.decode(response.body);
+    return itens;
+  }
+
   Future<List<CoursesModel>> getCoursesSearch({
     required String token,
     required String query,

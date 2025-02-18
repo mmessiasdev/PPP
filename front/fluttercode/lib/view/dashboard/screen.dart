@@ -1,6 +1,7 @@
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/view/account/account.dart';
 import 'package:Prontas/view/account/auth/signin.dart';
+import 'package:Prontas/view/club/home/homepage.dart';
 import 'package:Prontas/view/course/homepage.dart';
 import 'package:Prontas/view/prenatalwallet/homescreen.dart';
 import 'package:Prontas/view/videos/home/homepage.dart';
@@ -49,6 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     index: controller.tabIndex,
                     children: [
                       HomePage(),
+                      HomePageClub(),
                       HomePageCoursesScreen(),
                       HomePageCareers(),
                       PreNatalScreen(),
@@ -80,6 +82,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.video_call,
                         size: 30,
                       )),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.favorite,
+                          size: 30,
+                        ),
+                      ),
                       BottomNavigationBarItem(
                         icon: Icon(
                           Icons.play_arrow,

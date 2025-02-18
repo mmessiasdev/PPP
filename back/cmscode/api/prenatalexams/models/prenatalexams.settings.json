@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "prenatalexams",
   "info": {
-    "name": "prenatalexams"
+    "name": "prenatalexams",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "data": {
-      "type": "date"
-    },
     "type": {
       "type": "string"
     },
@@ -23,6 +21,9 @@
     "profile": {
       "via": "prenatalexams",
       "model": "profile"
+    },
+    "data": {
+      "type": "string"
     }
   }
 }

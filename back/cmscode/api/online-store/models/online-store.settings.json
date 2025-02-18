@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "online_stores",
+  "info": {
+    "name": "OnlineStore",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "afflink": {
+      "type": "string"
+    },
+    "percentcashback": {
+      "type": "decimal"
+    },
+    "logourl": {
+      "type": "string"
+    },
+    "categories": {
+      "via": "online_stores",
+      "collection": "category",
+      "dominant": true
+    },
+    "ative": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

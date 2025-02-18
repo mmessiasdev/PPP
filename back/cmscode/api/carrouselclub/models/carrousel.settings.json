@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carrousels",
+  "info": {
+    "name": "CarrouselsClub",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "banners": {
+      "via": "carrousels",
+      "collection": "banner",
+      "dominant": true
+    }
+  }
+}

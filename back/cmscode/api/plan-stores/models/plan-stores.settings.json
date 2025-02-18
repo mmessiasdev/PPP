@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plan_stores",
+  "info": {
+    "name": "PlanStores",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "benefits": {
+      "type": "string"
+    },
+    "profile": {
+      "via": "plan_stores",
+      "model": "profile"
+    },
+    "plan": {
+      "via": "plan_stores",
+      "model": "plan"
+    },
+    "urlLogo": {
+      "type": "string"
+    }
+  }
+}

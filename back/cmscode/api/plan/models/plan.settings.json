@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plans",
+  "info": {
+    "name": "Plan",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "benefits": {
+      "type": "string"
+    },
+    "rules": {
+      "type": "string"
+    },
+    "value": {
+      "default": 0,
+      "type": "decimal"
+    },
+    "profiles": {
+      "via": "plan",
+      "collection": "profile"
+    },
+    "plan_stores": {
+      "via": "plan",
+      "collection": "plan-stores"
+    },
+    "color": {
+      "type": "string"
+    }
+  }
+}

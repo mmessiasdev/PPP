@@ -53,45 +53,43 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                 align: TextAlign.start),
           ),
         ),
-        Expanded(
-          child: FutureBuilder<List<CoursesModel>>(
-            future: RemoteAuthService().getCourses(token: token),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                if (snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text("Nenhum video disponível no momento."),
-                  );
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      var renders = snapshot.data![index];
-                      return ContentProduct(
-                          drules: renders.desc.toString(),
-                          title: renders.title.toString(),
-                          bgcolor: SecudaryColor,
-                          urlThumb: renders.urlbanner.toString(),
-                          id: renders.id.toString());
-                    },
-                  );
-                }
-              } else if (snapshot.hasError) {
-                return WidgetLoading();
+        FutureBuilder<List<CoursesModel>>(
+          future: RemoteAuthService().getCourses(token: token),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              if (snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text("Nenhum video disponível no momento."),
+                );
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    var renders = snapshot.data![index];
+                    return ContentProduct(
+                        drules: renders.desc.toString(),
+                        title: renders.title.toString(),
+                        bgcolor: SecudaryColor,
+                        urlThumb: renders.urlbanner.toString(),
+                        id: renders.id.toString());
+                  },
+                );
               }
-              return Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: nightColor,
-                  ),
+            } else if (snapshot.hasError) {
+              return WidgetLoading();
+            }
+            return Expanded(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: nightColor,
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ],
     ));

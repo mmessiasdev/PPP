@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "proofs",
+  "info": {
+    "name": "ProofCourses",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "questions": {
+      "type": "json"
+    },
+    "title": {
+      "type": "string"
+    },
+    "course": {
+      "model": "course",
+      "via": "proof"
+    }
+  }
+}

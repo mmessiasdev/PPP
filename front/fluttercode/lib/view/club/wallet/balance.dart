@@ -3,7 +3,7 @@ import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/balancelocalstores.dart';
-import 'package:Prontas/model/verfiquedexitbalances.dart';
+import 'package:Prontas/model/verifiquedexitbalances.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -1,13 +1,11 @@
-import 'package:Prontas/component/bankcard.dart';
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/colors.dart';
-import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/tips.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/balancelocalstores.dart';
-import 'package:Prontas/model/verfiquedexitbalances.dart';
+import 'package:Prontas/model/verifiquedexitbalances.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/club/wallet/balance.dart';
@@ -54,12 +52,11 @@ class _WalletScreenState extends State<WalletScreen> {
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken();
     var strFullName = await LocalAuthService().getFullName();
-    var strCpf = await LocalAuthService().getCpf();
     var strProfileId = await LocalAuthService().getId();
 
     if (mounted) {
       setState(() {
-        cpf = strCpf.toString();
+        // cpf = strCpf.toString();
         id = strProfileId.toString();
         fullname = strFullName.toString();
         token = strToken.toString();
@@ -414,10 +411,10 @@ class _WalletScreenState extends State<WalletScreen> {
                             const SizedBox(
                               height: 25,
                             ),
-                            BankCard(
-                              cpf: cpf ?? "",
-                              name: fullname ?? "",
-                            ),
+                            // BankCard(
+                            //   cpf: cpf ?? "",
+                            //   name: fullname ?? "",
+                            // ),
                             const SizedBox(
                               height: 40,
                             ),

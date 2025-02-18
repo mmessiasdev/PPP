@@ -4,7 +4,6 @@ import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/tips.dart';
 import 'package:Prontas/component/widgets/header.dart';
-import 'package:Prontas/component/widgets/searchInput.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
@@ -78,7 +77,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                       onClick: () {
                                         (Navigator.pop(context));
                                       }),
-                                  const SearchClubInput(),
+                                  // const SearchClubInput(),
                                   Padding(
                                     padding: defaultPaddingVertical,
                                     child: SizedBox(

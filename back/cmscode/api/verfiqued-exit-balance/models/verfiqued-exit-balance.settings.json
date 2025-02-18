@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "verfiqued_exit_balances",
+  "info": {
+    "name": "VerfiquedExitBalance",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "profile": {
+      "via": "verfiqued_exit_balances",
+      "model": "profile"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "bankkey": {
+      "type": "string"
+    }
+  }
+}
