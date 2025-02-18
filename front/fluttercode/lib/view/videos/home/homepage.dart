@@ -85,7 +85,7 @@ class _HomePageCareersState extends State<HomePageCareers> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: SecudaryColor,
+                        color: lightColor,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),

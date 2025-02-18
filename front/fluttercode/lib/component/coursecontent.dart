@@ -181,7 +181,7 @@ class VideoContent extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CoursePayScreen(
+                builder: (context) => VideoScreen(
                       id: id,
                       urlbanner: urlThumb ?? "",
                     )),
