@@ -1,10 +1,10 @@
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/containersLoading.dart';
-import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/tips.dart';
+import 'package:Prontas/component/videos/videothumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/model/video.dart';
@@ -253,7 +253,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                                     const NeverScrollableScrollPhysics(),
                                                 itemBuilder: (context, index) {
                                                   final video = videos[index];
-                                                  return VideoContent(
+                                                  return VideoThumb(
                                                     urlThumb:
                                                         render["urlbanner"],
                                                     time: video.time.toString(),

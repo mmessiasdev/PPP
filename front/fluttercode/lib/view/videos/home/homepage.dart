@@ -1,14 +1,15 @@
 import 'package:Prontas/component/categorie.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/contentproduct.dart';
-import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/inputdefault.dart';
+import 'package:Prontas/component/videos/playlistthumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/component/widgets/iconlist.dart';
 import 'package:Prontas/controller/auth.dart';
 import 'package:Prontas/model/categoriescareers.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
+import 'package:Prontas/view/videos/coursescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
@@ -124,12 +125,16 @@ class _HomePageCareersState extends State<HomePageCareers> {
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: (context, index) {
                                       var renders = snapshot.data![index];
-                                      return CourseContent(
+                                      return PlaylistThumb(
+                                        widroute: CourseScreen(
+                                            id: renders.id.toString(),
+                                            urlbanner:
+                                                renders.urlbanner.toString()),
                                         urlThumb: renders.urlbanner.toString(),
                                         subtitle: "${renders.desc}",
                                         title: renders.title.toString(),
                                         id: renders.id.toString(),
-                                        time: "",
+                                        terciaryText: "",
                                       );
                                     },
                                   );

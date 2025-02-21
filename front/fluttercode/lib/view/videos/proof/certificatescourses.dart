@@ -1,11 +1,12 @@
 import 'package:Prontas/component/colors.dart';
-import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/padding.dart';
+import 'package:Prontas/component/videos/playlistthumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/component/widgets/plancontainer.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
+import 'package:Prontas/view/videos/coursescreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +72,8 @@ class _CerfiticatesCoursesState extends State<CerfiticatesCourses> {
                             if (renders != null) {
                               return Padding(
                                 padding: defaultPaddingHorizon,
-                                child: CourseContent(
+                                child: PlaylistThumb(
+                                  widroute: CourseScreen(id: renders.id.toString(), urlbanner: renders.urlbanner.toString()),
                                   urlThumb: renders.urlbanner.toString(),
                                   subtitle: "${renders.desc}",
                                   title: renders.title.toString(),

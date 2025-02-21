@@ -9,6 +9,7 @@ import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
+import 'package:Prontas/view/videos/coursescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
@@ -168,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                         onClick: () => _showDraggableScrollableSheet(context)),
                   ),
                   SizedBox(
-                    height: 75,
+                    height: 30,
                   ),
 
                   // Caroulsel --------------
@@ -199,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             options: CarouselOptions(
-                              height: isDesktop ? 350 : 130,
+                              height: (320 * 9) / 16,
                               autoPlay:
                                   true, // Habilita o deslizamento automático
                               autoPlayInterval:
@@ -207,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                               enlargeCenterPage:
                                   true, // Destaque do item central
                               viewportFraction:
-                                  0.8, // Proporção dos itens visíveis
+                                  0.7, // Proporção dos itens visíveis
                             ),
                           );
                         }
@@ -283,8 +284,12 @@ class _HomePageState extends State<HomePage> {
                                   itemBuilder: (context, index) {
                                     var renders = snapshot.data![index];
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(12),
                                       child: PlaylistThumb(
+                                        widroute: CourseScreen(
+                                            id: renders.id.toString(),
+                                            urlbanner:
+                                                renders.urlbanner.toString()),
                                         urlThumb: renders.urlbanner.toString(),
                                         title: renders.title.toString(),
                                         id: renders.id.toString(),

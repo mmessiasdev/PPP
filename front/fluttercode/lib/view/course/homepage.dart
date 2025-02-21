@@ -1,9 +1,11 @@
 import 'package:Prontas/component/containerpaycourse.dart';
 import 'package:Prontas/component/containersLoading.dart';
-import 'package:Prontas/component/coursecontent.dart';
+import 'package:Prontas/component/videos/playlistthumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
+import 'package:Prontas/view/course/coursescreen.dart';
+import 'package:Prontas/view/videos/coursescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
@@ -80,7 +82,7 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: SecudaryColor,
+                        color: lightColor,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
@@ -99,6 +101,9 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                                     'Aulinhas para ajudar você mamãe e papai!',
                                 color: nightColor,
                                 align: TextAlign.start),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           FutureBuilder<List<CoursesModel>>(
                             future:
@@ -121,9 +126,21 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: (context, index) {
                                       var renders = snapshot.data![index];
-                                      return ContainerPayCourse(
-                                          title: renders.title.toString(),
-                                          id: renders.id.toString());
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: PlaylistThumb(
+                                            widroute: CoursePayScreen(
+                                                id: renders.id.toString(),
+                                                urlbanner: renders.urlbanner
+                                                    .toString()),
+                                            urlThumb: renders.urlbanner,
+                                            title: renders.desc.toString(),
+                                            subtitle:
+                                                "Tempo do curso: ${renders.time.toString()} minutos",
+                                            terciaryText:
+                                                renders.price ?? "Grátis",
+                                            id: renders.id.toString()),
+                                      );
                                     },
                                   );
                                 }

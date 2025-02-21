@@ -32,8 +32,8 @@ class BannerList extends StatelessWidget {
         }
       },
       child: Container(
-        width: MediaQuery.of(context).size.width *
-            1, // Ocupar 100% da largura da tela
+        width: 320, // Largura fixa (pode ser ajustada conforme necessário)
+        height: (320 * 9) / 16,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30), // Bordas arredondadas
           boxShadow: [
@@ -47,7 +47,7 @@ class BannerList extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius:
-              BorderRadius.circular(30), // Bordas arredondadas no conteúdo
+              BorderRadius.circular(25), // Bordas arredondadas no conteúdo
           child: Image.network(
             imageUrl,
             fit: BoxFit.cover, // Faz a imagem preencher todo o espaço
