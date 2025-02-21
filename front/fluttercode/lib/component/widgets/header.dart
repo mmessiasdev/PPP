@@ -1,3 +1,4 @@
+import 'package:Prontas/component/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/texts.dart';
@@ -21,30 +22,33 @@ class MainHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                  width: 100,
-                  child: Image.asset('assets/images/logo/image.png')),
-              SizedBox(
-                height: 20,
-              ),
-              // SecundaryText(
-              //     text: title, color: nightColor, align: TextAlign.start)
-            ],
-          ),
-          GestureDetector(
-            onTap: () => onClick!(),
-            child: Icon(
-              icon,
-              size: 25,
+      child: Padding(
+        padding: defaultPadding,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                    width: 70,
+                    height: 70,
+                    child: Image.asset('assets/images/logo/image.png')),
+                SizedBox(
+                  height: 20,
+                ),
+                PrimaryText(
+                    text: title, color: nightColor, align: TextAlign.start)
+              ],
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: () => onClick!(),
+              child: Icon(
+                icon,
+                size: 25,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

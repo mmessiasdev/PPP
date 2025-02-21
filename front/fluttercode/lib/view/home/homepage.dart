@@ -1,8 +1,15 @@
+import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
+import 'package:Prontas/component/buttons/itembuttom.dart';
 import 'package:Prontas/component/containersLoading.dart';
+import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
+import 'package:Prontas/model/carrouselbanners.dart';
+import 'package:Prontas/model/courses.dart';
+import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
@@ -143,152 +150,150 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /// Users who use the same liveID can join the same live streaming.
-  final liveTextCtrl =
-      TextEditingController(text: Random().nextInt(10000).toString());
-
   @override
   Widget build(BuildContext context) {
     return token == null
         ? const SizedBox()
-        : SafeArea(
-            child: SizedBox(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: defaultPaddingHorizon,
-                    child: MainHeader(
-                        title: "Prontas Pra Parir!",
-                        icon: Icons.menu,
-                        onClick: () => _showDraggableScrollableSheet(context)),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () => jumpToLivePage(
-                              liveTextCtrl: liveTextCtrl.text,
-                              context,
-                              liveID: liveTextCtrl.text,
-                              isHost: true,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: PrimaryColor,
-                                      child: CircleAvatar(
-                                        radius: 30,
-                                        child: Icon(Icons.add),
-                                      )),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(username.toString()),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: SubText(
-                                      text: "Iniciar Transmissão",
-                                      align: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Padding(
-                    padding: defaultPadding,
-                    child: LayoutBuilder(builder: (context, constraints) {
-                      final isDesktop = constraints.maxWidth > 800;
+        : LayoutBuilder(builder: (context, constraints) {
+            bool isDesktop = constraints.maxWidth > 800;
 
-                      return Center(
-                        child: SizedBox(
-                          width: isDesktop ? 600 : double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Campo de entrada com validação
-                              InputTextField(
-                                textEditingController: liveTextCtrl,
-                                title:
-                                    "Digite aqui o link do parto que deseja assistir!",
-                                fcolor: nightColor,
-                                fill: true,
-                                textInputType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter
-                                      .digitsOnly, // Apenas números
-                                  LengthLimitingTextInputFormatter(
-                                    13,
-                                  ), // Limitar a 13 caracteres
-                                ],
-                              ),
-
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              Builder(builder: (context) {
-                                return GestureDetector(
-                                  onTap: () => jumpToLivePage(
-                                    liveTextCtrl: liveTextCtrl.text,
-                                    context,
-                                    liveID: liveTextCtrl.text,
-                                    isHost: false,
-                                  ),
-                                  child: DefaultButton(
-                                    text: "Acessar",
-                                    padding: defaultPadding,
-                                    icon: Icons.keyboard_arrow_right_outlined,
-                                    color: PrimaryColor,
-                                    colorText: lightColor,
-                                    // Desabilita o botão se o CPF for menor que 11 caracteres
+            return SafeArea(
+              child: SizedBox(
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: defaultPaddingHorizon,
+                      child: MainHeader(
+                          title: "Prontas",
+                          icon: Icons.menu,
+                          onClick: () =>
+                              _showDraggableScrollableSheet(context)),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder<List<Banners>>(
+                      future: RemoteAuthService()
+                          .getCarrouselBanners(token: token, id: "1"),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return const SizedBox(
+                              height: 50,
+                              child: Center(child: SizedBox()),
+                            );
+                          } else {
+                            return CarouselSlider.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index, realIndex) {
+                                var renders = snapshot.data![index];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  child: BannerList(
+                                    imageUrl: renders.urlimage.toString(),
+                                    redirectUrl: renders.urlroute.toString(),
                                   ),
                                 );
-                              }),
-                            ],
+                              },
+                              options: CarouselOptions(
+                                height: isDesktop ? 350 : 130,
+                                autoPlay:
+                                    true, // Habilita o deslizamento automático
+                                autoPlayInterval:
+                                    const Duration(seconds: 3), // Intervalo
+                                enlargeCenterPage:
+                                    true, // Destaque do item central
+                                viewportFraction:
+                                    0.8, // Proporção dos itens visíveis
+                              ),
+                            );
+                          }
+                        } else if (snapshot.hasError) {
+                          return const Center(child: SizedBox());
+                        }
+                        return SizedBox(
+                          height: 150,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
                           ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 170,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          ItemButtom(
+                            title: "Carterinha",
+                            icon: Icons.add,
+                          ),
+                          ItemButtom(
+                            title: "Carterinha",
+                            icon: Icons.add,
+                          ),
+                          ItemButtom(
+                            title: "Carterinha",
+                            icon: Icons.add,
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        SecundaryText(
+                            text: "Nossas playlists excluivas :)",
+                            color: nightColor,
+                            align: TextAlign.center),
+                        FutureBuilder<List<CoursesModel>>(
+                          future: RemoteAuthService().getCourses(token: token),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              if (snapshot.data!.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                      "Nenhum video disponível no momento."),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    var renders = snapshot.data![index];
+                                    return CourseContent(
+                                      urlThumb: renders.urlbanner.toString(),
+                                      subtitle: "${renders.desc}",
+                                      title: renders.title.toString(),
+                                      id: renders.id.toString(),
+                                      time: "",
+                                    );
+                                  },
+                                );
+                              }
+                            } else if (snapshot.hasError) {
+                              return WidgetLoading();
+                            }
+                            return Expanded(
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: nightColor,
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    }),
-                  ),
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
-  }
-
-  jumpToLivePage(BuildContext context,
-      {required String liveID,
-      required bool isHost,
-      required String liveTextCtrl}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => LivePage(
-                id: id.toString(),
-                codlive: liveTextCtrl,
-                liveID: liveID,
-                isHost: isHost,
-                username: username.toString(),
-              )),
-    );
+            );
+          });
   }
 }

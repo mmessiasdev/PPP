@@ -26,12 +26,12 @@ class PrimaryText extends StatelessWidget {
         overflow: over,
         textAlign: align ?? TextAlign.start,
         style: GoogleFonts.montserrat(
-          fontSize: 30,
+          fontSize: 32,
           textStyle: TextStyle(
               height: 1,
               color: color,
               decoration: TextDecoration.none,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w400),
         ),
       ),
     );
@@ -61,6 +61,41 @@ class SecundaryText extends StatelessWidget {
         textAlign: align,
         style: GoogleFonts.montserrat(
           fontSize: 20,
+          textStyle: TextStyle(
+            height: 1,
+            fontWeight: FontWeight.w500,
+            color: color,
+            decoration: TextDecoration.none,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TerciaryText extends StatelessWidget {
+  TerciaryText(
+      {required this.text,
+      required this.color,
+      required this.align,
+      this.maxl,
+      this.over});
+  String text;
+  Color color;
+  TextAlign align;
+  TextOverflow? over;
+  int? maxl;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Text(
+        text,
+        maxLines: maxl,
+        overflow: over,
+        textAlign: align,
+        style: GoogleFonts.montserrat(
+          fontSize: 16,
           textStyle: TextStyle(
             height: 1,
             fontWeight: FontWeight.w500,
