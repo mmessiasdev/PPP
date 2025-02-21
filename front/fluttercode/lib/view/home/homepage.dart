@@ -2,8 +2,8 @@ import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/buttons/itembuttom.dart';
 import 'package:Prontas/component/containersLoading.dart';
-import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/inputdefault.dart';
+import 'package:Prontas/component/videos/playlistthumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
@@ -158,96 +158,112 @@ class _HomePageState extends State<HomePage> {
             bool isDesktop = constraints.maxWidth > 800;
 
             return SafeArea(
-              child: SizedBox(
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: defaultPaddingHorizon,
-                      child: MainHeader(
-                          title: "Prontas",
-                          icon: Icons.menu,
-                          onClick: () =>
-                              _showDraggableScrollableSheet(context)),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    FutureBuilder<List<Banners>>(
-                      future: RemoteAuthService()
-                          .getCarrouselBanners(token: token, id: "1"),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
-                          if (snapshot.data!.isEmpty) {
-                            return const SizedBox(
-                              height: 50,
-                              child: Center(child: SizedBox()),
-                            );
-                          } else {
-                            return CarouselSlider.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index, realIndex) {
-                                var renders = snapshot.data![index];
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: BannerList(
-                                    imageUrl: renders.urlimage.toString(),
-                                    redirectUrl: renders.urlroute.toString(),
-                                  ),
-                                );
-                              },
-                              options: CarouselOptions(
-                                height: isDesktop ? 350 : 130,
-                                autoPlay:
-                                    true, // Habilita o deslizamento automático
-                                autoPlayInterval:
-                                    const Duration(seconds: 3), // Intervalo
-                                enlargeCenterPage:
-                                    true, // Destaque do item central
-                                viewportFraction:
-                                    0.8, // Proporção dos itens visíveis
-                              ),
-                            );
-                          }
-                        } else if (snapshot.hasError) {
-                          return const Center(child: SizedBox());
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: defaultPaddingHorizon,
+                    child: MainHeader(
+                        title: "Prontas",
+                        icon: Icons.menu,
+                        onClick: () => _showDraggableScrollableSheet(context)),
+                  ),
+                  SizedBox(
+                    height: 75,
+                  ),
+
+                  // Caroulsel --------------
+
+                  FutureBuilder<List<Banners>>(
+                    future: RemoteAuthService()
+                        .getCarrouselBanners(token: token, id: "1"),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        if (snapshot.data!.isEmpty) {
+                          return const SizedBox(
+                            height: 50,
+                            child: Center(child: SizedBox()),
+                          );
+                        } else {
+                          return CarouselSlider.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index, realIndex) {
+                              var renders = snapshot.data![index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: BannerList(
+                                  imageUrl: renders.urlimage.toString(),
+                                  redirectUrl: renders.urlroute.toString(),
+                                ),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: isDesktop ? 350 : 130,
+                              autoPlay:
+                                  true, // Habilita o deslizamento automático
+                              autoPlayInterval:
+                                  const Duration(seconds: 3), // Intervalo
+                              enlargeCenterPage:
+                                  true, // Destaque do item central
+                              viewportFraction:
+                                  0.8, // Proporção dos itens visíveis
+                            ),
+                          );
                         }
-                        return SizedBox(
-                          height: 150,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 170,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          ItemButtom(
-                            title: "Carterinha",
-                            icon: Icons.add,
-                          ),
-                          ItemButtom(
-                            title: "Carterinha",
-                            icon: Icons.add,
-                          ),
-                          ItemButtom(
-                            title: "Carterinha",
-                            icon: Icons.add,
-                          )
-                        ],
+                      } else if (snapshot.hasError) {
+                        return const Center(child: SizedBox());
+                      }
+                      return SizedBox(
+                        height: 150,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 75,
+                  ),
+
+                  // Buttons -------------------
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ItemButtom(
+                        title: "Carterinha",
+                        icon: Icons.add,
                       ),
-                    ),
-                    Column(
-                      children: [
-                        SecundaryText(
-                            text: "Nossas playlists excluivas :)",
-                            color: nightColor,
-                            align: TextAlign.center),
-                        FutureBuilder<List<CoursesModel>>(
+                      ItemButtom(
+                        title: "Carterinha",
+                        icon: Icons.add,
+                      ),
+                      ItemButtom(
+                        title: "Carterinha",
+                        icon: Icons.add,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 75,
+                  ),
+
+                  // Playlist ----------------------
+                  Column(
+                    children: [
+                      SecundaryText(
+                        text: "Nossas playlists excluivas :)",
+                        color: nightColor,
+                        align: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FutureBuilder<List<CoursesModel>>(
                           future: RemoteAuthService().getCourses(token: token),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
@@ -266,12 +282,13 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, index) {
                                     var renders = snapshot.data![index];
-                                    return CourseContent(
-                                      urlThumb: renders.urlbanner.toString(),
-                                      subtitle: "${renders.desc}",
-                                      title: renders.title.toString(),
-                                      id: renders.id.toString(),
-                                      time: "",
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: PlaylistThumb(
+                                        urlThumb: renders.urlbanner.toString(),
+                                        title: renders.title.toString(),
+                                        id: renders.id.toString(),
+                                      ),
                                     );
                                   },
                                 );
@@ -288,10 +305,10 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             );
           });

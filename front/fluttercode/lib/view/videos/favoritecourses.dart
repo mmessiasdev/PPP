@@ -1,6 +1,6 @@
 import 'package:Prontas/component/colors.dart';
-import 'package:Prontas/component/coursecontent.dart';
 import 'package:Prontas/component/padding.dart';
+import 'package:Prontas/component/videos/playlistthumb.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/component/widgets/plancontainer.dart';
 import 'package:Prontas/model/courses.dart';
@@ -71,7 +71,7 @@ class _OurCoursesState extends State<OurCourses> {
                             if (renders != null) {
                               return Padding(
                                 padding: defaultPaddingHorizon,
-                                child: CourseContent(
+                                child: PlaylistThumb(
                                   urlThumb: renders.urlbanner.toString(),
                                   subtitle: "${renders.desc}",
                                   title: renders.title.toString(),
