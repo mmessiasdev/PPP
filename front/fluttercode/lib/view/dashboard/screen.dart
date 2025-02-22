@@ -1,3 +1,4 @@
+import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/view/account/account.dart';
 import 'package:Prontas/view/account/auth/signin.dart';
@@ -41,89 +42,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: SizedBox(
-          child: GetBuilder<DashboardController>(
-        builder: (controller) => token == "null"
-            ? SignInScreen()
-            : Scaffold(
-                backgroundColor: lightColor,
-                body: SafeArea(
-                  child: IndexedStack(
-                    index: controller.tabIndex,
-                    children: [
-                      HomePage(),
-                      HomePageClub(),
-                      HomePageCoursesScreen(),
-                      PlaylistsHomePage(),
-                      PreNatalScreen(),
-                      PrenatalTimelineScreen(),
-                      LiveHomePage()
-                    ],
-                  ),
-                ),
-                bottomNavigationBar: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: lightColor,
-                  ),
-                  child: SnakeNavigationBar.color(
-                    snakeShape: SnakeShape.rectangle,
-                    backgroundColor: PrimaryColor,
-                    unselectedItemColor: nightColor,
-                    showUnselectedLabels: true,
-                    selectedItemColor: nightColor,
-                    snakeViewColor: SecudaryColor,
-                    currentIndex: controller.tabIndex,
-                    onTap: (val) {
-                      controller.updateIndex(val);
-                    },
-                    items: const [
-                      BottomNavigationBarItem(
-                          icon: Icon(
-                        Icons.video_call,
-                        size: 30,
-                      )),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.favorite,
-                          size: 30,
-                        ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.play_arrow,
-                          size: 30,
-                        ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.search_sharp,
-                          size: 30,
-                        ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.bedroom_baby,
-                          size: 30,
-                        ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.timelapse,
-                          size: 30,
-                        ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.circle,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
+        child: GetBuilder<DashboardController>(
+      builder: (controller) => token == "null"
+          ? SignInScreen()
+          : Scaffold(
+              backgroundColor: lightColor,
+              body: SafeArea(
+                child: IndexedStack(
+                  index: controller.tabIndex,
+                  children: [HomePage(), CoursesHomePage(), LiveHomePage()],
                 ),
               ),
-      )),
-    );
+              bottomNavigationBar: SnakeNavigationBar.color(
+                snakeShape: SnakeShape.rectangle,
+                backgroundColor: PrimaryColor,
+                unselectedItemColor: lightColor,
+                showUnselectedLabels: true,
+                selectedItemColor: lightColor,
+                snakeViewColor: SecudaryColor,
+                currentIndex: controller.tabIndex,
+                onTap: (val) {
+                  controller.updateIndex(val);
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                    Icons.home,
+                    size: 30,
+                  )),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 30,
+                    ),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.circle_outlined,
+                      size: 30,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    ));
   }
 }

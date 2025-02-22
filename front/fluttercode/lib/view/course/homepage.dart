@@ -13,14 +13,14 @@ import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:http/http.dart' as http;
 
-class HomePageCoursesScreen extends StatefulWidget {
-  const HomePageCoursesScreen({super.key});
+class CoursesHomePage extends StatefulWidget {
+  const CoursesHomePage({super.key});
 
   @override
-  State<HomePageCoursesScreen> createState() => _HomePageCoursesScreenState();
+  State<CoursesHomePage> createState() => _CoursesHomePageState();
 }
 
-class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
+class _CoursesHomePageState extends State<CoursesHomePage> {
   var client = http.Client();
   String? token;
   String? fullname;

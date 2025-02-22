@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             Padding(
               padding: defaultPaddingHorizon,
-              child: MainHeader(title: "Connect Prontas", onClick: () {}),
+              child: MainHeader(title: "Prontas", onClick: () {}),
             ),
             Expanded(
               child: PageView.builder(

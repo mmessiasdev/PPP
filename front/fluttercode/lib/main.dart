@@ -14,18 +14,10 @@ import 'package:flutter/services.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await dotenv.load(fileName: ".env");
-  // Bloqueando a rotação da tela para o modo retrato (portrait)
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Retrato normal
     DeviceOrientation.portraitDown // Retrato invertido (se necessário)
   ]);
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-
-  // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  // OneSignal.initialize("f49b725b-18ff-4f6e-b7b1-9bcadb116e48");
-  // OneSignal.Notifications.requestPermission(true);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: lightColor, // cor da barra superior
