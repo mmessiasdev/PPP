@@ -10,23 +10,23 @@ import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/model/video.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
-import 'package:Prontas/view/videos/proof/examsscreen.dart';
+import 'package:Prontas/view/course/proof/examsscreen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 
-class CourseScreen extends StatefulWidget {
-  CourseScreen({super.key, required this.id, required this.urlbanner});
+class PlaylistScreen extends StatefulWidget {
+  PlaylistScreen({super.key, required this.id, required this.urlbanner});
   String id;
   String urlbanner;
 
   @override
-  State<CourseScreen> createState() => _CourseScreenState();
+  State<PlaylistScreen> createState() => _PlaylistScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen> {
+class _PlaylistScreenState extends State<PlaylistScreen> {
   var email;
   var fullname;
   var cpf;

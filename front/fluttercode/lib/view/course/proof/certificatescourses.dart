@@ -6,18 +6,19 @@ import 'package:Prontas/component/widgets/plancontainer.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
-import 'package:Prontas/view/videos/coursescreen.dart';
+import 'package:Prontas/view/course/coursescreen.dart';
+import 'package:Prontas/view/freeplaylist/coursescreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class OurCourses extends StatefulWidget {
-  const OurCourses({super.key});
+class CerfiticatesCourses extends StatefulWidget {
+  const CerfiticatesCourses({super.key});
 
   @override
-  State<OurCourses> createState() => _OurCoursesState();
+  State<CerfiticatesCourses> createState() => _CerfiticatesCoursesState();
 }
 
-class _OurCoursesState extends State<OurCourses> {
+class _CerfiticatesCoursesState extends State<CerfiticatesCourses> {
   var token;
   var profileId;
 
@@ -47,7 +48,7 @@ class _OurCoursesState extends State<OurCourses> {
             Padding(
               padding: defaultPaddingHorizon,
               child: MainHeader(
-                  title: "Favoritos",
+                  title: "Certificados",
                   maxl: 1,
                   icon: Icons.arrow_back_ios,
                   onClick: () {
@@ -59,7 +60,7 @@ class _OurCoursesState extends State<OurCourses> {
             ),
             Center(
               child: FutureBuilder<List<CoursesModel>>(
-                  future: RemoteAuthService().getFavoriteCourses(
+                  future: RemoteAuthService().getCerfiticatesCourses(
                       token: token, profileId: profileId.toString()),
                   builder: (context, planSnapshot) {
                     if (planSnapshot.hasData) {
@@ -73,9 +74,7 @@ class _OurCoursesState extends State<OurCourses> {
                               return Padding(
                                 padding: defaultPaddingHorizon,
                                 child: PlaylistThumb(
-                                  widroute: CourseScreen(
-                                      id: renders.id.toString(),
-                                      urlbanner: renders.urlbanner.toString()),
+                                  widroute: CoursePayScreen(id: renders.id.toString(), urlbanner: renders.urlbanner.toString()),
                                   urlThumb: renders.urlbanner.toString(),
                                   subtitle: "${renders.desc}",
                                   title: renders.title.toString(),

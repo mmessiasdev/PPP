@@ -9,7 +9,7 @@ import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
-import 'package:Prontas/view/videos/coursescreen.dart';
+import 'package:Prontas/view/freeplaylist/coursescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                                     return Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: PlaylistThumb(
-                                        widroute: CourseScreen(
+                                        widroute: PlaylistScreen(
                                             id: renders.id.toString(),
                                             urlbanner:
                                                 renders.urlbanner.toString()),

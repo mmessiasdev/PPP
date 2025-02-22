@@ -1,6 +1,6 @@
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/texts.dart';
-import 'package:Prontas/view/videos/video/videoscreen.dart';
+import 'package:Prontas/view/video/videoscreen.dart';
 import 'package:flutter/material.dart';
 
 class VideoThumb extends StatelessWidget {

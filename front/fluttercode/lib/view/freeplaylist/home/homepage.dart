@@ -13,14 +13,14 @@ import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:http/http.dart' as http;
 
-class HomePageCoursesScreen extends StatefulWidget {
-  const HomePageCoursesScreen({super.key});
+class PlaylistsHomePage extends StatefulWidget {
+  const PlaylistsHomePage({super.key});
 
   @override
-  State<HomePageCoursesScreen> createState() => _HomePageCoursesScreenState();
+  State<PlaylistsHomePage> createState() => _PlaylistsHomePageState();
 }
 
-class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
+class _PlaylistsHomePageState extends State<PlaylistsHomePage> {
   var client = http.Client();
   String? token;
   String? fullname;
@@ -71,7 +71,8 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                         Padding(
                           padding: defaultPadding,
                           child: SecundaryText(
-                            text: 'Aulinhas para ajudar você mamãe e papai!',
+                            text:
+                                'Nossos videos recomendados para todo papai e toda mamãe!',
                             color: nightColor,
                             align: TextAlign.start,
                           ),
@@ -107,15 +108,12 @@ class _HomePageCoursesScreenState extends State<HomePageCoursesScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: PlaylistThumb(
-                                      widroute: CoursePayScreen(
+                                      widroute: PlaylistScreen(
                                         id: course.id.toString(),
                                         urlbanner: course.urlbanner.toString(),
                                       ),
                                       urlThumb: course.urlbanner,
-                                      title: course.desc.toString(),
-                                      subtitle:
-                                          "Tempo do curso: ${course.time.toString()} minutos",
-                                      terciaryText: course.price ?? "Grátis",
+                                      title: course.title.toString(),
                                       id: course.id.toString(),
                                     ),
                                   );

@@ -11,7 +11,7 @@ import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/model/video.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
-import 'package:Prontas/view/videos/proof/examsscreen.dart';
+import 'package:Prontas/view/course/proof/examsscreen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';

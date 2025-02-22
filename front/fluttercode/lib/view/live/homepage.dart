@@ -15,14 +15,14 @@ import 'dart:math';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-class HomePageLive extends StatefulWidget {
-  const HomePageLive({super.key});
+class LiveHomePage extends StatefulWidget {
+  const LiveHomePage({super.key});
 
   @override
-  State<HomePageLive> createState() => _HomePageLiveState();
+  State<LiveHomePage> createState() => _LiveHomePageState();
 }
 
-class _HomePageLiveState extends State<HomePageLive> {
+class _LiveHomePageState extends State<LiveHomePage> {
   var client = http.Client();
 
   String screen = "online";
@@ -76,73 +76,6 @@ class _HomePageLiveState extends State<HomePageLive> {
     );
   }
 
-  void _showDraggableScrollableSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          expand: false,
-          builder: (context, scrollController) {
-            return Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: defaultPadding,
-                  child: ListView(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: SecudaryColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: GestureDetector(
-                          onTap: () {
-                            (Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AccountScreen(
-                                        buttom: true,
-                                      )),
-                            ));
-                          },
-                          child: Padding(
-                            padding: defaultPadding,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.person),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  children: [
-                                    SubText(
-                                      text: 'Meu Perfil',
-                                      align: TextAlign.start,
-                                      color: nightColor,
-                                    ),
-                                    SubTextSized(
-                                      text:
-                                          'Verificar informações e sair da conta',
-                                      size: 10,
-                                      fontweight: FontWeight.w600,
-                                      color: OffColor,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ));
-          },
-        );
-      },
-    );
-  }
-
   /// Users who use the same liveID can join the same live streaming.
   final liveTextCtrl =
       TextEditingController(text: Random().nextInt(10000).toString());
@@ -158,12 +91,66 @@ class _HomePageLiveState extends State<HomePageLive> {
                   Padding(
                     padding: defaultPaddingHorizon,
                     child: MainHeader(
-                        title: "Prontas Pra Parir!",
-                        icon: Icons.menu,
-                        onClick: () => _showDraggableScrollableSheet(context)),
+                      title: "Prontas Pra Parir!",
+                      icon: Icons.menu,
+                    ),
                   ),
                   SizedBox(
                     height: 5,
+                  ),
+                  Padding(
+                    padding: defaultPadding,
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      final isDesktop = constraints.maxWidth > 800;
+                      return Center(
+                        child: SizedBox(
+                          width: isDesktop ? 600 : double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Campo de entrada com validação
+
+                              InputTextField(
+                                textEditingController: liveTextCtrl,
+                                title:
+                                    "Digite aqui o link do parto que deseja assistir!",
+                                fcolor: nightColor,
+                                fill: true,
+                                textInputType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter
+                                      .digitsOnly, // Apenas números
+                                  LengthLimitingTextInputFormatter(
+                                    13,
+                                  ), // Limitar a 13 caracteres
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Builder(builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => jumpToLivePage(
+                                    liveTextCtrl: liveTextCtrl.text,
+                                    context,
+                                    liveID: liveTextCtrl.text,
+                                    isHost: false,
+                                  ),
+                                  child: DefaultButton(
+                                    text: "Acessar",
+                                    padding: defaultPadding,
+                                    icon: Icons.keyboard_arrow_right_outlined,
+                                    color: PrimaryColor,
+                                    colorText: lightColor,
+                                    // Desabilita o botão se o CPF for menor que 11 caracteres
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -213,59 +200,6 @@ class _HomePageLiveState extends State<HomePageLive> {
                   ),
                   SizedBox(
                     height: 100,
-                  ),
-                  Padding(
-                    padding: defaultPadding,
-                    child: LayoutBuilder(builder: (context, constraints) {
-                      final isDesktop = constraints.maxWidth > 800;
-                      return Center(
-                        child: SizedBox(
-                          width: isDesktop ? 600 : double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Campo de entrada com validação
-                              InputTextField(
-                                textEditingController: liveTextCtrl,
-                                title:
-                                    "Digite aqui o link do parto que deseja assistir!",
-                                fcolor: nightColor,
-                                fill: true,
-                                textInputType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter
-                                      .digitsOnly, // Apenas números
-                                  LengthLimitingTextInputFormatter(
-                                    13,
-                                  ), // Limitar a 13 caracteres
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              Builder(builder: (context) {
-                                return GestureDetector(
-                                  onTap: () => jumpToLivePage(
-                                    liveTextCtrl: liveTextCtrl.text,
-                                    context,
-                                    liveID: liveTextCtrl.text,
-                                    isHost: false,
-                                  ),
-                                  child: DefaultButton(
-                                    text: "Acessar",
-                                    padding: defaultPadding,
-                                    icon: Icons.keyboard_arrow_right_outlined,
-                                    color: PrimaryColor,
-                                    colorText: lightColor,
-                                    // Desabilita o botão se o CPF for menor que 11 caracteres
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
                   ),
                 ],
               ),

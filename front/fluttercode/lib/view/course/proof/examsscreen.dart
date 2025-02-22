@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/defaultButton.dart';
 import 'package:Prontas/service/local/auth.dart';
-import 'package:Prontas/view/videos/proof/resultexam.dart';
+import 'package:Prontas/view/course/proof/resultexam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:Prontas/component/colors.dart';
