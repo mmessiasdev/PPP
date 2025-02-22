@@ -35,10 +35,16 @@ class ItemButtom extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              SubText(text: title ?? "", align: TextAlign.center),
+              title != null
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SubText(text: title ?? "", align: TextAlign.center),
+                      ],
+                    )
+                  : SizedBox(),
             ],
           ),
         ),

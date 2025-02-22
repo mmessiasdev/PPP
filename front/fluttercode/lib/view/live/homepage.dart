@@ -1,8 +1,13 @@
+import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
+import 'package:Prontas/component/buttons/itembuttom.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
+import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/padding.dart';
@@ -14,6 +19,7 @@ import 'package:Prontas/view/live/livepage.dart';
 import 'dart:math';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:Prontas/model/carrouselbanners.dart';
 
 class LiveHomePage extends StatefulWidget {
   const LiveHomePage({super.key});
@@ -91,112 +97,163 @@ class _LiveHomePageState extends State<LiveHomePage> {
                   Padding(
                     padding: defaultPaddingHorizon,
                     child: MainHeader(
-                      title: "Prontas Pra Parir!",
+                      title: "Prontas",
                       icon: Icons.menu,
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 30,
                   ),
-                  Padding(
-                    padding: defaultPadding,
-                    child: LayoutBuilder(builder: (context, constraints) {
-                      final isDesktop = constraints.maxWidth > 800;
-                      return Center(
-                        child: SizedBox(
-                          width: isDesktop ? 600 : double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Campo de entrada com validação
-
-                              InputTextField(
-                                textEditingController: liveTextCtrl,
-                                title:
-                                    "Digite aqui o link do parto que deseja assistir!",
-                                fcolor: nightColor,
-                                fill: true,
-                                textInputType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter
-                                      .digitsOnly, // Apenas números
-                                  LengthLimitingTextInputFormatter(
-                                    13,
-                                  ), // Limitar a 13 caracteres
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              Builder(builder: (context) {
-                                return GestureDetector(
-                                  onTap: () => jumpToLivePage(
-                                    liveTextCtrl: liveTextCtrl.text,
-                                    context,
-                                    liveID: liveTextCtrl.text,
-                                    isHost: false,
-                                  ),
-                                  child: DefaultButton(
-                                    text: "Acessar",
-                                    padding: defaultPadding,
-                                    icon: Icons.keyboard_arrow_right_outlined,
-                                    color: PrimaryColor,
-                                    colorText: lightColor,
-                                    // Desabilita o botão se o CPF for menor que 11 caracteres
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () => jumpToLivePage(
-                              liveTextCtrl: liveTextCtrl.text,
-                              context,
-                              liveID: liveTextCtrl.text,
-                              isHost: true,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                  LayoutBuilder(builder: (context, constraints) {
+                    final isDesktop = constraints.maxWidth > 800;
+                    return Center(
+                      child: SizedBox(
+                        width: isDesktop ? 600 : double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Campo de entrada com validação
+                            Padding(
+                              padding: defaultPadding,
                               child: Column(
                                 children: [
-                                  CircleAvatar(
-                                      radius: 35,
-                                      backgroundColor: PrimaryColor,
-                                      child: const CircleAvatar(
-                                        radius: 30,
-                                        child: Icon(Icons.add),
-                                      )),
+                                  SecundaryText(
+                                      text:
+                                          "Digite o código do parto qe deseja assistir",
+                                      color: nightColor,
+                                      align: TextAlign.center),
                                   SizedBox(
-                                    height: 10,
+                                    height: 25,
                                   ),
-                                  Text(username.toString()),
+                                  InputTextField(
+                                    textEditingController: liveTextCtrl,
+                                    title: "",
+                                    fcolor: nightColor,
+                                    fill: true,
+                                    textInputType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter
+                                          .digitsOnly, // Apenas números
+                                      LengthLimitingTextInputFormatter(
+                                        13,
+                                      ), // Limitar a 13 caracteres
+                                    ],
+                                  ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 30,
                                   ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: SubText(
-                                      text: "Iniciar Transmissão",
-                                      align: TextAlign.center,
-                                    ),
-                                  ),
+                                  Builder(builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () => jumpToLivePage(
+                                        liveTextCtrl: liveTextCtrl.text,
+                                        context,
+                                        liveID: liveTextCtrl.text,
+                                        isHost: false,
+                                      ),
+                                      child: DefaultButton(
+                                        text: "Acessar",
+                                        padding: defaultPadding,
+                                        icon:
+                                            Icons.keyboard_arrow_right_outlined,
+                                        color: SecudaryColor,
+                                        colorText: lightColor,
+                                        // Desabilita o botão se o CPF for menor que 11 caracteres
+                                      ),
+                                    );
+                                  }),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+
+                            SizedBox(
+                              height: 50,
+                            ),
+
+                            // Caroulsel --------------
+
+                            FutureBuilder<List<Banners>>(
+                              future: RemoteAuthService()
+                                  .getCarrouselBanners(token: token, id: "1"),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  if (snapshot.data!.isEmpty) {
+                                    return const SizedBox(
+                                      height: 50,
+                                      child: Center(child: SizedBox()),
+                                    );
+                                  } else {
+                                    return CarouselSlider.builder(
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index, realIndex) {
+                                        var renders = snapshot.data![index];
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 15),
+                                          child: BannerList(
+                                            imageUrl:
+                                                renders.urlimage.toString(),
+                                            redirectUrl:
+                                                renders.urlroute.toString(),
+                                          ),
+                                        );
+                                      },
+                                      options: CarouselOptions(
+                                        height: (320 * 9) / 16,
+                                        autoPlay:
+                                            true, // Habilita o deslizamento automático
+                                        autoPlayInterval: const Duration(
+                                            seconds: 3), // Intervalo
+                                        enlargeCenterPage:
+                                            true, // Destaque do item central
+                                        viewportFraction:
+                                            0.7, // Proporção dos itens visíveis
+                                      ),
+                                    );
+                                  }
+                                } else if (snapshot.hasError) {
+                                  return const Center(child: SizedBox());
+                                }
+                                return SizedBox(
+                                  height: 150,
+                                  child: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    );
+                  }),
+                  Padding(
+                    padding: defaultPadding,
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () => jumpToLivePage(
+                          liveTextCtrl: liveTextCtrl.text,
+                          context,
+                          liveID: liveTextCtrl.text,
+                          isHost: true,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ItemButtom(icon: Icons.circle_outlined),
+                            SubText(
+                              text: "Iniciar a transmissão do parto.",
+                              align: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 100,

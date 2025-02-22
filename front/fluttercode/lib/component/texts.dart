@@ -183,7 +183,6 @@ class SubText extends StatelessWidget {
           fontWeight: FontWeight.w600,
           textStyle: TextStyle(
             color: nightColor,
-            height: 1,
             decoration: TextDecoration.none,
           ),
         ),
