@@ -91,7 +91,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                       width:
                                           MediaQuery.of(context).size.width * 1,
                                       decoration: BoxDecoration(
-                                        color: PrimaryColor,
+                                        color: SecudaryColor,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Padding(

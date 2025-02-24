@@ -64,7 +64,7 @@ class ContentProduct extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: FourtyColor,
+                        color: SecudaryColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Padding(
@@ -94,8 +94,6 @@ class ContentProduct extends StatelessWidget {
     );
   }
 }
-
-
 
 // import 'package:Prontas/component/colors.dart';
 // import 'package:Prontas/component/texts.dart';

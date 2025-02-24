@@ -9,8 +9,10 @@ import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
+import 'package:Prontas/view/club/home/homepage.dart';
 import 'package:Prontas/view/freeplaylist/coursescreen.dart';
 import 'package:Prontas/view/prenatalwallet/homescreen.dart';
+import 'package:Prontas/view/prenatalwallet/timelineprenatal.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
@@ -248,14 +250,34 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.add,
                         ),
                       ),
-                      ItemButtom(
-                        title: "Carterinha",
-                        icon: Icons.add,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PrenatalTimelineScreen(),
+                            ),
+                          );
+                        },
+                        child: ItemButtom(
+                          title: "Jornada",
+                          icon: Icons.map_sharp,
+                        ),
                       ),
-                      ItemButtom(
-                        title: "Carterinha",
-                        icon: Icons.add,
-                      )
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePageClub(),
+                            ),
+                          );
+                        },
+                        child: ItemButtom(
+                          title: "Lojinha",
+                          icon: Icons.storefront,
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(

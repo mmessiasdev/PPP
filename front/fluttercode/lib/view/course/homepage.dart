@@ -46,6 +46,7 @@ class _CoursesHomePageState extends State<CoursesHomePage> {
     return token == null
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
+            backgroundColor: lightColor,
             body: SafeArea(
               child: ListView(
                 children: [

@@ -78,7 +78,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.circle_outlined,
+                      Icons.trip_origin,
                       size: 30,
                     ),
                   ),

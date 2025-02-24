@@ -137,7 +137,249 @@ class _HomePageClubState extends State<HomePageClub> {
                                   //   child: const SearchClubInput(),
                                   // ),
                                   const SizedBox(
-                                    height: 15,
+                                    height: 45,
+                                  ),
+
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Padding(
+                                        padding: defaultPaddingHorizon,
+                                        child: const ListTitle(
+                                            title: "Cashback em lojas!"),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            250, // Altura definida para o ListView
+                                        child: FutureBuilder<List<StoresModel>>(
+                                          future: RemoteAuthService()
+                                              .getStores(token: token),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                    ConnectionState.done &&
+                                                snapshot.hasData) {
+                                              if (snapshot.data!.isEmpty) {
+                                                return const Center(
+                                                  child: Text(
+                                                      "Nenhuma loja disponível no momento."),
+                                                );
+                                              } else {
+                                                return ListView.builder(
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount:
+                                                      snapshot.data!.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var renders =
+                                                        snapshot.data![index];
+                                                    return ContentProduct(
+                                                      urlThumb: renders.logourl
+                                                          .toString(),
+                                                      drules:
+                                                          "${renders.percentcashback}% de cashback",
+                                                      title: renders.name
+                                                          .toString(),
+                                                      id: renders.id.toString(),
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            } else if (snapshot.hasError) {
+                                              return WidgetLoading();
+                                            }
+                                            return SizedBox(
+                                              height: 300,
+                                              child: Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: nightColor,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      // Padding(
+                                      //   padding:
+                                      //       defaultPaddingHorizon,
+                                      //   child: const ListTitle(
+                                      //       title: "Lojas locais"),
+                                      // ),
+                                      // FutureBuilder<
+                                      //     List<LocalStores>>(
+                                      //   future: RemoteAuthService()
+                                      //       .getLocalStores(
+                                      //           token: token),
+                                      //   builder: (context, snapshot) {
+                                      //     if (snapshot.connectionState ==
+                                      //             ConnectionState
+                                      //                 .done &&
+                                      //         snapshot.hasData) {
+                                      //       if (snapshot
+                                      //           .data!.isEmpty) {
+                                      //         return const SizedBox(
+                                      //           height: 200,
+                                      //           child: Center(
+                                      //             child: Text(
+                                      //                 "Nenhuma loja disponível no momento."),
+                                      //           ),
+                                      //         );
+                                      //       } else {
+                                      //         return ListView.builder(
+                                      //           shrinkWrap: true,
+                                      //           physics:
+                                      //               const NeverScrollableScrollPhysics(),
+                                      //           itemCount: snapshot
+                                      //               .data!.length,
+                                      //           itemBuilder:
+                                      //               (context, index) {
+                                      //             var renders =
+                                      //                 snapshot.data![
+                                      //                     index];
+                                      //             print(renders
+                                      //                 .benefit);
+                                      //             // Verificação se o idPlan não é nulo
+                                      //             return Padding(
+                                      //               padding:
+                                      //                   defaultPadding,
+                                      //               child:
+                                      //                   ContentLocalProduct(
+                                      //                 urlLogo: renders
+                                      //                     .urllogo
+                                      //                     .toString(),
+                                      //                 benefit: renders
+                                      //                     .benefit
+                                      //                     .toString(),
+                                      //                 title: renders
+                                      //                     .name
+                                      //                     .toString(),
+                                      //                 id: renders.id
+                                      //                     .toString(),
+                                      //               ),
+                                      //             );
+                                      //           },
+                                      //         );
+                                      //       }
+                                      //     } else if (snapshot
+                                      //         .hasError) {
+                                      //       return WidgetLoading();
+                                      //     }
+                                      //     return SizedBox(
+                                      //       height: 300,
+                                      //       child: Center(
+                                      //         child:
+                                      //             CircularProgressIndicator(
+                                      //           color: nightColor,
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      // ),
+                                      // Padding(
+                                      //   padding: defaultPadding,
+                                      //   child: GestureDetector(
+                                      //     onTap: () {
+                                      //       Navigator.push(
+                                      //         context,
+                                      //         MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               LocalStoreListScreen(),
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //     child: SubTextSized(
+                                      //       text: "Ver mais",
+                                      //       align: TextAlign.center,
+                                      //       fontweight:
+                                      //           FontWeight.w600,
+                                      //       size: 12,
+                                      //       tdeco: TextDecoration
+                                      //           .underline,
+                                      //     ),
+                                      //   ),
+                                      // ),
+
+                                      // Padding(
+                                      //   padding:
+                                      //       defaultPaddingHorizon,
+                                      //   child: const ListTitle(
+                                      //       title: "Eletrônicos"),
+                                      // ),
+                                      // SizedBox(
+                                      //   height:
+                                      //       250, // Altura definida para o ListView
+                                      //   child: FutureBuilder<
+                                      //       List<OnlineStores>>(
+                                      //     future: RemoteAuthService()
+                                      //         .getOneCategoryStories(
+                                      //             token: token,
+                                      //             id: '2'),
+                                      //     builder:
+                                      //         (context, snapshot) {
+                                      //       if (snapshot.connectionState ==
+                                      //               ConnectionState
+                                      //                   .done &&
+                                      //           snapshot.hasData) {
+                                      //         if (snapshot
+                                      //             .data!.isEmpty) {
+                                      //           return const Center(
+                                      //             child: Text(
+                                      //                 "Nenhuma loja disponível no momento."),
+                                      //           );
+                                      //         } else {
+                                      //           return ListView
+                                      //               .builder(
+                                      //             shrinkWrap: true,
+                                      //             scrollDirection:
+                                      //                 Axis.horizontal,
+                                      //             physics:
+                                      //                 const NeverScrollableScrollPhysics(),
+                                      //             itemCount: snapshot
+                                      //                 .data!.length,
+                                      //             itemBuilder:
+                                      //                 (context,
+                                      //                     index) {
+                                      //               var renders =
+                                      //                   snapshot.data![
+                                      //                       index];
+                                      //               return ContentProduct(
+                                      //                 urlLogo: renders
+                                      //                     .logourl
+                                      //                     .toString(),
+                                      //                 drules:
+                                      //                     "${renders.percentcashback}% de cashback",
+                                      //                 title: renders
+                                      //                     .name
+                                      //                     .toString(),
+                                      //                 id: renders.id
+                                      //                     .toString(),
+                                      //               );
+                                      //             },
+                                      //           );
+                                      //         }
+                                      //       } else if (snapshot
+                                      //           .hasError) {
+                                      //         return WidgetLoading();
+                                      //       }
+                                      //       return SizedBox(
+                                      //         height: 300,
+                                      //         child: Center(
+                                      //           child:
+                                      //               CircularProgressIndicator(
+                                      //             color: nightColor,
+                                      //           ),
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //   ),
+                                      // ),
+                                    ],
                                   ),
                                   FutureBuilder<List<Banners>>(
                                     future: RemoteAuthService()
@@ -172,7 +414,7 @@ class _HomePageClubState extends State<HomePageClub> {
                                               );
                                             },
                                             options: CarouselOptions(
-                                              height: isDesktop ? 350 : 130,
+                                              height: (320 * 9) / 16,
                                               autoPlay:
                                                   true, // Habilita o deslizamento automático
                                               autoPlayInterval: const Duration(
@@ -180,7 +422,7 @@ class _HomePageClubState extends State<HomePageClub> {
                                               enlargeCenterPage:
                                                   true, // Destaque do item central
                                               viewportFraction:
-                                                  0.8, // Proporção dos itens visíveis
+                                                  0.7, // Proporção dos itens visíveis
                                             ),
                                           );
                                         }
@@ -194,389 +436,6 @@ class _HomePageClubState extends State<HomePageClub> {
                                         ),
                                       );
                                     },
-                                  ),
-                                  const SizedBox(height: 15),
-                                  // Padding(
-                                  //   padding: defaultPaddingHorizon,
-                                  //   child: Row(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.spaceAround,
-                                  //     children: [
-                                  //       IconList(
-                                  //         title: "Saúde",
-                                  //         icon: Icons.monitor_heart,
-                                  //         onClick: () {
-                                  //           (Navigator.push(
-                                  //             context,
-                                  //             MaterialPageRoute(
-                                  //                 builder: (context) =>
-                                  //                     CategoryScreen(
-                                  //                       id: '1',
-                                  //                     )),
-                                  //           ));
-                                  //         },
-                                  //       ),
-                                  //       IconList(
-                                  //         title: "Eletrônicos",
-                                  //         icon: Icons.computer,
-                                  //         onClick: () {
-                                  //           (Navigator.push(
-                                  //             context,
-                                  //             MaterialPageRoute(
-                                  //                 builder: (context) =>
-                                  //                     CategoryScreen(
-                                  //                       id: '2',
-                                  //                     )),
-                                  //           ));
-                                  //         },
-                                  //       ),
-                                  //       IconList(
-                                  //         title: "Beleza",
-                                  //         icon: Icons.brush,
-                                  //         onClick: () {
-                                  //           // (Navigator.push(
-                                  //           //   context,
-                                  //           //   MaterialPageRoute(
-                                  //           //     builder: (context) => CategoryScreen(
-                                  //           //       id: '4',
-                                  //           //     ),
-                                  //           //   ),
-                                  //           // ));
-                                  //         },
-                                  //       ),
-                                  //       IconList(
-                                  //         title: "Verificar Loja",
-                                  //         icon: Icons.qr_code,
-                                  //         onClick: () {
-                                  //           Navigator.push(
-                                  //             context,
-                                  //             MaterialPageRoute(
-                                  //               builder: (context) =>
-                                  //                   QRCodeScannerPage(),
-                                  //             ),
-                                  //           );
-                                  //         },
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  const SizedBox(height: 15),
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(35),
-                                      topRight: Radius.circular(35),
-                                    ),
-                                    child: Container(
-                                      height: 75,
-                                      decoration:
-                                          BoxDecoration(color: SecudaryColor),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          GestureDetector(
-                                            child: SubText(
-                                              text: "Online",
-                                              align: TextAlign.center,
-                                              color: screen == "online"
-                                                  ? nightColor
-                                                  : OffColor,
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                screen = "online";
-                                              });
-                                            },
-                                          ),
-                                          GestureDetector(
-                                            child: SubText(
-                                              text: "Perto de você",
-                                              align: TextAlign.center,
-                                              color: screen == "close"
-                                                  ? nightColor
-                                                  : OffColor,
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                screen = "close";
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    color: SecudaryColor,
-                                    child: Padding(
-                                      padding: defaultPaddingVertical,
-                                      child: screen == "online"
-                                          ? Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      defaultPaddingHorizon,
-                                                  child: const ListTitle(
-                                                      title: "Destaques"),
-                                                ),
-                                                SizedBox(
-                                                  height:
-                                                      250, // Altura definida para o ListView
-                                                  child: FutureBuilder<
-                                                      List<StoresModel>>(
-                                                    future: RemoteAuthService()
-                                                        .getStores(
-                                                            token: token),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      if (snapshot.connectionState ==
-                                                              ConnectionState
-                                                                  .done &&
-                                                          snapshot.hasData) {
-                                                        if (snapshot
-                                                            .data!.isEmpty) {
-                                                          return const Center(
-                                                            child: Text(
-                                                                "Nenhuma loja disponível no momento."),
-                                                          );
-                                                        } else {
-                                                          return ListView
-                                                              .builder(
-                                                            shrinkWrap: true,
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            itemCount: snapshot
-                                                                .data!.length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
-                                                              var renders =
-                                                                  snapshot.data![
-                                                                      index];
-                                                              return ContentProduct(
-                                                                urlThumb: renders
-                                                                    .logourl
-                                                                    .toString(),
-                                                                drules:
-                                                                    "${renders.percentcashback}% de cashback",
-                                                                title: renders
-                                                                    .name
-                                                                    .toString(),
-                                                                id: renders.id
-                                                                    .toString(),
-                                                              );
-                                                            },
-                                                          );
-                                                        }
-                                                      } else if (snapshot
-                                                          .hasError) {
-                                                        return WidgetLoading();
-                                                      }
-                                                      return SizedBox(
-                                                        height: 300,
-                                                        child: Center(
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: nightColor,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 60,
-                                                ),
-                                                // Padding(
-                                                //   padding:
-                                                //       defaultPaddingHorizon,
-                                                //   child: const ListTitle(
-                                                //       title: "Lojas locais"),
-                                                // ),
-                                                // FutureBuilder<
-                                                //     List<LocalStores>>(
-                                                //   future: RemoteAuthService()
-                                                //       .getLocalStores(
-                                                //           token: token),
-                                                //   builder: (context, snapshot) {
-                                                //     if (snapshot.connectionState ==
-                                                //             ConnectionState
-                                                //                 .done &&
-                                                //         snapshot.hasData) {
-                                                //       if (snapshot
-                                                //           .data!.isEmpty) {
-                                                //         return const SizedBox(
-                                                //           height: 200,
-                                                //           child: Center(
-                                                //             child: Text(
-                                                //                 "Nenhuma loja disponível no momento."),
-                                                //           ),
-                                                //         );
-                                                //       } else {
-                                                //         return ListView.builder(
-                                                //           shrinkWrap: true,
-                                                //           physics:
-                                                //               const NeverScrollableScrollPhysics(),
-                                                //           itemCount: snapshot
-                                                //               .data!.length,
-                                                //           itemBuilder:
-                                                //               (context, index) {
-                                                //             var renders =
-                                                //                 snapshot.data![
-                                                //                     index];
-                                                //             print(renders
-                                                //                 .benefit);
-                                                //             // Verificação se o idPlan não é nulo
-                                                //             return Padding(
-                                                //               padding:
-                                                //                   defaultPadding,
-                                                //               child:
-                                                //                   ContentLocalProduct(
-                                                //                 urlLogo: renders
-                                                //                     .urllogo
-                                                //                     .toString(),
-                                                //                 benefit: renders
-                                                //                     .benefit
-                                                //                     .toString(),
-                                                //                 title: renders
-                                                //                     .name
-                                                //                     .toString(),
-                                                //                 id: renders.id
-                                                //                     .toString(),
-                                                //               ),
-                                                //             );
-                                                //           },
-                                                //         );
-                                                //       }
-                                                //     } else if (snapshot
-                                                //         .hasError) {
-                                                //       return WidgetLoading();
-                                                //     }
-                                                //     return SizedBox(
-                                                //       height: 300,
-                                                //       child: Center(
-                                                //         child:
-                                                //             CircularProgressIndicator(
-                                                //           color: nightColor,
-                                                //         ),
-                                                //       ),
-                                                //     );
-                                                //   },
-                                                // ),
-                                                // Padding(
-                                                //   padding: defaultPadding,
-                                                //   child: GestureDetector(
-                                                //     onTap: () {
-                                                //       Navigator.push(
-                                                //         context,
-                                                //         MaterialPageRoute(
-                                                //           builder: (context) =>
-                                                //               LocalStoreListScreen(),
-                                                //         ),
-                                                //       );
-                                                //     },
-                                                //     child: SubTextSized(
-                                                //       text: "Ver mais",
-                                                //       align: TextAlign.center,
-                                                //       fontweight:
-                                                //           FontWeight.w600,
-                                                //       size: 12,
-                                                //       tdeco: TextDecoration
-                                                //           .underline,
-                                                //     ),
-                                                //   ),
-                                                // ),
-                                                const SizedBox(
-                                                  height: 60,
-                                                ),
-                                                // Padding(
-                                                //   padding:
-                                                //       defaultPaddingHorizon,
-                                                //   child: const ListTitle(
-                                                //       title: "Eletrônicos"),
-                                                // ),
-                                                // SizedBox(
-                                                //   height:
-                                                //       250, // Altura definida para o ListView
-                                                //   child: FutureBuilder<
-                                                //       List<OnlineStores>>(
-                                                //     future: RemoteAuthService()
-                                                //         .getOneCategoryStories(
-                                                //             token: token,
-                                                //             id: '2'),
-                                                //     builder:
-                                                //         (context, snapshot) {
-                                                //       if (snapshot.connectionState ==
-                                                //               ConnectionState
-                                                //                   .done &&
-                                                //           snapshot.hasData) {
-                                                //         if (snapshot
-                                                //             .data!.isEmpty) {
-                                                //           return const Center(
-                                                //             child: Text(
-                                                //                 "Nenhuma loja disponível no momento."),
-                                                //           );
-                                                //         } else {
-                                                //           return ListView
-                                                //               .builder(
-                                                //             shrinkWrap: true,
-                                                //             scrollDirection:
-                                                //                 Axis.horizontal,
-                                                //             physics:
-                                                //                 const NeverScrollableScrollPhysics(),
-                                                //             itemCount: snapshot
-                                                //                 .data!.length,
-                                                //             itemBuilder:
-                                                //                 (context,
-                                                //                     index) {
-                                                //               var renders =
-                                                //                   snapshot.data![
-                                                //                       index];
-                                                //               return ContentProduct(
-                                                //                 urlLogo: renders
-                                                //                     .logourl
-                                                //                     .toString(),
-                                                //                 drules:
-                                                //                     "${renders.percentcashback}% de cashback",
-                                                //                 title: renders
-                                                //                     .name
-                                                //                     .toString(),
-                                                //                 id: renders.id
-                                                //                     .toString(),
-                                                //               );
-                                                //             },
-                                                //           );
-                                                //         }
-                                                //       } else if (snapshot
-                                                //           .hasError) {
-                                                //         return WidgetLoading();
-                                                //       }
-                                                //       return SizedBox(
-                                                //         height: 300,
-                                                //         child: Center(
-                                                //           child:
-                                                //               CircularProgressIndicator(
-                                                //             color: nightColor,
-                                                //           ),
-                                                //         ),
-                                                //       );
-                                                //     },
-                                                //   ),
-                                                // ),
-                                              ],
-                                            )
-                                          : SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  .5,
-                                              child: ErrorPost(
-                                                text: "Em breve!",
-                                              ),
-                                            ),
-                                    ),
                                   ),
                                 ],
                               );

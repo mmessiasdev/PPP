@@ -21,7 +21,6 @@ class MainHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
       child: Padding(
         padding: defaultPadding,
         child: Row(
@@ -36,8 +35,10 @@ class MainHeader extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                PrimaryText(
-                    text: title, color: nightColor, align: TextAlign.start)
+                SizedBox(
+                  child: PrimaryText(
+                      text: title, color: nightColor, align: TextAlign.start),
+                )
               ],
             ),
             GestureDetector(
