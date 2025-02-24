@@ -1,5 +1,7 @@
 import 'package:Prontas/component/colors.dart';
+import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/texts.dart';
+import 'package:Prontas/component/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -104,11 +106,23 @@ class _LivePageState extends State<LivePage> {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      return Center(
-        child: SubText(
-          text: "Live Streaming não está disponível nesta plataforma.",
-          align: TextAlign.center,
-        ),
+      return Column(
+        children: [
+          MainHeader(
+            title: "Prontas",
+            icon: Icons.arrow_back_ios,
+            onClick: () {
+              (Navigator.pop(context));
+            },
+          ),
+          Expanded(
+            child: Center(
+              child: ErrorPost(
+                text: "Live Streaming não está disponível nesta plataforma.",
+              ),
+            ),
+          ),
+        ],
       );
     }
 
@@ -130,7 +144,8 @@ class _LivePageState extends State<LivePage> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 70, horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       spacing: 2,

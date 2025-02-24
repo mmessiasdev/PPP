@@ -10,6 +10,7 @@ import 'package:Prontas/model/courses.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
 import 'package:Prontas/view/freeplaylist/coursescreen.dart';
+import 'package:Prontas/view/prenatalwallet/homescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
@@ -233,9 +234,19 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ItemButtom(
-                        title: "Carterinha",
-                        icon: Icons.add,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddPrenatalScreen(),
+                            ),
+                          );
+                        },
+                        child: ItemButtom(
+                          title: "Carterinha",
+                          icon: Icons.add,
+                        ),
                       ),
                       ItemButtom(
                         title: "Carterinha",
