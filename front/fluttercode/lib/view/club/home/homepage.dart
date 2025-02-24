@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
+import 'package:Prontas/component/buttons/itembuttom.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/contentproduct.dart';
 import 'package:Prontas/component/widgets/header.dart';
@@ -15,6 +16,7 @@ import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/club/category/categoryscreen.dart';
 import 'package:Prontas/view/club/qrcode/qrcodescreen.dart';
 import 'package:Prontas/view/club/store/local/localstorelist.dart';
+import 'package:Prontas/view/club/wallet/walletscreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/component/colors.dart';
@@ -136,6 +138,30 @@ class _HomePageClubState extends State<HomePageClub> {
                                   //   padding: defaultPaddingHorizon,
                                   //   child: const SearchClubInput(),
                                   // ),
+                                  const SizedBox(
+                                    height: 45,
+                                  ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WalletScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: ItemButtom(
+                                          icon: Icons.wallet,
+                                          title: "Saldo",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 45,
                                   ),

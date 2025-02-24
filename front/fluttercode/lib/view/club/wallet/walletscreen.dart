@@ -313,7 +313,10 @@ class _WalletScreenState extends State<WalletScreen> {
             padding: defaultPaddingHorizon,
             child: MainHeader(
               title: "Carteira",
-              onClick: () {},
+              icon: Icons.arrow_back_ios_new,
+              onClick: () {
+                Navigator.of(context).pop();
+              },
             ),
           ),
           // O total de saldo é exibido diretamente pelo FutureBuilder

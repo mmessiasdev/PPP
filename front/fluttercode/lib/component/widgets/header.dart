@@ -21,6 +21,7 @@ class MainHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: double.infinity,
       child: Padding(
         padding: defaultPadding,
         child: Row(
@@ -36,6 +37,7 @@ class MainHeader extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
+                  
                   child: PrimaryText(
                       text: title, color: nightColor, align: TextAlign.start),
                 )
