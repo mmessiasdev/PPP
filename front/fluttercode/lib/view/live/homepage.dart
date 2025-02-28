@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/buttons/itembuttom.dart';
@@ -88,180 +90,276 @@ class _LiveHomePageState extends State<LiveHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return token == null
-        ? const SizedBox()
-        : SafeArea(
-            child: SizedBox(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: defaultPaddingHorizon,
-                    child: MainHeader(
-                      title: "Prontas",
-                      icon: Icons.menu,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  LayoutBuilder(builder: (context, constraints) {
-                    final isDesktop = constraints.maxWidth > 800;
-                    return Center(
-                      child: SizedBox(
-                        width: isDesktop ? 600 : double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+    return FutureBuilder<http.Response>(
+      future: RemoteAuthService()
+          .getProfile(token: token.toString()), // Chamada assíncrona
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ); // Mostra um indicador de carregamento
+        } else if (snapshot.hasError) {
+          return Text("Erro ao carregar os dados");
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return Text("Nenhum dado encontrado");
+        }
+
+        // Aqui já temos certeza de que snapshot.data não é nulo
+        var userData = jsonDecode(snapshot.data!.body);
+        var planId = userData["planid"];
+
+        void _showDraggableScrollableSheet(BuildContext context) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return DraggableScrollableSheet(
+                expand: false,
+                builder: (context, scrollController) {
+                  return Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: defaultPadding,
+                        child: ListView(
                           children: [
-                            // Campo de entrada com validação
-                            Padding(
-                              padding: defaultPadding,
-                              child: Column(
-                                children: [
-                                  SecundaryText(
-                                      text:
-                                          "Digite o código do parto qe deseja assistir",
-                                      color: nightColor,
-                                      align: TextAlign.center),
-                                  SizedBox(
-                                    height: 25,
-                                  ),
-                                  InputTextField(
-                                    textEditingController: liveTextCtrl,
-                                    title: "",
-                                    fcolor: nightColor,
-                                    fill: true,
-                                    textInputType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter
-                                          .digitsOnly, // Apenas números
-                                      LengthLimitingTextInputFormatter(
-                                        13,
-                                      ), // Limitar a 13 caracteres
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: SecudaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  (Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AccountScreen(
+                                              buttom: true,
+                                            )),
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: defaultPadding,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.person),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        children: [
+                                          SubText(
+                                            text: 'Meu Perfil',
+                                            align: TextAlign.start,
+                                            color: nightColor,
+                                          ),
+                                          SubTextSized(
+                                            text:
+                                                'Verificar informações e sair da conta',
+                                            size: 10,
+                                            fontweight: FontWeight.w600,
+                                            color: OffColor,
+                                          )
+                                        ],
+                                      )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Builder(builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => jumpToLivePage(
-                                        liveTextCtrl: liveTextCtrl.text,
-                                        context,
-                                        liveID: liveTextCtrl.text,
-                                        isHost: false,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ));
+                },
+              );
+            },
+          );
+        }
+
+        return token == null
+            ? const SizedBox()
+            : SafeArea(
+                child: SizedBox(
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: defaultPaddingHorizon,
+                        child: MainHeader(
+                            title: "Prontas",
+                            icon: Icons.menu,
+                            onClick: () =>
+                                _showDraggableScrollableSheet(context)),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      LayoutBuilder(builder: (context, constraints) {
+                        final isDesktop = constraints.maxWidth > 800;
+                        return Center(
+                          child: SizedBox(
+                            width: isDesktop ? 600 : double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Campo de entrada com validação
+                                Padding(
+                                  padding: defaultPadding,
+                                  child: Column(
+                                    children: [
+                                      SecundaryText(
+                                          text:
+                                              "Digite o código do parto qe deseja assistir",
+                                          color: nightColor,
+                                          align: TextAlign.center),
+                                      SizedBox(
+                                        height: 25,
                                       ),
-                                      child: DefaultButton(
-                                        text: "Acessar",
-                                        padding: defaultPadding,
-                                        icon:
-                                            Icons.keyboard_arrow_right_outlined,
-                                        color: SecudaryColor,
-                                        colorText: lightColor,
-                                        // Desabilita o botão se o CPF for menor que 11 caracteres
+                                      InputTextField(
+                                        textEditingController: liveTextCtrl,
+                                        title: "",
+                                        fcolor: nightColor,
+                                        fill: true,
+                                        textInputType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly, // Apenas números
+                                          LengthLimitingTextInputFormatter(
+                                            13,
+                                          ), // Limitar a 13 caracteres
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Builder(builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => jumpToLivePage(
+                                            liveTextCtrl: liveTextCtrl.text,
+                                            context,
+                                            liveID: liveTextCtrl.text,
+                                            isHost: false,
+                                          ),
+                                          child: DefaultButton(
+                                            text: "Acessar",
+                                            padding: defaultPadding,
+                                            icon: Icons
+                                                .keyboard_arrow_right_outlined,
+                                            color: SecudaryColor,
+                                            colorText: lightColor,
+                                            // Desabilita o botão se o CPF for menor que 11 caracteres
+                                          ),
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  height: 50,
+                                ),
+
+                                // Caroulsel --------------
+
+                                FutureBuilder<List<Banners>>(
+                                  future: RemoteAuthService()
+                                      .getCarrouselBanners(
+                                          token: token, id: "1"),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                            ConnectionState.done &&
+                                        snapshot.hasData) {
+                                      if (snapshot.data!.isEmpty) {
+                                        return const SizedBox(
+                                          height: 50,
+                                          child: Center(child: SizedBox()),
+                                        );
+                                      } else {
+                                        return CarouselSlider.builder(
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder:
+                                              (context, index, realIndex) {
+                                            var renders = snapshot.data![index];
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                              child: BannerList(
+                                                imageUrl:
+                                                    renders.urlimage.toString(),
+                                                redirectUrl:
+                                                    renders.urlroute.toString(),
+                                              ),
+                                            );
+                                          },
+                                          options: CarouselOptions(
+                                            height: (320 * 9) / 16,
+                                            autoPlay:
+                                                true, // Habilita o deslizamento automático
+                                            autoPlayInterval: const Duration(
+                                                seconds: 3), // Intervalo
+                                            enlargeCenterPage:
+                                                true, // Destaque do item central
+                                            viewportFraction:
+                                                0.7, // Proporção dos itens visíveis
+                                          ),
+                                        );
+                                      }
+                                    } else if (snapshot.hasError) {
+                                      return const Center(child: SizedBox());
+                                    }
+                                    return SizedBox(
+                                      height: 150,
+                                      child: const Center(
+                                        child: CircularProgressIndicator(),
                                       ),
                                     );
-                                  }),
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                      if (planId == 2)
+                        Padding(
+                          padding: defaultPadding,
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () => jumpToLivePage(
+                                liveTextCtrl: liveTextCtrl.text,
+                                context,
+                                liveID: liveTextCtrl.text,
+                                isHost: true,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ItemButtom(icon: Icons.circle_outlined),
+                                  SubText(
+                                    text: "Iniciar a transmissão do parto.",
+                                    align: TextAlign.center,
+                                  ),
                                 ],
                               ),
                             ),
-
-                            SizedBox(
-                              height: 50,
-                            ),
-
-                            // Caroulsel --------------
-
-                            FutureBuilder<List<Banners>>(
-                              future: RemoteAuthService()
-                                  .getCarrouselBanners(token: token, id: "1"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                        ConnectionState.done &&
-                                    snapshot.hasData) {
-                                  if (snapshot.data!.isEmpty) {
-                                    return const SizedBox(
-                                      height: 50,
-                                      child: Center(child: SizedBox()),
-                                    );
-                                  } else {
-                                    return CarouselSlider.builder(
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index, realIndex) {
-                                        var renders = snapshot.data![index];
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15),
-                                          child: BannerList(
-                                            imageUrl:
-                                                renders.urlimage.toString(),
-                                            redirectUrl:
-                                                renders.urlroute.toString(),
-                                          ),
-                                        );
-                                      },
-                                      options: CarouselOptions(
-                                        height: (320 * 9) / 16,
-                                        autoPlay:
-                                            true, // Habilita o deslizamento automático
-                                        autoPlayInterval: const Duration(
-                                            seconds: 3), // Intervalo
-                                        enlargeCenterPage:
-                                            true, // Destaque do item central
-                                        viewportFraction:
-                                            0.7, // Proporção dos itens visíveis
-                                      ),
-                                    );
-                                  }
-                                } else if (snapshot.hasError) {
-                                  return const Center(child: SizedBox());
-                                }
-                                return SizedBox(
-                                  height: 150,
-                                  child: const Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(
-                              height: 50,
-                            ),
-                          ],
-                        ),
+                          ),
+                        )
+                      else
+                        SizedBox(),
+                      SizedBox(
+                        height: 100,
                       ),
-                    );
-                  }),
-                  Padding(
-                    padding: defaultPadding,
-                    child: Center(
-                      child: GestureDetector(
-                        onTap: () => jumpToLivePage(
-                          liveTextCtrl: liveTextCtrl.text,
-                          context,
-                          liveID: liveTextCtrl.text,
-                          isHost: true,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ItemButtom(icon: Icons.circle_outlined),
-                            SubText(
-                              text: "Iniciar a transmissão do parto.",
-                              align: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 100,
-                  ),
-                ],
-              ),
-            ),
-          );
+                ),
+              ); // Exemplo de exibição do ID
+      },
+    );
   }
 
   jumpToLivePage(BuildContext context,

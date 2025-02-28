@@ -54,6 +54,10 @@
     "verifiqued_buy_local_stores": {
       "via": "profile",
       "collection": "verifiqued-buy-local-store"
+    },
+    "planid": {
+      "type": "integer",
+      "default": 1
     }
   }
 }
