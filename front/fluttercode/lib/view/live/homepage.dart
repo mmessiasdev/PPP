@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Prontas/component/bannerlist.dart';
 import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/buttons/itembuttom.dart';
@@ -8,6 +7,7 @@ import 'package:Prontas/component/inputdefault.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/account/account.dart';
+import 'package:Prontas/view/account/auth/signup.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -196,10 +196,10 @@ class _LiveHomePageState extends State<LiveHomePage> {
                       Padding(
                         padding: defaultPaddingHorizon,
                         child: MainHeader(
-                            title: "Prontas",
-                            icon: Icons.menu,
-                            onClick: () =>
-                                _showDraggableScrollableSheet(context)),
+                          title: "Prontas",
+                          icon: Icons.menu,
+                          onClick: () => _showDraggableScrollableSheet(context),
+                        ),
                       ),
                       SizedBox(
                         height: 30,
@@ -218,10 +218,11 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                   child: Column(
                                     children: [
                                       SecundaryText(
-                                          text:
-                                              "Digite o código do parto que deseja assistir",
-                                          color: nightColor,
-                                          align: TextAlign.center),
+                                        text:
+                                            "Digite o código do parto que deseja assistir",
+                                        color: nightColor,
+                                        align: TextAlign.center,
+                                      ),
                                       SizedBox(
                                         height: 25,
                                       ),
@@ -337,26 +338,56 @@ class _LiveHomePageState extends State<LiveHomePage> {
                       if (planId == 2)
                         Padding(
                           padding: defaultPadding,
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () => jumpToLivePage(
-                                liveTextCtrl: liveTextCtrl.text,
-                                context,
-                                liveID: liveTextCtrl.text,
-                                isHost: true,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ItemButtom(icon: Icons.circle_outlined),
-                                  SubText(
-                                    text: "Iniciar a transmissão do parto.",
-                                    align: TextAlign.center,
+                          child: Column(
+                            children: [
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () => jumpToLivePage(
+                                    liveTextCtrl: liveTextCtrl.text,
+                                    context,
+                                    liveID: liveTextCtrl.text,
+                                    isHost: true,
                                   ),
-                                ],
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ItemButtom(icon: Icons.circle_outlined),
+                                      SubText(
+                                        text: "Iniciar a transmissão do parto.",
+                                        align: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: defaultPadding,
+                                child: RichDefaultText(
+                                  text: 'Precisa de uma conta? ',
+                                  size: 12,
+                                  wid: GestureDetector(
+                                    onTap: () {
+                                      (
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignUpScreen(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: SubText(
+                                      text: 'Crie uma aqui!',
+                                      align: TextAlign.start,
+                                      color: PrimaryColor,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       else

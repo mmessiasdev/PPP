@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Column(
                 children: [
                   InputLogin(
-                    inputTitle: 'CPF',
+                    inputTitle: 'Username',
                     controller: usernameController,
                     keyboardType: TextInputType.number,
                   ),
@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   (Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => SignInScreen(),
+                                        builder: (context) => DashboardScreen(),
                                       )));
                                 },
                                 child: SubTextSized(
