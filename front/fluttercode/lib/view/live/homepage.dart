@@ -101,9 +101,19 @@ class _LiveHomePageState extends State<LiveHomePage> {
             ),
           ); // Mostra um indicador de carregamento
         } else if (snapshot.hasError) {
-          return Text("Erro ao carregar os dados");
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+          ;
         } else if (!snapshot.hasData || snapshot.data == null) {
-          return Text("Nenhum dado encontrado");
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+          ;
         }
 
         // Aqui já temos certeza de que snapshot.data não é nulo
@@ -209,7 +219,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                     children: [
                                       SecundaryText(
                                           text:
-                                              "Digite o código do parto qe deseja assistir",
+                                              "Digite o código do parto que deseja assistir",
                                           color: nightColor,
                                           align: TextAlign.center),
                                       SizedBox(
