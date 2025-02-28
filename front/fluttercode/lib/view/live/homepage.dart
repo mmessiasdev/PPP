@@ -85,8 +85,10 @@ class _LiveHomePageState extends State<LiveHomePage> {
   }
 
   /// Users who use the same liveID can join the same live streaming.
-  final liveTextCtrl =
+  final liveRandomText =
       TextEditingController(text: Random().nextInt(10000).toString());
+
+  final liveText = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -95,25 +97,26 @@ class _LiveHomePageState extends State<LiveHomePage> {
           .getProfile(token: token.toString()), // Chamada assíncrona
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(
+          return const SizedBox(
+            height: 300,
             child: Center(
               child: CircularProgressIndicator(),
             ),
           ); // Mostra um indicador de carregamento
         } else if (snapshot.hasError) {
-          return Expanded(
+          return const SizedBox(
+            height: 300,
             child: Center(
               child: CircularProgressIndicator(),
             ),
           );
-          ;
         } else if (!snapshot.hasData || snapshot.data == null) {
-          return Expanded(
+          return const SizedBox(
+            height: 300,
             child: Center(
               child: CircularProgressIndicator(),
             ),
           );
-          ;
         }
 
         // Aqui já temos certeza de que snapshot.data não é nulo
@@ -227,7 +230,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                         height: 25,
                                       ),
                                       InputTextField(
-                                        textEditingController: liveTextCtrl,
+                                        textEditingController: liveText,
                                         title: "",
                                         fcolor: nightColor,
                                         fill: true,
@@ -246,9 +249,9 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                       Builder(builder: (context) {
                                         return GestureDetector(
                                           onTap: () => jumpToLivePage(
-                                            liveTextCtrl: liveTextCtrl.text,
+                                            liveRandomText: liveText.text,
                                             context,
-                                            liveID: liveTextCtrl.text,
+                                            liveID: liveText.text,
                                             isHost: false,
                                           ),
                                           child: DefaultButton(
@@ -343,9 +346,9 @@ class _LiveHomePageState extends State<LiveHomePage> {
                               Center(
                                 child: GestureDetector(
                                   onTap: () => jumpToLivePage(
-                                    liveTextCtrl: liveTextCtrl.text,
+                                    liveRandomText: liveRandomText.text,
                                     context,
-                                    liveID: liveTextCtrl.text,
+                                    liveID: liveRandomText.text,
                                     isHost: true,
                                   ),
                                   child: Row(
@@ -406,13 +409,13 @@ class _LiveHomePageState extends State<LiveHomePage> {
   jumpToLivePage(BuildContext context,
       {required String liveID,
       required bool isHost,
-      required String liveTextCtrl}) {
+      required String liveRandomText}) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => LivePage(
                 id: id.toString(),
-                codlive: liveTextCtrl,
+                codlive: liveRandomText,
                 liveID: liveID,
                 isHost: isHost,
                 username: username.toString(),

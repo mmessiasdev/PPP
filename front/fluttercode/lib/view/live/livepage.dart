@@ -178,7 +178,7 @@ class _LivePageState extends State<LivePage> {
                             padding: const EdgeInsets.all(5),
                           ),
                           child: Icon(
-                            isRecording ? Icons.stop : Icons.play_arrow,
+                            isRecording ? Icons.save : Icons.play_arrow,
                             color: lightColor,
                             size: 30,
                           ),
