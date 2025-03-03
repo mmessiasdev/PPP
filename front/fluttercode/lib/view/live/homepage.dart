@@ -234,14 +234,14 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                         title: "",
                                         fcolor: nightColor,
                                         fill: true,
-                                        textInputType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly, // Apenas números
-                                          LengthLimitingTextInputFormatter(
-                                            13,
-                                          ), // Limitar a 13 caracteres
-                                        ],
+                                        // textInputType: TextInputType.number,
+                                        // inputFormatters: [
+                                        //   FilteringTextInputFormatter
+                                        //       .digitsOnly, // Apenas números
+                                        //   LengthLimitingTextInputFormatter(
+                                        //     13,
+                                        //   ), // Limitar a 13 caracteres
+                                        // ],
                                       ),
                                       SizedBox(
                                         height: 30,

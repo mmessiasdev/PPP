@@ -3,7 +3,7 @@ import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/widgets/header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // Já importado
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
@@ -38,6 +38,15 @@ class _LivePageState extends State<LivePage> {
   void initState() {
     super.initState();
 
+    // Força a orientação da tela para paisagem
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    // Ativa o modo tela cheia
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     // Registra os callbacks de gravação
     ZegoExpressEngine.onCapturedDataRecordStateUpdate = (
       ZegoDataRecordState state,
@@ -67,6 +76,22 @@ class _LivePageState extends State<LivePage> {
     ) {
       debugPrint("Progresso da gravação: ${progress.currentFileSize} bytes");
     };
+  }
+
+  @override
+  void dispose() {
+    // Restaura a orientação da tela para o padrão ao sair da tela
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    // Restaura o modo de UI padrão (sai do modo tela cheia)
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+    super.dispose();
   }
 
   // Inicia a gravação
