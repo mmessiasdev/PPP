@@ -1,6 +1,8 @@
 import { appId, secret } from "../../components/helper";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
+
 
 function randomID(len) {
     let result = '';
@@ -29,8 +31,8 @@ export default function App() {
     let myMeeting = async (element) => {
 
         // generate Kit Token
-        const appID = appId;
-        const serverSecret = secret;
+        const appID = parseInt(process.env.REACT_APP_APP_ID, 10); // Converte para número, se necessário
+        const serverSecret = process.env.REACT_APP_SERVER_SECRET;
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
 
         // Create instance object from Kit Token.
@@ -55,11 +57,20 @@ export default function App() {
         });
     };
 
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const codigo = queryParams.get('codigo'); // Acessa o parâmetro "codigo"
+
     return (
-        <div
-            className="myCallContainer"
-            ref={myMeeting}
-            style={{ width: '100vw', height: '100vh' }}
-        ></div>
+        <>
+            <div
+                className="myCallContainer"
+                ref={myMeeting}
+                style={{ width: '100vw', height: '100vh' }}
+            ></div>
+            <div>
+                <h1>Valor do Código: {codigo}</h1>
+            </div>
+        </>
     );
 }

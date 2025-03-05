@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Já importado
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_express_engine/zego_express_engine.dart';
 import 'dart:io' show Platform;
@@ -128,9 +129,23 @@ class _LivePageState extends State<LivePage> {
     EasyLoading.showSuccess("Código da live copiado: $liveCode");
   }
 
+  Future<void> _launchURL() async {
+    const baseUrl = 'http://localhost:3000';
+    final codigo = 'Messias'; // String que você deseja passar
+    final url = '$baseUrl?codigo=$codigo'; // Adiciona o parâmetro à URL
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      _launchURL();
+
       return Column(
         children: [
           MainHeader(
@@ -143,7 +158,7 @@ class _LivePageState extends State<LivePage> {
           Expanded(
             child: Center(
               child: ErrorPost(
-                text: "Live Streaming não está disponível nesta plataforma.",
+                text: "Live inicada em outra guia!",
               ),
             ),
           ),
