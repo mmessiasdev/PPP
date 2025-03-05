@@ -130,10 +130,7 @@ class _LivePageState extends State<LivePage> {
   }
 
   Future<void> _launchURL() async {
-    const baseUrl = 'http://localhost:3000';
-    final codigo = 'Messias'; // String que você deseja passar
-    final url = '$baseUrl?codigo=$codigo'; // Adiciona o parâmetro à URL
-
+    const url = 'http://localhost:3000';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -158,7 +155,7 @@ class _LivePageState extends State<LivePage> {
           Expanded(
             child: Center(
               child: ErrorPost(
-                text: "Live inicada em outra guia!",
+                text: "Live Streaming iniciada em outra guia!",
               ),
             ),
           ),
