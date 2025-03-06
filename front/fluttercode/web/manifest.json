@@ -1,11 +1,11 @@
 {
-    "name": "fluttercode",
-    "short_name": "fluttercode",
+    "name": "Prontas Pra Parir",
+    "short_name": "Prontas",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Um aplicativo para gestantes",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
