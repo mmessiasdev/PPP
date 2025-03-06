@@ -150,29 +150,64 @@ class _LivePageState extends State<LivePage> {
     }
   }
 
+  Future<void> _launchURLAudience() async {
+    const baseUrl = 'http://localhost:3000';
+    final username = widget.username; // String que você deseja passar
+    final url =
+        '$baseUrl?username=${username}&code=${widget.codlive}'; // Adiciona o parâmetro à URL
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      _launchURL();
+      if (widget.isHost == true) {
+        _launchURL();
 
-      return Column(
-        children: [
-          MainHeader(
-            title: "Prontas",
-            icon: Icons.arrow_back_ios,
-            onClick: () {
-              (Navigator.pop(context));
-            },
-          ),
-          Expanded(
-            child: Center(
-              child: ErrorPost(
-                text: "Live Streaming iniciada em outra guia!",
+        return Column(
+          children: [
+            MainHeader(
+              title: "Prontas",
+              icon: Icons.arrow_back_ios,
+              onClick: () {
+                (Navigator.pop(context));
+              },
+            ),
+            Expanded(
+              child: Center(
+                child: ErrorPost(
+                  text: "Live Streaming iniciada em outra guia!",
+                ),
               ),
             ),
-          ),
-        ],
-      );
+          ],
+        );
+      } else {
+        _launchURLAudience();
+        return Column(
+          children: [
+            MainHeader(
+              title: "Prontas",
+              icon: Icons.arrow_back_ios,
+              onClick: () {
+                (Navigator.pop(context));
+              },
+            ),
+            Expanded(
+              child: Center(
+                child: ErrorPost(
+                  text: "Live Streaming iniciada em outra guia!",
+                ),
+              ),
+            ),
+          ],
+        );
+      }
     }
 
     return Scaffold(
