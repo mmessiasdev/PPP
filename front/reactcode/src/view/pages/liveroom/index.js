@@ -7,14 +7,14 @@ import { useLocation } from 'react-router-dom';
 
 function randomID(len) {
     let result = '';
-    if (result) return result;
-    var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
-        maxPos = chars.length,
-        i;
-    len = len || 5;
-    for (i = 0; i < len; i++) {
+    const chars = 'abcdefghijklmnopqrstuvwxyz'; // Somente letras minúsculas
+    const maxPos = chars.length;
+    len = len || 5; // Tamanho padrão do código é 5 caracteres
+
+    for (let i = 0; i < len; i++) {
         result += chars.charAt(Math.floor(Math.random() * maxPos));
     }
+
     return result;
 }
 
@@ -45,7 +45,7 @@ export default function App() {
             showMyCameraToggleButton: isHost, // Apenas o host pode ligar/desligar a câmera
             showAudioVideoSettingsButton: isHost, // Apenas o host pode ajustar as configurações de áudio/vídeo
             showScreenSharingButton: isHost, // Apenas o host pode compartilhar a tela
-            showPreJoinView: true,
+            showPreJoinView: false,
             turnOnMicrophoneWhenJoining: false,
             sharedLinks: [{
                 url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?username=' + username + '&code=' + roomID,
