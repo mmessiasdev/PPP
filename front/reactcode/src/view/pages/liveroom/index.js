@@ -3,8 +3,6 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-
-
 function randomID(len) {
     let result = '';
     const chars = 'abcdefghijklmnopqrstuvwxyz'; // Somente letras minúsculas
@@ -29,6 +27,14 @@ export default function App() {
     const roomID = getUrlParams().get('code') || randomID(5);
     const isHost = !getUrlParams().get('code'); // Se não houver roomID na URL, é o host
 
+    const handleCopyRoomID = () => {
+        navigator.clipboard.writeText(roomID).then(() => {
+            alert('Copiado para a área de transferência!');
+        }).catch(err => {
+            console.error('Erro ao copiar: ', err);
+        });
+    };
+
     let myMeeting = async (element) => {
 
         // generate Kit Token
@@ -47,6 +53,8 @@ export default function App() {
             showScreenSharingButton: isHost, // Apenas o host pode compartilhar a tela
             showPreJoinView: false,
             turnOnMicrophoneWhenJoining: false,
+            showRoomDetailsButton: false,
+            videoResolutionDefault: "720P",
             sharedLinks: [{
                 url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?username=' + username + '&code=' + roomID,
             }],
@@ -70,7 +78,37 @@ export default function App() {
                 ref={myMeeting}
                 style={{ width: '100vw', height: '100vh' }}
             ></div>
-        </>
 
+            {/* Nova div para exibir o roomID e o botão de copiar */}
+            <div style={{
+                position: 'absolute',
+                bottom: '10px', // Posiciona no canto inferior
+                left: '10px',   // Posiciona no canto esquerdo
+                display: 'block',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                padding: '10px',
+                borderRadius: '5px',
+                boxShadow: '0 2px 10px rgba(25, 0, 255, 0.1)',
+                zIndex: 1000,
+                fontFamily: 'Montserrat, sans-serif' // Aplica a fonte Montserrat
+            }}>
+                <span>Código da live: {roomID}</span>
+                <button
+                    onClick={handleCopyRoomID}
+                    style={{
+                        marginLeft: '10px',
+                        padding: '5px 10px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '3px',
+                        cursor: 'pointer',
+                        fontFamily: 'Montserrat, sans-serif' // Aplica a fonte Montserrat no botão
+                    }}
+                >
+                    Copiar
+                </button>
+            </div>
+        </>
     );
 }
