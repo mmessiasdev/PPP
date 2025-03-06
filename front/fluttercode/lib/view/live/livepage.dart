@@ -129,8 +129,20 @@ class _LivePageState extends State<LivePage> {
     EasyLoading.showSuccess("Código da live copiado: $liveCode");
   }
 
+  // Future<void> _launchURL() async {
+  //   const url = 'http://localhost:3000';
+  //   if (await canLaunch(url)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
+
   Future<void> _launchURL() async {
-    const url = 'http://localhost:3000';
+    const baseUrl = 'http://localhost:3000';
+    final username = widget.username; // String que você deseja passar
+    final url = '$baseUrl?username=$username'; // Adiciona o parâmetro à URL
+
     if (await canLaunch(url)) {
       await launch(url);
     } else {
