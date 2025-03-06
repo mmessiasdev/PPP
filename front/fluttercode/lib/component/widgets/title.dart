@@ -28,42 +28,35 @@ class DefaultTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: double.infinity,
-          child: Container(
-              margin: const EdgeInsets.only(top: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .8,
-                    child: PrimaryText(
-                      text: title,
-                      color: nightColor,
-                      align: align,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: PrimaryText(
+                text: title,
+                color: nightColor,
+                align: align,
+              ),
+            ),
+            buttom == true
+                ? GestureDetector(
+                    onTap: () {
+                      route != null
+                          ? Navigator.of(Get.overlayContext!)
+                              .pushReplacementNamed(route ?? "")
+                          : Navigator.of(Get.overlayContext!).pop();
+                    },
+                    child: const SizedBox(
+                      child: Center(
+                          child: Icon(
+                        Icons.arrow_back_ios,
+                        size: 30,
+                      )),
                     ),
-                  ),
-                  buttom == true
-                      ? GestureDetector(
-                          onTap: () {
-                            route != null
-                                ? Navigator.of(Get.overlayContext!)
-                                    .pushReplacementNamed(route ?? "")
-                                : Navigator.of(Get.overlayContext!).pop();
-                          },
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * .1,
-                            child: const Center(
-                                child: Icon(
-                              Icons.arrow_back_ios,
-                              size: 48,
-                            )),
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              )),
+                  )
+                : const SizedBox(),
+          ],
         ),
         const SizedBox(
           height: 15,

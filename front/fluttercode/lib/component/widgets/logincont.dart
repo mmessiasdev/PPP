@@ -102,7 +102,9 @@ class _LoginContentState extends State<LoginContent> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => SignUpScreen(),
+                                      builder: (context) => SignUpScreen(
+                                        backButtom: false,
+                                      ),
                                     ),
                                   ),
                                 );
