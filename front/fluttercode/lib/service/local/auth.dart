@@ -93,35 +93,19 @@ class LocalAuthService {
 //     required String fullname,
 //     required int id,
 //     required String username,
-//     required int planId,
 //   }) async {
 //     if (_isWeb()) {
 //       html.window.localStorage['account'] = jsonEncode({
 //         "id": id.toString(),
 //         "email": email,
 //         "fullname": fullname,
-//         "username": username,
-//         "planId": planId.toString(),
+//         "username": username
 //       });
 //     } else {
 //       await _storage.write(key: "id", value: id.toString());
 //       await _storage.write(key: "email", value: email);
 //       await _storage.write(key: "fullname", value: fullname);
 //       await _storage.write(key: "username", value: username);
-//       await _storage.write(key: "planId", value: planId.toString());
-//     }
-//   }
-
-//   // Recuperar planId
-//   Future<String?> getPlanId() async {
-//     if (_isWeb()) {
-//       final account = html.window.localStorage['account'];
-//       if (account != null) {
-//         return jsonDecode(account)['planId'];
-//       }
-//       return null;
-//     } else {
-//       return await _storage.read(key: "planId");
 //     }
 //   }
 

@@ -1,0 +1,3 @@
+CMS=localhost:1340
+FLUTTER=localhost:52890
+REACTJS=localhost:3000
