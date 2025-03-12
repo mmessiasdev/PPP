@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:Prontas/env.dart';
 import 'package:Prontas/model/balancelocalstores.dart';
 import 'package:Prontas/model/carrouselbanners.dart';
 import 'package:Prontas/model/courses.dart';
@@ -16,7 +17,6 @@ import 'package:Prontas/model/stores.dart';
 import 'package:Prontas/model/verifiquedexitbalances.dart';
 import 'package:Prontas/model/video.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -31,7 +31,7 @@ class RemoteAuthService {
   var client = http.Client();
   final storage = FlutterSecureStorage();
 
-  final url = dotenv.env["BASEURL"];
+  final url = EnvSecret().BASEURL;
 
   Future<dynamic> signUp(
       {required String email,

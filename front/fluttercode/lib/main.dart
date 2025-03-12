@@ -1,6 +1,5 @@
 import 'package:Prontas/component/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:Prontas/route/route.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/services.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-  await dotenv.load(fileName: ".env");
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Retrato normal
     DeviceOrientation.portraitDown // Retrato invertido (se necessário)

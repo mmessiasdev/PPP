@@ -4,6 +4,7 @@ import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/tips.dart';
 import 'package:Prontas/component/widgets/header.dart';
+import 'package:Prontas/env.dart';
 import 'package:Prontas/model/balancelocalstores.dart';
 import 'package:Prontas/model/verifiquedexitbalances.dart';
 import 'package:Prontas/service/local/auth.dart';
@@ -11,7 +12,6 @@ import 'package:Prontas/service/remote/auth.dart';
 import 'package:Prontas/view/club/wallet/balance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -32,7 +32,7 @@ class _WalletScreenState extends State<WalletScreen> {
   var cpf;
   var id;
   final _formKey = GlobalKey<FormState>();
-  String? urlEnv = dotenv.env["BASEURL"];
+  String? urlEnv = EnvSecret().BASEURL;
 
   TextEditingController valueExit = TextEditingController();
 

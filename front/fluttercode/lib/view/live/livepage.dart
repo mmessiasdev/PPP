@@ -2,9 +2,9 @@ import 'package:Prontas/component/colors.dart';
 import 'package:Prontas/component/containersLoading.dart';
 import 'package:Prontas/component/texts.dart';
 import 'package:Prontas/component/widgets/header.dart';
+import 'package:Prontas/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Já importado
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
@@ -151,7 +151,7 @@ class _LivePageState extends State<LivePage> {
   }
 
   Future<void> _launchURLAudience() async {
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = 'http://189.50.63.45:3000';
     final username = widget.username; // String que você deseja passar
     final url =
         '$baseUrl?username=${username}&code=${widget.codlive}'; // Adiciona o parâmetro à URL
@@ -215,8 +215,8 @@ class _LivePageState extends State<LivePage> {
         child: Stack(
           children: [
             ZegoUIKitPrebuiltLiveStreaming(
-              appID: int.parse(dotenv.env["APPID"].toString()),
-              appSign: dotenv.env["APPSIGN"].toString(),
+              appID: int.parse(EnvSecret().APPID),
+              appSign: EnvSecret().APPSIGN,
               userID: widget.id,
               userName: widget.username,
               liveID: widget.liveID,

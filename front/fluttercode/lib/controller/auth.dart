@@ -1,16 +1,15 @@
 import 'dart:convert';
+import 'package:Prontas/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:Prontas/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-  String? urlEnv = dotenv.env["BASEURL"];
-  String? authSerasa = dotenv.env["AUTHSERASA"];
+  String? urlEnv = EnvSecret().BASEURL;
 
   @override
   void onInit() async {
