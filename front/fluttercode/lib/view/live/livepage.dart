@@ -139,7 +139,7 @@ class _LivePageState extends State<LivePage> {
   // }
 
   Future<void> _launchURL() async {
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = 'http://189.50.63.45:3000';
     final username = widget.username; // String que você deseja passar
     final url = '$baseUrl?username=$username'; // Adiciona o parâmetro à URL
 

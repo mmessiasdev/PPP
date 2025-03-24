@@ -91,7 +91,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                       width:
                                           MediaQuery.of(context).size.width * 1,
                                       decoration: BoxDecoration(
-                                        color: SecudaryColor,
+                                        color: PrimaryColor,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Padding(
@@ -125,7 +125,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                       },
                                       child: DefaultButton(
                                         text: "Ativar cashback",
-                                        color: nightColor,
+                                        color: SecudaryColor,
                                         padding: defaultPadding,
                                         colorText: lightColor,
                                       ),

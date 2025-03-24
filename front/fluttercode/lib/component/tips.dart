@@ -16,7 +16,7 @@ class Tips extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: nightColor, width: 2),
             borderRadius: BorderRadius.circular(5),
-            color: SeventhColor),
+            color: SeventhColor.withOpacity(.5)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Row(

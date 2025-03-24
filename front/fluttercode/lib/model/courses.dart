@@ -5,8 +5,8 @@ class CoursesModel {
   String? nivel;
   int? time;
   String? urlbanner;
-  Null? price;
-  Null? private;
+  String? price; // Alterado de Null? para String?
+  bool? private; // Alterado de Null? para bool?
   Proof? proof;
   String? publishedAt;
   String? createdAt;
@@ -27,37 +27,39 @@ class CoursesModel {
     this.updatedAt,
   });
 
-  CoursesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    desc = json['desc'];
-    nivel = json['nivel'];
-    time = json['time'];
-    urlbanner = json['urlbanner'];
-    price = json['price'];
-    private = json['private'];
-    proof = json['proof'] != null ? new Proof.fromJson(json['proof']) : null;
-    publishedAt = json['published_at'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory CoursesModel.fromJson(Map<String, dynamic> json) {
+    return CoursesModel(
+      id: json['id'] as int?,
+      title: json['title'] as String?,
+      desc: json['desc'] as String?,
+      nivel: json['nivel'] as String?,
+      time: json['time'] as int?,
+      urlbanner: json['urlbanner'] as String?,
+      price: json['price']?.toString(), // Converte para String se não for nulo
+      private: json['private'] as bool?, // Assume que é um booleano
+      proof: json['proof'] != null ? Proof.fromJson(json['proof']) : null,
+      publishedAt: json['published_at'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['desc'] = this.desc;
-    data['nivel'] = this.nivel;
-    data['time'] = this.time;
-    data['urlbanner'] = this.urlbanner;
-    data['price'] = this.price;
-    data['private'] = this.private;
-    if (this.proof != null) {
-      data['proof'] = this.proof!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['desc'] = desc;
+    data['nivel'] = nivel;
+    data['time'] = time;
+    data['urlbanner'] = urlbanner;
+    data['price'] = price;
+    data['private'] = private;
+    if (proof != null) {
+      data['proof'] = proof!.toJson();
     }
-    data['published_at'] = this.publishedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['published_at'] = publishedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -71,41 +73,43 @@ class Proof {
   String? createdAt;
   String? updatedAt;
 
-  Proof(
-      {this.id,
-      this.questions,
-      this.title,
-      this.course,
-      this.publishedAt,
-      this.createdAt,
-      this.updatedAt});
+  Proof({
+    this.id,
+    this.questions,
+    this.title,
+    this.course,
+    this.publishedAt,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-  Proof.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    if (json['questions'] != null) {
-      questions = <Questions>[];
-      json['questions'].forEach((v) {
-        questions!.add(new Questions.fromJson(v));
-      });
-    }
-    title = json['title'];
-    course = json['course'];
-    publishedAt = json['published_at'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory Proof.fromJson(Map<String, dynamic> json) {
+    return Proof(
+      id: json['id'] as int?,
+      questions: json['questions'] != null
+          ? (json['questions'] as List)
+              .map((v) => Questions.fromJson(v))
+              .toList()
+          : null,
+      title: json['title'] as String?,
+      course: json['course'] as int?,
+      publishedAt: json['published_at'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.questions != null) {
-      data['questions'] = this.questions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (questions != null) {
+      data['questions'] = questions!.map((v) => v.toJson()).toList();
     }
-    data['title'] = this.title;
-    data['course'] = this.course;
-    data['published_at'] = this.publishedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['title'] = title;
+    data['course'] = course;
+    data['published_at'] = publishedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -116,111 +120,29 @@ class Questions {
   List<String>? options;
   String? correctAnswer;
 
-  Questions({this.id, this.question, this.options, this.correctAnswer});
+  Questions({
+    this.id,
+    this.question,
+    this.options,
+    this.correctAnswer,
+  });
 
-  Questions.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    question = json['question'];
-    options = json['options'].cast<String>();
-    correctAnswer = json['correctAnswer'];
+  factory Questions.fromJson(Map<String, dynamic> json) {
+    return Questions(
+      id: json['id'] as int?,
+      question: json['question'] as String?,
+      options:
+          json['options'] != null ? List<String>.from(json['options']) : null,
+      correctAnswer: json['correctAnswer'] as String?,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['question'] = this.question;
-    data['options'] = this.options;
-    data['correctAnswer'] = this.correctAnswer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['question'] = question;
+    data['options'] = options;
+    data['correctAnswer'] = correctAnswer;
     return data;
   }
 }
-
-// class Videos {
-//   int? id;
-//   String? name;
-//   String? desc;
-//   String? url;
-//   int? time;
-//   bool? public;
-//   int? course;
-//   String? publishedAt;
-//   String? createdAt;
-//   String? updatedAt;
-
-//   Videos(
-//       {this.id,
-//       this.name,
-//       this.desc,
-//       this.url,
-//       this.time,
-//       this.public,
-//       this.course,
-//       this.publishedAt,
-//       this.createdAt,
-//       this.updatedAt});
-
-//   Videos.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     name = json['name'];
-//     desc = json['desc'];
-//     url = json['url'];
-//     time = json['time'];
-//     public = json['public'];
-//     course = json['course'];
-//     publishedAt = json['published_at'];
-//     createdAt = json['created_at'];
-//     updatedAt = json['updated_at'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['name'] = this.name;
-//     data['desc'] = this.desc;
-//     data['url'] = this.url;
-//     data['time'] = this.time;
-//     data['public'] = this.public;
-//     data['course'] = this.course;
-//     data['published_at'] = this.publishedAt;
-//     data['created_at'] = this.createdAt;
-//     data['updated_at'] = this.updatedAt;
-//     return data;
-//   }
-// }
-
-// class CategoryCourses {
-//   int? id;
-//   String? name;
-//   String? urlbanner;
-//   String? publishedAt;
-//   String? createdAt;
-//   String? updatedAt;
-
-//   CategoryCourses(
-//       {this.id,
-//       this.name,
-//       this.urlbanner,
-//       this.publishedAt,
-//       this.createdAt,
-//       this.updatedAt});
-
-//   CategoryCourses.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     name = json['name'];
-//     urlbanner = json['urlbanner'];
-//     publishedAt = json['published_at'];
-//     createdAt = json['created_at'];
-//     updatedAt = json['updated_at'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['name'] = this.name;
-//     data['urlbanner'] = this.urlbanner;
-//     data['published_at'] = this.publishedAt;
-//     data['created_at'] = this.createdAt;
-//     data['updated_at'] = this.updatedAt;
-//     return data;
-//   }
-// }

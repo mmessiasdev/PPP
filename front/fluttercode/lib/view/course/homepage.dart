@@ -116,7 +116,11 @@ class _CoursesHomePageState extends State<CoursesHomePage> {
                                       title: course.desc.toString(),
                                       subtitle:
                                           "Tempo do curso: ${course.time.toString()} minutos",
-                                      terciaryText: course.price ?? "Grátis",
+                                      terciaryText: (course.price == null ||
+                                              course.price!.isEmpty ||
+                                              course.price == "0")
+                                          ? "Grátis"
+                                          : course.price!,
                                       id: course.id.toString(),
                                     ),
                                   );

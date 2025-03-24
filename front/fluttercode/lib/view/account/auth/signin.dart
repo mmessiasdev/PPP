@@ -1,3 +1,4 @@
+import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/defaultButton.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/controller/auth.dart';
@@ -23,6 +24,9 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController passwordController = TextEditingController();
   final AuthController authController = Get.put(AuthController());
 
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -30,136 +34,152 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // List<Widget> get _pages => [
+  //       InputLogin(
+  //         title: "Email ou CPF",
+  //         controller: emailController,
+  //         keyboardType: TextInputType.emailAddress,
+  //       ),
+  //       InputLogin(
+  //         title: "Senha",
+  //         controller: passwordController,
+  //         obsecureText: true,
+  //       ),
+  //     ];
 
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-
-  List<Widget> get _pages => [
-        InputLogin(
-          title: "Email",
-          controller: emailController,
-          keyboardType: TextInputType.emailAddress,
-        ),
-        InputLogin(
-          title: "Senha",
-          controller: passwordController,
-          obsecureText: true,
-        ),
-      ];
+  // void _previousPage() {
+  //   if (_currentPage > 0) {
+  //     _pageController.previousPage(
+  //       duration: Duration(milliseconds: 300),
+  //       curve: Curves.easeIn,
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: lightColor,
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Padding(
-              padding: defaultPaddingHorizon,
-              child: MainHeader(title: "Prontas", onClick: () {}),
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                itemCount: _pages.length,
-                itemBuilder: (context, index) {
-                  return _pages[index];
-                },
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      child: Scaffold(
+        backgroundColor: lightColor,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isDesktop = constraints.maxWidth > 800;
+            return Form(
+              key: _formKey,
+              child: ListView(
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        if (_currentPage == _pages.length - 1) {
-                          // Se for a última página, finalize o tutorial
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignInScreen(),
+                  Padding(
+                    padding: defaultPaddingHorizon,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          height: 95,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              "assets/images/logo/image.png",
+                              width: 80,
                             ),
-                          );
-                        } else {
-                          // Caso contrário, vá para a próxima página
-                          _pageController.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn,
-                          );
-                        }
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DefaultCircleButton(
-                            color: PrimaryColor,
-                            iconColor: lightColor,
-                            onClick: () {
-                              if (_currentPage == _pages.length - 1) {
-                                // Se for a última página, finalize o tutorial
+                            PrimaryText(
+                              color: nightColor,
+                              text: "Faça login",
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 95,
+                        ),
+                        Column(
+                          children: [
+                            InputLogin(
+                              title: "Email ou CPF",
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            InputLogin(
+                              title: "Senha",
+                              controller: passwordController,
+                              obsecureText: true,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 95,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   authController.signIn(
                                       email: emailController.text,
                                       password: passwordController.text);
                                 }
-                              } else {
-                                // Caso contrário, vá para a próxima página
-                                _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.easeIn,
-                                );
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          // RichDefaultText(
-                          //   text: 'Não tem conta? ',
-                          //   size: 12,
-                          //   wid: GestureDetector(
-                          //     onTap: () {
-                          //       (
-                          //         Navigator.pushReplacement(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //             builder: (context) => SignUpScreen(),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     },
-                          //     child: SubText(
-                          //       text: 'Crie uma aqui!',
-                          //       align: TextAlign.start,
-                          //       color: PrimaryColor,
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      )),
-                  SizedBox(
-                    height: 10,
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  DefaultButton(
+                                    text: "Entrar",
+                                    color: PrimaryColor,
+                                    colorText: lightColor,
+                                    padding: defaultPadding,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     (
+                            //       Navigator.pushReplacement(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) => SignUpScreen(
+                            //             backButtom: true,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: Column(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       DefaultButton(
+                            //         text: "Criar conta",
+                            //         color: SecudaryColor,
+                            //         colorText: lightColor,
+                            //         padding: defaultPadding,
+                            //       ),
+                            //       SizedBox(
+                            //         height: 20,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -185,25 +205,23 @@ class InputLogin extends StatelessWidget {
       padding: defaultPaddingHorizonTop,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PrimaryText(
+          SubText(
             color: nightColor,
-            text: title,
+            text: title ?? "",
+            align: TextAlign.start,
           ),
           const SizedBox(
-            height: 25,
+            height: 5,
           ),
-          Padding(
-            padding: defaultPaddingHorizon,
-            child: InputTextField(
-              obsecureText: obsecureText ?? false,
-              textEditingController: controller,
-              textInputType: keyboardType ?? TextInputType.text,
-              title: inputTitle ?? "",
-              fill: true,
-              maxLines: 1, // Define maxLines para 1
-            ),
+          InputTextField(
+            obsecureText: obsecureText ?? false,
+            textEditingController: controller,
+            textInputType: keyboardType ?? TextInputType.text,
+            title: inputTitle ?? "",
+            fill: true,
+            maxLines: 1, // Define maxLines para 1
           ),
         ],
       ),

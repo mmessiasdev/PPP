@@ -81,13 +81,16 @@ class _AddPrenatalScreenState extends State<AddPrenatalScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        MainHeader(
-                          title: "Adicone itens a sua carteirinha!",
-                          maxl: 3,
-                          icon: Icons.arrow_back_ios,
-                          onClick: () {
-                            Navigator.pop(context);
-                          },
+                        SizedBox(
+                          width: double.infinity,
+                          child: MainHeader(
+                            title: "Adicone itens a sua carteirinha!",
+                            maxl: 3,
+                            icon: Icons.arrow_back_ios,
+                            onClick: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                         // PrenatalTimelineScreen(),
                         // Padding(

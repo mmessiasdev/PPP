@@ -50,44 +50,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
               body: SafeArea(
                 child: IndexedStack(
                   index: controller.tabIndex,
-                  children: [
-                    // HomePage(),
-                    // CoursesHomePage(),
-                    LiveHomePage()
-                  ],
+                  children: [HomePage(), CoursesHomePage(), LiveHomePage()],
                 ),
               ),
-              // bottomNavigationBar: SnakeNavigationBar.color(
-              //   snakeShape: SnakeShape.rectangle,
-              //   backgroundColor: PrimaryColor,
-              //   unselectedItemColor: lightColor,
-              //   showUnselectedLabels: true,
-              //   selectedItemColor: lightColor,
-              //   snakeViewColor: SecudaryColor,
-              //   currentIndex: controller.tabIndex,
-              //   onTap: (val) {
-              //     controller.updateIndex(val);
-              //   },
-              //   items: const [
-              //     BottomNavigationBarItem(
-              //         icon: Icon(
-              //       Icons.home,
-              //       size: 30,
-              //     )),
-              //     BottomNavigationBarItem(
-              //       icon: Icon(
-              //         Icons.favorite,
-              //         size: 30,
-              //       ),
-              //     ),
-              //     BottomNavigationBarItem(
-              //       icon: Icon(
-              //         Icons.trip_origin,
-              //         size: 30,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              bottomNavigationBar: SnakeNavigationBar.color(
+                snakeShape: SnakeShape.rectangle,
+                backgroundColor: PrimaryColor,
+                unselectedItemColor: lightColor,
+                showUnselectedLabels: true,
+                selectedItemColor: lightColor,
+                snakeViewColor: SecudaryColor,
+                currentIndex: controller.tabIndex,
+                onTap: (val) {
+                  controller.updateIndex(val);
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                    Icons.home,
+                    size: 30,
+                  )),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 30,
+                    ),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.trip_origin,
+                      size: 30,
+                    ),
+                  ),
+                ],
+              ),
             ),
     ));
   }

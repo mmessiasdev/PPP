@@ -177,10 +177,11 @@ class _CoursePayScreenState extends State<CoursePayScreen> {
                                     children: [
                                       Icon(Icons.credit_card),
                                       SubTextSized(
-                                        text: render["price"] == null ||
-                                                render["price"] == null
+                                        text: (render["price"] == null ||
+                                                render["price"]!.isEmpty ||
+                                                render["price"] == "0")
                                             ? "Grátis"
-                                            : "${render["price"]}R\$",
+                                            : render["price"]!,
                                         size: 26,
                                         align: TextAlign.end,
                                         fontweight: FontWeight.w600,

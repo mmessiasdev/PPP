@@ -113,359 +113,346 @@ class _HomePageClubState extends State<HomePageClub> {
                             var render = jsonDecode(response.body)
                                 as Map<String, dynamic>;
 
-                            // Verifica se o campo "plan" é nulo
-                            if (render != null && render['plan'] == null) {
-                              return SizedBox(
-                                child: Center(
-                                    child:
-                                        Text('Você não possui nenhum plano')),
-                              );
-                            } else {
-                              idPlan = render['plan']['id'].toString();
-                              return ListView(
-                                children: [
-                                  Padding(
-                                    padding: defaultPaddingHorizon,
-                                    child: MainHeader(
-                                      title: "Prontas",
-                                      icon: Icons.arrow_back_ios,
-                                      onClick: () {
-                                        Navigator.of(context).pop();
+                            return ListView(
+                              children: [
+                                Padding(
+                                  padding: defaultPaddingHorizon,
+                                  child: MainHeader(
+                                    title: "Prontas",
+                                    icon: Icons.arrow_back_ios,
+                                    onClick: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                                // Padding(
+                                //   padding: defaultPaddingHorizon,
+                                //   child: const SearchClubInput(),
+                                // ),
+                                const SizedBox(
+                                  height: 45,
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                WalletScreen(),
+                                          ),
+                                        );
                                       },
+                                      child: ItemButtom(
+                                        icon: Icons.wallet,
+                                        title: "Saldo",
+                                      ),
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: defaultPaddingHorizon,
-                                  //   child: const SearchClubInput(),
-                                  // ),
-                                  const SizedBox(
-                                    height: 45,
-                                  ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  WalletScreen(),
+                                ),
+                                const SizedBox(
+                                  height: 45,
+                                ),
+
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: defaultPaddingHorizon,
+                                      child: const ListTitle(
+                                          title: "Cashback em lojas!"),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          250, // Altura definida para o ListView
+                                      child: FutureBuilder<List<StoresModel>>(
+                                        future: RemoteAuthService()
+                                            .getStores(token: token),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            if (snapshot.data!.isEmpty) {
+                                              return const Center(
+                                                child: Text(
+                                                    "Nenhuma loja disponível no momento."),
+                                              );
+                                            } else {
+                                              return ListView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount:
+                                                    snapshot.data!.length,
+                                                itemBuilder: (context, index) {
+                                                  var renders =
+                                                      snapshot.data![index];
+                                                  return ContentProduct(
+                                                    urlThumb: renders.logourl
+                                                        .toString(),
+                                                    drules:
+                                                        "${renders.percentcashback}% de cashback",
+                                                    title:
+                                                        renders.name.toString(),
+                                                    id: renders.id.toString(),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          } else if (snapshot.hasError) {
+                                            return WidgetLoading();
+                                          }
+                                          return SizedBox(
+                                            height: 300,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: nightColor,
+                                              ),
                                             ),
                                           );
                                         },
-                                        child: ItemButtom(
-                                          icon: Icons.wallet,
-                                          title: "Saldo",
-                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 45,
-                                  ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    // Padding(
+                                    //   padding:
+                                    //       defaultPaddingHorizon,
+                                    //   child: const ListTitle(
+                                    //       title: "Lojas locais"),
+                                    // ),
+                                    // FutureBuilder<
+                                    //     List<LocalStores>>(
+                                    //   future: RemoteAuthService()
+                                    //       .getLocalStores(
+                                    //           token: token),
+                                    //   builder: (context, snapshot) {
+                                    //     if (snapshot.connectionState ==
+                                    //             ConnectionState
+                                    //                 .done &&
+                                    //         snapshot.hasData) {
+                                    //       if (snapshot
+                                    //           .data!.isEmpty) {
+                                    //         return const SizedBox(
+                                    //           height: 200,
+                                    //           child: Center(
+                                    //             child: Text(
+                                    //                 "Nenhuma loja disponível no momento."),
+                                    //           ),
+                                    //         );
+                                    //       } else {
+                                    //         return ListView.builder(
+                                    //           shrinkWrap: true,
+                                    //           physics:
+                                    //               const NeverScrollableScrollPhysics(),
+                                    //           itemCount: snapshot
+                                    //               .data!.length,
+                                    //           itemBuilder:
+                                    //               (context, index) {
+                                    //             var renders =
+                                    //                 snapshot.data![
+                                    //                     index];
+                                    //             print(renders
+                                    //                 .benefit);
+                                    //             // Verificação se o idPlan não é nulo
+                                    //             return Padding(
+                                    //               padding:
+                                    //                   defaultPadding,
+                                    //               child:
+                                    //                   ContentLocalProduct(
+                                    //                 urlLogo: renders
+                                    //                     .urllogo
+                                    //                     .toString(),
+                                    //                 benefit: renders
+                                    //                     .benefit
+                                    //                     .toString(),
+                                    //                 title: renders
+                                    //                     .name
+                                    //                     .toString(),
+                                    //                 id: renders.id
+                                    //                     .toString(),
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //         );
+                                    //       }
+                                    //     } else if (snapshot
+                                    //         .hasError) {
+                                    //       return WidgetLoading();
+                                    //     }
+                                    //     return SizedBox(
+                                    //       height: 300,
+                                    //       child: Center(
+                                    //         child:
+                                    //             CircularProgressIndicator(
+                                    //           color: nightColor,
+                                    //         ),
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    // ),
+                                    // Padding(
+                                    //   padding: defaultPadding,
+                                    //   child: GestureDetector(
+                                    //     onTap: () {
+                                    //       Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               LocalStoreListScreen(),
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //     child: SubTextSized(
+                                    //       text: "Ver mais",
+                                    //       align: TextAlign.center,
+                                    //       fontweight:
+                                    //           FontWeight.w600,
+                                    //       size: 12,
+                                    //       tdeco: TextDecoration
+                                    //           .underline,
+                                    //     ),
+                                    //   ),
+                                    // ),
 
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Padding(
-                                        padding: defaultPaddingHorizon,
-                                        child: const ListTitle(
-                                            title: "Cashback em lojas!"),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            250, // Altura definida para o ListView
-                                        child: FutureBuilder<List<StoresModel>>(
-                                          future: RemoteAuthService()
-                                              .getStores(token: token),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                    ConnectionState.done &&
-                                                snapshot.hasData) {
-                                              if (snapshot.data!.isEmpty) {
-                                                return const Center(
-                                                  child: Text(
-                                                      "Nenhuma loja disponível no momento."),
-                                                );
-                                              } else {
-                                                return ListView.builder(
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemCount:
-                                                      snapshot.data!.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    var renders =
-                                                        snapshot.data![index];
-                                                    return ContentProduct(
-                                                      urlThumb: renders.logourl
-                                                          .toString(),
-                                                      drules:
-                                                          "${renders.percentcashback}% de cashback",
-                                                      title: renders.name
-                                                          .toString(),
-                                                      id: renders.id.toString(),
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                            } else if (snapshot.hasError) {
-                                              return WidgetLoading();
-                                            }
-                                            return SizedBox(
-                                              height: 300,
-                                              child: Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: nightColor,
-                                                ),
+                                    // Padding(
+                                    //   padding:
+                                    //       defaultPaddingHorizon,
+                                    //   child: const ListTitle(
+                                    //       title: "Eletrônicos"),
+                                    // ),
+                                    // SizedBox(
+                                    //   height:
+                                    //       250, // Altura definida para o ListView
+                                    //   child: FutureBuilder<
+                                    //       List<OnlineStores>>(
+                                    //     future: RemoteAuthService()
+                                    //         .getOneCategoryStories(
+                                    //             token: token,
+                                    //             id: '2'),
+                                    //     builder:
+                                    //         (context, snapshot) {
+                                    //       if (snapshot.connectionState ==
+                                    //               ConnectionState
+                                    //                   .done &&
+                                    //           snapshot.hasData) {
+                                    //         if (snapshot
+                                    //             .data!.isEmpty) {
+                                    //           return const Center(
+                                    //             child: Text(
+                                    //                 "Nenhuma loja disponível no momento."),
+                                    //           );
+                                    //         } else {
+                                    //           return ListView
+                                    //               .builder(
+                                    //             shrinkWrap: true,
+                                    //             scrollDirection:
+                                    //                 Axis.horizontal,
+                                    //             physics:
+                                    //                 const NeverScrollableScrollPhysics(),
+                                    //             itemCount: snapshot
+                                    //                 .data!.length,
+                                    //             itemBuilder:
+                                    //                 (context,
+                                    //                     index) {
+                                    //               var renders =
+                                    //                   snapshot.data![
+                                    //                       index];
+                                    //               return ContentProduct(
+                                    //                 urlLogo: renders
+                                    //                     .logourl
+                                    //                     .toString(),
+                                    //                 drules:
+                                    //                     "${renders.percentcashback}% de cashback",
+                                    //                 title: renders
+                                    //                     .name
+                                    //                     .toString(),
+                                    //                 id: renders.id
+                                    //                     .toString(),
+                                    //               );
+                                    //             },
+                                    //           );
+                                    //         }
+                                    //       } else if (snapshot
+                                    //           .hasError) {
+                                    //         return WidgetLoading();
+                                    //       }
+                                    //       return SizedBox(
+                                    //         height: 300,
+                                    //         child: Center(
+                                    //           child:
+                                    //               CircularProgressIndicator(
+                                    //             color: nightColor,
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                                FutureBuilder<List<Banners>>(
+                                  future: RemoteAuthService()
+                                      .getCarrouselBanners(
+                                          token: token, id: "1"),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                            ConnectionState.done &&
+                                        snapshot.hasData) {
+                                      if (snapshot.data!.isEmpty) {
+                                        return const SizedBox(
+                                          height: 50,
+                                          child: Center(child: SizedBox()),
+                                        );
+                                      } else {
+                                        return CarouselSlider.builder(
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder:
+                                              (context, index, realIndex) {
+                                            var renders = snapshot.data![index];
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                              child: BannerList(
+                                                imageUrl:
+                                                    renders.urlimage.toString(),
+                                                redirectUrl:
+                                                    renders.urlroute.toString(),
                                               ),
                                             );
                                           },
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
-                                      // Padding(
-                                      //   padding:
-                                      //       defaultPaddingHorizon,
-                                      //   child: const ListTitle(
-                                      //       title: "Lojas locais"),
-                                      // ),
-                                      // FutureBuilder<
-                                      //     List<LocalStores>>(
-                                      //   future: RemoteAuthService()
-                                      //       .getLocalStores(
-                                      //           token: token),
-                                      //   builder: (context, snapshot) {
-                                      //     if (snapshot.connectionState ==
-                                      //             ConnectionState
-                                      //                 .done &&
-                                      //         snapshot.hasData) {
-                                      //       if (snapshot
-                                      //           .data!.isEmpty) {
-                                      //         return const SizedBox(
-                                      //           height: 200,
-                                      //           child: Center(
-                                      //             child: Text(
-                                      //                 "Nenhuma loja disponível no momento."),
-                                      //           ),
-                                      //         );
-                                      //       } else {
-                                      //         return ListView.builder(
-                                      //           shrinkWrap: true,
-                                      //           physics:
-                                      //               const NeverScrollableScrollPhysics(),
-                                      //           itemCount: snapshot
-                                      //               .data!.length,
-                                      //           itemBuilder:
-                                      //               (context, index) {
-                                      //             var renders =
-                                      //                 snapshot.data![
-                                      //                     index];
-                                      //             print(renders
-                                      //                 .benefit);
-                                      //             // Verificação se o idPlan não é nulo
-                                      //             return Padding(
-                                      //               padding:
-                                      //                   defaultPadding,
-                                      //               child:
-                                      //                   ContentLocalProduct(
-                                      //                 urlLogo: renders
-                                      //                     .urllogo
-                                      //                     .toString(),
-                                      //                 benefit: renders
-                                      //                     .benefit
-                                      //                     .toString(),
-                                      //                 title: renders
-                                      //                     .name
-                                      //                     .toString(),
-                                      //                 id: renders.id
-                                      //                     .toString(),
-                                      //               ),
-                                      //             );
-                                      //           },
-                                      //         );
-                                      //       }
-                                      //     } else if (snapshot
-                                      //         .hasError) {
-                                      //       return WidgetLoading();
-                                      //     }
-                                      //     return SizedBox(
-                                      //       height: 300,
-                                      //       child: Center(
-                                      //         child:
-                                      //             CircularProgressIndicator(
-                                      //           color: nightColor,
-                                      //         ),
-                                      //       ),
-                                      //     );
-                                      //   },
-                                      // ),
-                                      // Padding(
-                                      //   padding: defaultPadding,
-                                      //   child: GestureDetector(
-                                      //     onTap: () {
-                                      //       Navigator.push(
-                                      //         context,
-                                      //         MaterialPageRoute(
-                                      //           builder: (context) =>
-                                      //               LocalStoreListScreen(),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //     child: SubTextSized(
-                                      //       text: "Ver mais",
-                                      //       align: TextAlign.center,
-                                      //       fontweight:
-                                      //           FontWeight.w600,
-                                      //       size: 12,
-                                      //       tdeco: TextDecoration
-                                      //           .underline,
-                                      //     ),
-                                      //   ),
-                                      // ),
-
-                                      // Padding(
-                                      //   padding:
-                                      //       defaultPaddingHorizon,
-                                      //   child: const ListTitle(
-                                      //       title: "Eletrônicos"),
-                                      // ),
-                                      // SizedBox(
-                                      //   height:
-                                      //       250, // Altura definida para o ListView
-                                      //   child: FutureBuilder<
-                                      //       List<OnlineStores>>(
-                                      //     future: RemoteAuthService()
-                                      //         .getOneCategoryStories(
-                                      //             token: token,
-                                      //             id: '2'),
-                                      //     builder:
-                                      //         (context, snapshot) {
-                                      //       if (snapshot.connectionState ==
-                                      //               ConnectionState
-                                      //                   .done &&
-                                      //           snapshot.hasData) {
-                                      //         if (snapshot
-                                      //             .data!.isEmpty) {
-                                      //           return const Center(
-                                      //             child: Text(
-                                      //                 "Nenhuma loja disponível no momento."),
-                                      //           );
-                                      //         } else {
-                                      //           return ListView
-                                      //               .builder(
-                                      //             shrinkWrap: true,
-                                      //             scrollDirection:
-                                      //                 Axis.horizontal,
-                                      //             physics:
-                                      //                 const NeverScrollableScrollPhysics(),
-                                      //             itemCount: snapshot
-                                      //                 .data!.length,
-                                      //             itemBuilder:
-                                      //                 (context,
-                                      //                     index) {
-                                      //               var renders =
-                                      //                   snapshot.data![
-                                      //                       index];
-                                      //               return ContentProduct(
-                                      //                 urlLogo: renders
-                                      //                     .logourl
-                                      //                     .toString(),
-                                      //                 drules:
-                                      //                     "${renders.percentcashback}% de cashback",
-                                      //                 title: renders
-                                      //                     .name
-                                      //                     .toString(),
-                                      //                 id: renders.id
-                                      //                     .toString(),
-                                      //               );
-                                      //             },
-                                      //           );
-                                      //         }
-                                      //       } else if (snapshot
-                                      //           .hasError) {
-                                      //         return WidgetLoading();
-                                      //       }
-                                      //       return SizedBox(
-                                      //         height: 300,
-                                      //         child: Center(
-                                      //           child:
-                                      //               CircularProgressIndicator(
-                                      //             color: nightColor,
-                                      //           ),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                  FutureBuilder<List<Banners>>(
-                                    future: RemoteAuthService()
-                                        .getCarrouselBanners(
-                                            token: token, id: "1"),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                              ConnectionState.done &&
-                                          snapshot.hasData) {
-                                        if (snapshot.data!.isEmpty) {
-                                          return const SizedBox(
-                                            height: 50,
-                                            child: Center(child: SizedBox()),
-                                          );
-                                        } else {
-                                          return CarouselSlider.builder(
-                                            itemCount: snapshot.data!.length,
-                                            itemBuilder:
-                                                (context, index, realIndex) {
-                                              var renders =
-                                                  snapshot.data![index];
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 15),
-                                                child: BannerList(
-                                                  imageUrl: renders.urlimage
-                                                      .toString(),
-                                                  redirectUrl: renders.urlroute
-                                                      .toString(),
-                                                ),
-                                              );
-                                            },
-                                            options: CarouselOptions(
-                                              height: (320 * 9) / 16,
-                                              autoPlay:
-                                                  true, // Habilita o deslizamento automático
-                                              autoPlayInterval: const Duration(
-                                                  seconds: 3), // Intervalo
-                                              enlargeCenterPage:
-                                                  true, // Destaque do item central
-                                              viewportFraction:
-                                                  0.7, // Proporção dos itens visíveis
-                                            ),
-                                          );
-                                        }
-                                      } else if (snapshot.hasError) {
-                                        return const Center(child: SizedBox());
+                                          options: CarouselOptions(
+                                            height: (320 * 9) / 16,
+                                            autoPlay:
+                                                true, // Habilita o deslizamento automático
+                                            autoPlayInterval: const Duration(
+                                                seconds: 3), // Intervalo
+                                            enlargeCenterPage:
+                                                true, // Destaque do item central
+                                            viewportFraction:
+                                                0.7, // Proporção dos itens visíveis
+                                          ),
+                                        );
                                       }
-                                      return SizedBox(
-                                        height: 150,
-                                        child: const Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              );
-                            }
+                                    } else if (snapshot.hasError) {
+                                      return const Center(child: SizedBox());
+                                    }
+                                    return SizedBox(
+                                      height: 150,
+                                      child: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
                           } catch (e) {
                             // Exibe uma mensagem de erro se não conseguir decodificar JSON
                             return Center(

@@ -55,7 +55,7 @@ class ContentProduct extends StatelessWidget {
                         height: 100,
                         child: Image.network(
                           urlThumb ?? "",
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
@@ -64,7 +64,7 @@ class ContentProduct extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: SecudaryColor,
+                        color: PrimaryColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Padding(

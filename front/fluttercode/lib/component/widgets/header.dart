@@ -20,38 +20,38 @@ class MainHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Padding(
-        padding: defaultPadding,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                    width: 70,
-                    height: 70,
-                    child: Image.asset('assets/images/logo/image.png')),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  
-                  child: PrimaryText(
-                      text: title, color: nightColor, align: TextAlign.start),
-                )
-              ],
-            ),
-            GestureDetector(
-              onTap: () => onClick!(),
-              child: Icon(
-                icon,
-                size: 25,
+    return Padding(
+      padding: defaultPadding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: Image.asset('assets/images/logo/image.png')),
+              SizedBox(
+                height: 20,
               ),
+              SizedBox(
+                width: 150,
+                child: SecundaryText(
+                  text: title,
+                  color: nightColor,
+                  align: TextAlign.start,
+                ),
+              )
+            ],
+          ),
+          GestureDetector(
+            onTap: () => onClick!(),
+            child: Icon(
+              icon,
+              size: 25,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,6 @@
+import 'package:Prontas/env.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -13,7 +13,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   String? token;
   int? id;
 
-  String? urlEnv = dotenv.env["BASEURL"];
+  String? urlEnv = EnvSecret().BASEURL;
 
   @override
   void initState() {
