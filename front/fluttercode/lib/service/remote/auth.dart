@@ -273,28 +273,56 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future postPrenatalConsultations(
-      {required String? token,
-      required String? date,
-      required String? obs,
-      required String? professional,
-      int? profileId}) async {
-    final body = {
-      "data": date,
-      "obs": obs,
-      "professional": professional,
-      "profile": profileId
-    };
-    var response = await client.post(
-      Uri.parse('$url/prenatalconsultations'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-        'ngrok-skip-browser-warning': "true"
-      },
-      body: jsonEncode(body),
-    );
-    return response;
+  Future postPrenatalConsultations({
+    required String? token,
+    required String? date,
+    required String? obs,
+    required String? professional,
+    int? profileId,
+  }) async {
+    try {
+      // Validação da data
+      if (date == null || date.isEmpty) {
+        throw Exception('Data da consulta é obrigatória');
+      }
+
+      // Verifica se a data está no formato correto
+      final dateRegex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+      if (!dateRegex.hasMatch(date)) {
+        throw Exception('Formato de data inválido. Use YYYY-MM-DD');
+      }
+
+      final body = {
+        "date": date,
+        "obs": obs,
+        "professional": professional,
+        "profile": profileId,
+      };
+
+      // Remove valores nulos
+      body.removeWhere((key, value) => value == null);
+
+      var response = await client.post(
+        Uri.parse('$url/prenatalconsultations'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+          'ngrok-skip-browser-warning': "true",
+        },
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode >= 400) {
+        print('Erro na requisição: ${response.statusCode}');
+        print('Corpo da resposta: ${response.body}');
+        throw Exception('Falha ao criar consulta pré-natal');
+      }
+
+      return response;
+    } catch (e) {
+      print('Erro em postPrenatalConsultations: $e');
+      rethrow;
+    }
   }
 
   Future<List<CoursesModel>> getOneCategoryCourse({

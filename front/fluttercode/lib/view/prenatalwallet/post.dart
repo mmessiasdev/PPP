@@ -43,17 +43,19 @@ class _AddExamScreenState extends State<AddExamScreen> {
   final TextEditingController field3 = TextEditingController();
 
   TextEditingController salesController = TextEditingController();
-
   Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      field3.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    if (picked != null) {
+      // Formata a data para o padrão ISO 8601 (YYYY-MM-DD)
+      final formattedDate =
+          "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      field3.text = formattedDate;
     }
   }
 
@@ -164,15 +166,18 @@ class _AddConsultationsScreenState extends State<AddConsultationsScreen> {
   TextEditingController salesController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      field3.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    if (picked != null) {
+      // Formata a data para o padrão ISO 8601 (YYYY-MM-DD)
+      final formattedDate =
+          "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      field3.text = formattedDate;
     }
   }
 
@@ -278,22 +283,25 @@ class _AddVaccinesScreenState extends State<AddVaccinesScreen> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController field1 = TextEditingController();
-  final TextEditingController field3 = TextEditingController();
-  final TextEditingController field2 = TextEditingController();
+  final TextEditingController vaccineNameController = TextEditingController();
+  final TextEditingController nextDoseController = TextEditingController();
+  final TextEditingController applicationDateController =
+      TextEditingController();
 
-  TextEditingController salesController = TextEditingController();
-
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+  Future<void> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      field3.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    if (picked != null) {
+      // Formata a data para o padrão ISO 8601 (YYYY-MM-DD)
+      final formattedDate =
+          "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      controller.text = formattedDate;
     }
   }
 
@@ -313,43 +321,52 @@ class _AddVaccinesScreenState extends State<AddVaccinesScreen> {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: field1,
+                        controller: vaccineNameController,
                         decoration:
                             InputDecoration(labelText: "Nome da vacina tomada"),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
                       TextFormField(
-                        controller: field2,
+                        controller: nextDoseController,
                         decoration:
-                            InputDecoration(labelText: "Proíxima Aplicação"),
-                        readOnly: true, // Impede digitação manual
-                        onTap: () => _selectDate(
-                            context), // Abre o painel ao clicar no campo
+                            InputDecoration(labelText: "Próxima Aplicação"),
+                        readOnly: true,
+                        onTap: () => _selectDate(context, nextDoseController),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
                       TextFormField(
-                        controller: field3,
+                        controller: applicationDateController,
                         decoration:
                             InputDecoration(labelText: "Dia da aplicação"),
-                        readOnly: true, // Impede digitação manual
-                        onTap: () => _selectDate(
-                            context), // Abre o painel ao clicar no campo
+                        readOnly: true,
+                        onTap: () =>
+                            _selectDate(context, applicationDateController),
                         validator: (value) =>
                             value!.isEmpty ? "Campo obrigatório" : null,
                       ),
                       SizedBox(height: 20),
                       GestureDetector(
-                        onTap: () {
-                          RemoteAuthService().postPrenatalVaccines(
-                            token: token,
-                            date: field3.text,
-                            name: field1.text,
-                            nextdose: field2.text,
-                            profileId: int.parse(profileId.toString()),
-                          );
-                          Navigator.pop(context);
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              await RemoteAuthService().postPrenatalVaccines(
+                                token: token,
+                                date: applicationDateController.text,
+                                name: vaccineNameController.text,
+                                nextdose: nextDoseController.text,
+                                profileId: int.parse(profileId.toString()),
+                              );
+                              Navigator.pop(context);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text('Erro ao adicionar vacina: $e')),
+                              );
+                            }
+                          }
                         },
                         child: DefaultButton(
                           text: "Adicionar",
@@ -410,15 +427,18 @@ class _AddMedicinesScreenState extends State<AddMedicinesScreen> {
   TextEditingController salesController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      field3.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    if (picked != null) {
+      // Formata a data para o padrão ISO 8601 (YYYY-MM-DD)
+      final formattedDate =
+          "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      field3.text = formattedDate;
     }
   }
 

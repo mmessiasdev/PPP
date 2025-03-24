@@ -81,16 +81,13 @@ class _AddPrenatalScreenState extends State<AddPrenatalScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: MainHeader(
-                            title: "Adicone itens a sua carteirinha!",
-                            maxl: 3,
-                            icon: Icons.arrow_back_ios,
-                            onClick: () {
-                              Navigator.pop(context);
-                            },
-                          ),
+                        MainHeader(
+                          title: "Adicone itens a sua carteirinha!",
+                          maxl: 3,
+                          icon: Icons.arrow_back_ios,
+                          onClick: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         // PrenatalTimelineScreen(),
                         // Padding(
@@ -136,7 +133,7 @@ class _AddPrenatalScreenState extends State<AddPrenatalScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  AddConsultationsScreen(),
+                                                  AddMedicinesScreen(),
                                             ),
                                           );
                                         },
@@ -150,7 +147,7 @@ class _AddPrenatalScreenState extends State<AddPrenatalScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  AddConsultationsScreen(),
+                                                  AddExamScreen(),
                                             ),
                                           );
                                         },
@@ -164,7 +161,7 @@ class _AddPrenatalScreenState extends State<AddPrenatalScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  AddConsultationsScreen(),
+                                                  AddVaccinesScreen(),
                                             ),
                                           );
                                         },
