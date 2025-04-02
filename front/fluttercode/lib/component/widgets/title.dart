@@ -48,7 +48,7 @@ class DefaultTitle extends StatelessWidget {
                           : Navigator.of(Get.overlayContext!).pop();
                     },
                     child: const SizedBox(
-                      child: Center(
+                      child: Center(  
                           child: Icon(
                         Icons.arrow_back_ios,
                         size: 30,

@@ -44,3 +44,6 @@ app.*.map.json
 
 .env
 env.local.json
+
+key.properties
+app/upload-keystore.jks

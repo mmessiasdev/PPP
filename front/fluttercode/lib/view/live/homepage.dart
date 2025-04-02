@@ -200,10 +200,17 @@ class _LiveHomePageState extends State<LiveHomePage> {
                       Padding(
                         padding: defaultPaddingHorizon,
                         child: MainHeader(
-                          title: "Prontas",
-                          icon: Icons.menu,
-                          onClick: () => _showDraggableScrollableSheet(context),
-                        ),
+                            title: "Prontas",
+                            icon: Icons.person,
+                            onClick: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AccountScreen(buttom: true),
+                                ),
+                              );
+                            }),
                       ),
                       SizedBox(
                         height: 30,
@@ -347,36 +354,40 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                     padding: defaultPadding,
                                     child: Column(
                                       children: [
-                                        Center(
-                                          child: GestureDetector(
-                                            onTap: () => jumpToLivePage(
-                                              liveRandomText:
-                                                  liveRandomText.text,
-                                              context,
-                                              liveID: liveRandomText.text,
-                                              isHost: true,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                ItemButtom(
-                                                    icon:
-                                                        Icons.circle_outlined),
-                                                SubText(
-                                                  text:
-                                                      "Iniciar a transmissão do parto.",
-                                                  align: TextAlign.center,
-                                                ),
-                                              ],
+                                        if (kIsWeb ||
+                                            Platform.isWindows ||
+                                            Platform.isMacOS ||
+                                            Platform.isLinux)
+                                          SizedBox()
+                                        else
+                                          Center(
+                                            child: GestureDetector(
+                                              onTap: () => jumpToLivePage(
+                                                liveRandomText:
+                                                    liveRandomText.text,
+                                                context,
+                                                liveID: liveRandomText.text,
+                                                isHost: true,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  ItemButtom(
+                                                      icon: Icons
+                                                          .circle_outlined),
+                                                  SubText(
+                                                    text:
+                                                        "Iniciar a transmissão do parto.",
+                                                    align: TextAlign.center,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
+                                        SizedBox(height: 20),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -385,15 +396,12 @@ class _LiveHomePageState extends State<LiveHomePage> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                (
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          SignUpScreen(
-                                                        backButtom: true,
-                                                      ),
-                                                    ),
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SignUpScreen(
+                                                            backButtom: true),
                                                   ),
                                                 );
                                               },

@@ -1,9 +1,12 @@
 import 'package:Prontas/component/padding.dart';
+import 'package:Prontas/component/widgets/header.dart';
 import 'package:Prontas/component/widgets/infotext.dart';
 import 'package:Prontas/component/widgets/title.dart';
 import 'package:Prontas/service/local/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Prontas/controller/controllers.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import '../../component/defaultTitleButtom.dart';
 import '../../component/colors.dart';
 import 'auth/signin.dart';
@@ -49,16 +52,19 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: lightColor,
-      child: Padding(
-        padding: defaultPaddingHorizon,
-        child: ListView(
-          children: [
-            DefaultTitle(
-              buttom: widget.buttom,
-              title: "Seu perfil",
-            ),
-            Column(
+      child: ListView(
+        children: [
+          MainHeader(
+              title: "Prontas",
+              icon: Icons.arrow_back_ios,
+              onClick: () => Navigator.of(Get.overlayContext!).pop()),
+          Padding(
+            padding: defaultPadding,
+            child: Column(
               children: [
+                SizedBox(
+                  height: 20,
+                ),
                 InfoText(
                   title: "Nome:",
                   stitle: fullname == "null" ? "" : fullname,
@@ -104,8 +110,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

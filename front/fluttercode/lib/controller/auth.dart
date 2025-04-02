@@ -21,6 +21,7 @@ class AuthController extends GetxController {
     required String email,
     required String username,
     required String password,
+    required bool adminScreen,
   }) async {
     try {
       // Mostrar loading
@@ -49,9 +50,16 @@ class AuthController extends GetxController {
 
         // Verificar se a criação do perfil foi bem-sucedida
         if (userResult.statusCode == 200) {
-          EasyLoading.showSuccess("Conta criada. Confirme suas informações.");
           // Redirecionar para a tela de login
-          Navigator.of(Get.overlayContext!).pushReplacementNamed('/login');
+
+          if (adminScreen) {
+            Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
+            EasyLoading.showSuccess(
+                "Conta criada. Passe o email e senha para o novo usuário!");
+          } else {
+            Navigator.of(Get.overlayContext!).pushReplacementNamed('/login');
+            EasyLoading.showSuccess("Conta criada. Confirme suas informações.");
+          }
         } else {
           // Mostrar erro se a criação do perfil falhou
           EasyLoading.showError('Alguma coisa deu errado. Tente novamente!');

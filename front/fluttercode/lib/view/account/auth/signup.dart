@@ -1,3 +1,4 @@
+import 'package:Prontas/component/buttons.dart';
 import 'package:Prontas/component/padding.dart';
 import 'package:Prontas/component/widgets/title.dart';
 import 'package:Prontas/controller/controllers.dart';
@@ -70,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         InputLogin(
                           inputTitle: 'Username',
                           controller: usernameController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                         ),
                         InputLogin(
                           inputTitle: 'Nome Completo',
@@ -91,70 +92,72 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 40),
                     Padding(
-                      padding: defaultPaddingHorizon,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      padding: defaultPadding,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SizedBox(
-                              child: RichDefaultText(
-                                  wid: GestureDetector(
-                                    onTap: () {
-                                      (
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const DashboardScreen(),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        (Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DashboardScreen(),
-                                            )));
-                                      },
-                                      child: SubTextSized(
-                                        align: TextAlign.start,
-                                        color: FourtyColor,
-                                        size: 16,
-                                        text: "Entre",
-                                        fontweight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  text: "Já tem um login? ",
-                                  align: TextAlign.start,
-                                  size: 16,
-                                  fontweight: FontWeight.normal)),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          CircleAvatar(
-                            maxRadius: 40,
-                            backgroundColor: FourtyColor,
-                            child: GestureDetector(
-                              child: Icon(
-                                Icons.arrow_right_alt,
-                                color: lightColor,
-                              ),
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  authController.signUp(
+                          GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                authController.signUp(
                                     fullname: fullnameController.text,
                                     email: emailController.text,
                                     username: usernameController.text,
                                     password: passwordController.text,
-                                  );
-                                }
-                              },
+                                    adminScreen: true);
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DefaultButton(
+                                  text: "Criar cadastro",
+                                  color: PrimaryColor,
+                                  colorText: lightColor,
+                                  padding: defaultPadding,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                              ],
                             ),
                           ),
+                          // SizedBox(
+                          //     child: RichDefaultText(
+                          //         wid: GestureDetector(
+                          //           onTap: () {
+                          //             (
+                          //               Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                   builder: (context) =>
+                          //                       const DashboardScreen(),
+                          //                 ),
+                          //               ),
+                          //             );
+                          //           },
+                          //           child: GestureDetector(
+                          //             onTap: () {
+                          //               (Navigator.pushReplacement(
+                          //                   context,
+                          //                   MaterialPageRoute(
+                          //                     builder: (context) =>
+                          //                         DashboardScreen(),
+                          //                   )));
+                          //             },
+                          //             child: SubTextSized(
+                          //               align: TextAlign.start,
+                          //               color: SecudaryColor,
+                          //               size: 16,
+                          //               text: "Entre",
+                          //               fontweight: FontWeight.w600,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         text: "Já tem um login? ",
+                          //         align: TextAlign.start,
+                          //         size: 16,
+                          //         fontweight: FontWeight.normal)),
                         ],
                       ),
                     ),
