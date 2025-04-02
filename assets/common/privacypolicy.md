@@ -1,5 +1,4 @@
 # Política de Privacidade do Prontas  
-**Última atualização:** [Data]  
 
 ## 1. Introdução  
 A Emminova ("nós", "nosso" ou "nós") desenvolveu o aplicativo **Prontas** ("o App") como um serviço gratuito. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você utiliza o Prontas.  
